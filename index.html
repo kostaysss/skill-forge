@@ -395,6 +395,151 @@
   .act.like:hover{border-color:var(--signal);background:rgba(255,94,26,0.08);transform:scale(1.08);}
   .act:disabled{opacity:0.4;cursor:default;transform:none;}
 
+  /* ---------- SEARCH / PROFILE ---------- */
+  .search{
+    position:relative;
+    background:
+      radial-gradient(ellipse 700px 420px at 18% 10%, rgba(255,94,26,0.12), transparent 60%),
+      var(--void);
+    padding:90px 0 100px;
+    overflow:hidden;
+  }
+  .search::before{
+    content:"";
+    position:absolute;inset:0;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 90% 70% at 50% 30%, black, transparent 80%);
+    pointer-events:none;
+  }
+  .search .wrap{
+    position:relative;
+    display:grid;
+    grid-template-columns:1fr 400px 1fr;
+    gap:36px;
+    align-items:center;
+  }
+  @media (max-width:1080px){
+    .search .wrap{grid-template-columns:1fr;gap:48px;justify-items:center;text-align:center;}
+  }
+
+  .search-copy h2{
+    font-family:var(--font-display);
+    font-size:clamp(22px,2.6vw,30px);
+    text-transform:uppercase;
+    margin:0 0 26px;
+    text-decoration:underline;
+    text-decoration-color:var(--signal);
+    text-underline-offset:6px;
+    text-decoration-thickness:2px;
+    text-wrap:balance;
+  }
+  .search-copy h2 em{color:var(--signal);font-style:normal;}
+  .search-point{
+    display:flex;gap:12px;margin-bottom:22px;max-width:44ch;
+    text-align:left;
+  }
+  @media (max-width:1080px){.search-point{text-align:left;margin-inline:auto;}}
+  .search-point .pico{
+    flex:none;width:22px;height:22px;color:var(--signal);margin-top:1px;
+  }
+  .search-point p{
+    margin:0;color:var(--ash);font-size:13.5px;line-height:1.55;
+    text-transform:uppercase;letter-spacing:0.02em;
+  }
+  .search-point p b{color:var(--bone);font-weight:700;}
+
+  .profile-card{
+    position:relative;
+    width:100%;max-width:400px;
+    border-radius:20px;
+    padding:26px 26px 30px;
+    background:linear-gradient(160deg, rgba(33,29,36,0.86), rgba(23,21,26,0.92));
+    border:1px solid rgba(255,94,26,0.28);
+    box-shadow:0 30px 70px -25px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,176,32,0.05) inset;
+    overflow:hidden;
+    text-align:left;
+  }
+  .profile-card::after{
+    content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(circle at 80% 20%, rgba(255,94,26,0.18), transparent 55%),
+      linear-gradient(200deg, rgba(74,69,78,0.35), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+  .profile-head{
+    position:relative;z-index:1;
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--font-display);
+    font-size:16px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--bone);
+    margin-bottom:22px;
+  }
+  .profile-head svg{width:20px;height:20px;color:var(--signal);}
+  .profile-form{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;}
+  .pfield{display:flex;flex-direction:column;gap:6px;}
+  .pfield label{
+    font-family:var(--font-mono);
+    font-size:11.5px;letter-spacing:0.05em;
+    color:var(--ash);text-transform:uppercase;
+  }
+  .pfield input, .pfield select{
+    font-family:var(--font-body);
+    font-size:13.5px;
+    color:var(--bone);
+    background:rgba(11,10,13,0.55);
+    border:1px solid rgba(237,234,230,0.12);
+    border-radius:8px;
+    padding:9px 12px;
+    outline:none;
+    transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .pfield input::placeholder{color:var(--steel);}
+  .pfield input:focus, .pfield select:focus{
+    border-color:var(--signal);
+    box-shadow:0 0 0 3px rgba(255,94,26,0.14);
+  }
+  .pfield select{appearance:none;cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--ash) 50%),linear-gradient(135deg,var(--ash) 50%,transparent 50%);
+    background-position:calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+    background-size:5px 5px, 5px 5px;background-repeat:no-repeat;
+  }
+  .profile-form .btn{margin-top:8px;justify-content:center;}
+
+  .search-cta{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    min-height:320px;
+  }
+  .search-cta .chute-bg{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    opacity:0.5;
+  }
+  .search-cta .chute-bg .canopy{
+    width:280px;height:150px;
+    border-radius:280px 280px 20px 20px;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(74,69,78,0.9), rgba(23,21,26,0.9) 70%),
+      repeating-conic-gradient(from 0deg at 50% 100%, rgba(237,234,230,0.06) 0deg 12deg, rgba(11,10,13,0.4) 12deg 24deg);
+    filter:blur(0.4px);
+  }
+  .search-cta h3{
+    position:relative;z-index:1;
+    font-family:var(--font-display);
+    font-size:clamp(24px,2.8vw,34px);
+    line-height:1.1;
+    text-transform:uppercase;
+    text-wrap:balance;
+    color:var(--bone);
+    text-shadow:0 4px 24px rgba(0,0,0,0.8);
+    max-width:14ch;
+  }
+  .search-cta h3 em{color:var(--signal);font-style:normal;}
+
   /* ---------- FEATURES ---------- */
   .features{
     background:var(--void);
@@ -520,7 +665,7 @@
     </a>
     <ul class="nav-links">
       <li><a href="#top" class="active">Главная</a></li>
-      <li><a href="#deck">Поиск тиммейта</a></li>
+      <li><a href="#search">Поиск тиммейта</a></li>
       <li><a href="#process">Механика/Гайды</a></li>
       <li><a href="#support">Поддержка</a></li>
     </ul>
@@ -556,6 +701,75 @@
     </div>
   </div>
 </header>
+
+<section class="search" id="search">
+  <div class="wrap">
+    <div class="search-copy">
+      <h2><em>Умный</em> поиск тиммейтов</h2>
+      <div class="search-point">
+        <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
+        <p>Забудь о случайных напарниках и бесконечном поиске в чатах. Наша система анализирует твою <b>игровую статистику, стиль игры и уровень навыков</b>, после чего автоматически подбирает игроков, похожих на тебя.</p>
+      </div>
+      <div class="search-point">
+        <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
+        <p>Благодаря интеллектуальному подбору ты сможешь быстрее находить <b>надёжных союзников</b>, играть с людьми своего уровня и повышать шансы на победу.</p>
+      </div>
+      <div class="search-point">
+        <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
+        <p>Собирай постоянную команду, улучшай взаимодействие и играй с теми, кто <b>действительно подходит тебе</b> по стилю и скиллу.</p>
+      </div>
+    </div>
+
+    <form class="profile-card" onsubmit="return false;">
+      <div class="profile-head">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+        Profile
+      </div>
+      <div class="profile-form">
+        <div class="pfield">
+          <label for="p-nick">Nickname</label>
+          <input id="p-nick" type="text" placeholder="Твой игровой ник">
+        </div>
+        <div class="pfield">
+          <label for="p-role">Role</label>
+          <select id="p-role">
+            <option>Fragger</option>
+            <option>IGL</option>
+            <option>Support</option>
+            <option>Sniper</option>
+            <option>Assault</option>
+          </select>
+        </div>
+        <div class="pfield">
+          <label for="p-id">Игровой ID</label>
+          <input id="p-id" type="text" placeholder="0000000000" inputmode="numeric">
+        </div>
+        <div class="pfield">
+          <label for="p-kd">K/D</label>
+          <input id="p-kd" type="text" placeholder="3.5">
+        </div>
+        <div class="pfield">
+          <label for="p-device">Устройство</label>
+          <input id="p-device" type="text" placeholder="Телефон / Планшет / Эмулятор">
+        </div>
+        <div class="pfield">
+          <label for="p-voice">TeamSpeak / Discord</label>
+          <input id="p-voice" type="text" placeholder="Есть микрофон?">
+        </div>
+        <div class="pfield">
+          <label for="p-age">Возраст</label>
+          <input id="p-age" type="text" placeholder="18" inputmode="numeric">
+        </div>
+        <button class="btn btn-primary" type="submit">Создать профиль →</button>
+      </div>
+    </form>
+
+    <div class="search-cta">
+      <div class="chute-bg"><div class="canopy"></div></div>
+      <h3>Создай аккаунт сейчас и найди команду, с которой <em>захочется побеждать</em>.</h3>
+    </div>
+  </div>
+</section>
 
 <section class="features" id="support">
   <div class="wrap">
