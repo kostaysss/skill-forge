@@ -295,12 +295,10 @@
   .card.leaving-left{transform:translate(-560px,-40px) rotate(-28deg) !important;opacity:0;}
 
   .card-portrait{
-    position:relative;
-    height:56%;
+    position:absolute;inset:0;
     background:
       radial-gradient(circle at 50% 30%, rgba(255,94,26,0.22), transparent 60%),
       linear-gradient(200deg, var(--steel), var(--void) 75%);
-    display:flex;align-items:center;justify-content:center;
   }
   .card-portrait::after{
     content:"";
@@ -309,7 +307,17 @@
     background-size:20px 20px;
     opacity:0.5;
   }
-  .card-portrait svg{position:relative;width:64px;height:64px;color:rgba(237,234,230,0.55);}
+  .card-portrait svg{
+    position:absolute;top:36%;left:50%;
+    transform:translate(-50%,-50%);
+    width:64px;height:64px;color:rgba(237,234,230,0.55);
+  }
+  .card-photo{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+    object-position:top center;
+  }
   .rank-badge{
     position:absolute;top:12px;left:12px;
     font-family:var(--font-mono);
@@ -334,9 +342,12 @@
   }
 
   .card-info{
-    padding:16px 18px 18px;
+    position:absolute;left:0;right:0;bottom:0;
+    min-height:60%;
+    padding:70px 18px 18px;
     display:flex;flex-direction:column;gap:10px;
-    flex:1;
+    background:linear-gradient(180deg, transparent 0%, rgba(11,10,13,0.2) 22%, rgba(11,10,13,0.68) 46%, rgba(11,10,13,0.94) 70%, var(--gunmetal) 100%);
+    z-index:1;
   }
   .card-info .nick{
     font-family:var(--font-display);
@@ -629,6 +640,7 @@
 <script>
 (function(){
   const cards = [
+    {nick:"bdFROSTY", rank:"ACE ★2", role:"Fragger", rating:"Ace", style:"Aggressive", lang:"Russia", online:"Evening", photo:"assets/bdfrosty.jpg"},
     {nick:"wizard777", rank:"ACE ★2", role:"IGL", rating:"Ace", style:"Tactician", lang:"Russia", online:"Evening"},
     {nick:"mrFROSTY", rank:"ACE ★6", role:"Fragger", rating:"Ace Master", style:"Aggressive", lang:"Russia", online:"Evening"},
     {nick:"lexicaneg", rank:"CROWN ★4", role:"Support", rating:"Ace Dominator", style:"Tactical", lang:"Russia", online:"Morning"},
@@ -663,7 +675,7 @@
         <div class="card-portrait">
           <span class="rank-badge">${data.rank}</span>
           <span class="status-dot">${data.online}</span>
-          ${personSvg()}
+          ${data.photo ? `<img class="card-photo" src="${data.photo}" alt="${data.nick}">` : personSvg()}
         </div>
         <div class="card-info">
           <div class="nick">${data.nick}</div>
