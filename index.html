@@ -196,17 +196,6 @@
     background:transparent;
     overflow:hidden;
   }
-  .scanline{
-    position:absolute;left:0;right:0;height:140px;
-    background:linear-gradient(180deg, transparent, rgba(255,94,26,0.06), transparent);
-    animation:scan 9s linear infinite;
-    pointer-events:none;
-  }
-  @keyframes scan{
-    0%{transform:translateY(-200px);}
-    100%{transform:translateY(900px);}
-  }
-
   .hero .wrap{
     position:relative;
     display:grid;
@@ -566,18 +555,23 @@
     position:absolute;
     pointer-events:none;user-select:none;
     z-index:0;
-    opacity:0.16;
-    filter:grayscale(0.2) brightness(0.72) contrast(1.02);
+    opacity:0.3;
+    filter:grayscale(0.28) brightness(0.82) contrast(1.03) drop-shadow(0 12px 22px rgba(0,0,0,0.5));
     will-change:transform;
   }
-  .bg-decor.float-a{animation:paraFloat 9s ease-in-out infinite;}
-  .bg-decor.float-b{animation:paraFloat 12s ease-in-out infinite reverse;}
+  .bg-decor.float-a{animation:paraFloat 10s ease-in-out infinite;}
+  .bg-decor.float-b{animation:paraFloat 13s ease-in-out infinite reverse;}
+  .bg-decor.float-c{animation:paraDrift 16s ease-in-out infinite;}
   @keyframes paraFloat{
-    0%,100%{transform:translateY(0) rotate(-1.5deg);}
-    50%{transform:translateY(-18px) rotate(1.5deg);}
+    0%,100%{transform:translateY(0) rotate(-2deg);}
+    50%{transform:translateY(-24px) rotate(2deg);}
+  }
+  @keyframes paraDrift{
+    0%,100%{transform:translate(0,0) rotate(1.5deg);}
+    50%{transform:translate(-16px,-20px) rotate(-2deg);}
   }
   @media (prefers-reduced-motion: reduce){
-    .bg-decor.float-a,.bg-decor.float-b{animation:none;}
+    .bg-decor{animation:none !important;}
   }
   /* keep section content above the faint decor */
   .hero .wrap,.search .wrap,.howto .wrap,.features .wrap{position:relative;z-index:1;}
@@ -827,7 +821,6 @@
   }
 
   @media (prefers-reduced-motion: reduce){
-    .scanline{animation:none;}
     .card{transition:none;}
   }
 </style>
@@ -860,9 +853,8 @@
 </nav>
 
 <header class="hero" id="top">
-  <div class="scanline"></div>
-  <img class="bg-decor float-a" src="assets/para-crate.png" alt="" style="width:130px;left:2%;bottom:8%;opacity:0.12;">
-  <img class="bg-decor float-b" src="assets/para-soldier.png" alt="" style="width:200px;right:24%;top:2%;opacity:0.1;">
+  <img class="bg-decor float-b" src="assets/para-soldier.png" alt="" style="width:220px;left:-46px;top:5%;">
+  <img class="bg-decor float-c" src="assets/para-crate.png" alt="" style="width:120px;left:8%;bottom:6%;">
   <div class="wrap">
     <div class="hero-copy">
       <span class="eyebrow">Найди напарника для совместной игры</span>
@@ -888,8 +880,8 @@
 </header>
 
 <section class="search" id="search">
-  <img class="bg-decor float-b" src="assets/para-soldier.png" alt="" style="width:340px;right:-40px;top:4%;">
-  <img class="bg-decor float-a" src="assets/para-crate.png" alt="" style="width:150px;left:3%;top:44%;">
+  <img class="bg-decor float-b" src="assets/para-soldier.png" alt="" style="width:320px;right:-30px;top:4%;">
+  <img class="bg-decor float-a" src="assets/para-crate.png" alt="" style="width:150px;left:2%;top:46%;">
 
   <div class="wrap">
     <div class="search-copy">
@@ -966,7 +958,8 @@
 </section>
 
 <section class="howto" id="process">
-  <img class="bg-decor float-b" src="assets/para-crate.png" alt="" style="width:140px;right:4%;top:2%;opacity:0.1;">
+  <img class="bg-decor float-a" src="assets/para-crate.png" alt="" style="width:130px;right:3%;top:0;">
+  <img class="bg-decor float-c" src="assets/para-soldier.png" alt="" style="width:180px;left:-40px;bottom:4%;">
   <div class="wrap">
     <h2 class="howto-title">Как это <em>работает?</em></h2>
     <div class="howto-grid">
@@ -1026,7 +1019,8 @@
 </section>
 
 <section class="features" id="support">
-  <img class="bg-decor float-a" src="assets/para-soldier.png" alt="" style="width:230px;left:-30px;bottom:6%;opacity:0.1;">
+  <img class="bg-decor float-b" src="assets/para-soldier.png" alt="" style="width:220px;left:-30px;bottom:6%;">
+  <img class="bg-decor float-a" src="assets/para-crate.png" alt="" style="width:120px;right:4%;top:10%;">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow">Почему Skill Forge</span>
