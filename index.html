@@ -33,6 +33,34 @@
     overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
+
+  /* ---------- UNIFIED SITE BACKGROUND ---------- */
+  /* one continuous backdrop behind the whole page: dark base + grid + ambient glow */
+  body::before{
+    content:"";
+    position:fixed;inset:0;z-index:-2;
+    pointer-events:none;
+    background:
+      radial-gradient(ellipse 900px 620px at 82% 0%, rgba(255,94,26,0.16), transparent 58%),
+      radial-gradient(ellipse 760px 520px at 12% 42%, rgba(255,94,26,0.10), transparent 60%),
+      linear-gradient(180deg, var(--void), #0d0b0f 55%, var(--void));
+  }
+  body::after{
+    content:"";
+    position:fixed;inset:0;z-index:-2;
+    pointer-events:none;
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(ellipse 120% 90% at 60% 30%, black, transparent 85%);
+    -webkit-mask-image:radial-gradient(ellipse 120% 90% at 60% 30%, black, transparent 85%);
+  }
+  .ember-global{
+    position:fixed;inset:0;z-index:-1;
+    width:100%;height:100%;
+    pointer-events:none;
+  }
   img{max-width:100%;display:block;}
   a{color:inherit;}
   button{font-family:inherit;}
@@ -165,20 +193,8 @@
     position:relative;
     isolation:isolate;
     padding:76px 0 120px;
-    background:
-      radial-gradient(ellipse 900px 500px at 78% 15%, rgba(255,94,26,0.16), transparent 60%),
-      linear-gradient(180deg, var(--void), var(--gunmetal) 130%);
+    background:transparent;
     overflow:hidden;
-  }
-  .hero::before{
-    content:"";
-    position:absolute;inset:0;
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size:64px 64px;
-    mask-image:radial-gradient(ellipse 80% 60% at 60% 20%, black, transparent 75%);
-    pointer-events:none;
   }
   .scanline{
     position:absolute;left:0;right:0;height:140px;
@@ -399,21 +415,9 @@
   /* ---------- SEARCH / PROFILE ---------- */
   .search{
     position:relative;
-    background:
-      radial-gradient(ellipse 700px 420px at 18% 10%, rgba(255,94,26,0.12), transparent 60%),
-      var(--void);
+    background:transparent;
     padding:90px 0 100px;
     overflow:hidden;
-  }
-  .search::before{
-    content:"";
-    position:absolute;inset:0;
-    background-image:
-      linear-gradient(var(--grid-line) 1px, transparent 1px),
-      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
-    background-size:64px 64px;
-    mask-image:radial-gradient(ellipse 90% 70% at 50% 30%, black, transparent 80%);
-    pointer-events:none;
   }
   .search .wrap{
     position:relative;
@@ -637,7 +641,7 @@
   /* ---------- HOW IT WORKS (4 steps) ---------- */
   .howto{
     position:relative;
-    background:linear-gradient(180deg, var(--void), #0e0c10);
+    background:transparent;
     padding:20px 0 96px;
     overflow:hidden;
   }
@@ -702,11 +706,9 @@
 
   /* ---------- FEATURES ---------- */
   .features{
-    background:var(--void);
+    background:transparent;
     padding:96px 0;
     position:relative;
-    clip-path:polygon(0 40px, 100% 0, 100% 100%, 0 100%);
-    margin-top:-40px;
   }
   .section-head{max-width:640px;margin:0 0 52px;}
   .section-head h2{
@@ -785,9 +787,10 @@
 
   /* ---------- FOOTER ---------- */
   footer{
-    background:var(--void);
+    background:rgba(9,8,11,0.72);
     border-top:2px solid var(--signal);
     padding:44px 0 30px;
+    position:relative;
   }
   .foot-top{
     display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;
@@ -812,6 +815,8 @@
 </style>
 </head>
 <body>
+
+<canvas class="ember-global" data-embers aria-hidden="true"></canvas>
 
 <nav class="nav">
   <div class="wrap">
@@ -863,8 +868,6 @@
 </header>
 
 <section class="search" id="search">
-  <canvas class="ember-canvas" data-embers aria-hidden="true"></canvas>
-
   <div class="para float-a" style="--pw:150px;--rig:56px;left:6%;top:34%;">
     <div class="dome"></div><div class="rig"></div><div class="load"></div>
   </div>
@@ -962,7 +965,6 @@
 </section>
 
 <section class="howto" id="process">
-  <canvas class="ember-canvas" data-embers aria-hidden="true"></canvas>
   <div class="wrap">
     <h2 class="howto-title">Как это <em>работает?</em></h2>
     <div class="howto-grid">
