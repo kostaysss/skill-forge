@@ -516,7 +516,7 @@
 
   .search-cta{
     position:relative;
-    display:flex;align-items:center;justify-content:center;
+    display:flex;align-items:center;
     min-height:320px;
   }
   .search-cta .chute-bg{
@@ -532,18 +532,46 @@
       repeating-conic-gradient(from 0deg at 50% 100%, rgba(237,234,230,0.06) 0deg 12deg, rgba(11,10,13,0.4) 12deg 24deg);
     filter:blur(0.4px);
   }
-  .search-cta h3{
+  .cta-inner{
     position:relative;z-index:1;
-    font-family:var(--font-display);
-    font-size:clamp(24px,2.8vw,34px);
-    line-height:1.1;
-    text-transform:uppercase;
-    text-wrap:balance;
-    color:var(--bone);
-    text-shadow:0 4px 24px rgba(0,0,0,0.8);
-    max-width:14ch;
+    display:flex;flex-direction:column;align-items:flex-start;
+    gap:18px;
+    max-width:360px;
   }
-  .search-cta h3 em{color:var(--signal);font-style:normal;}
+  .cta-lead{
+    margin:0;
+    font-size:clamp(15px,1.5vw,19px);
+    line-height:1.55;
+    font-weight:500;
+    color:var(--ash);
+    max-width:26ch;
+    text-wrap:balance;
+  }
+  .cta-lead b{color:var(--bone);font-weight:700;}
+  .cta-head{
+    margin:0;
+    font-family:var(--font-display);
+    font-size:clamp(30px,3.6vw,46px);
+    line-height:1.0;
+    letter-spacing:-0.01em;
+    text-transform:uppercase;
+    color:var(--bone);
+    text-wrap:balance;
+    text-shadow:0 6px 28px rgba(0,0,0,0.7);
+  }
+  .cta-head em{
+    display:inline-block;
+    font-style:normal;
+    background:linear-gradient(100deg,var(--signal),var(--ember));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    filter:drop-shadow(0 2px 14px rgba(255,94,26,0.35));
+  }
+  .cta-btn{margin-top:6px;}
+  @media (max-width:1080px){
+    .search-cta{justify-content:center;}
+    .cta-inner{align-items:center;text-align:center;}
+    .cta-lead{max-width:34ch;}
+  }
 
   /* ---------- DYNAMIC DECOR (embers / chutes / crate) ---------- */
   .ember-canvas{
@@ -959,7 +987,12 @@
 
     <div class="search-cta">
       <div class="chute-bg"><div class="canopy"></div></div>
-      <h3>Создай аккаунт сейчас и найди команду, с которой <em>захочется побеждать</em>.</h3>
+      <div class="cta-inner">
+        <span class="eyebrow">Готов к дропу?</span>
+        <p class="cta-lead">Создай аккаунт прямо сейчас и найди <b>команду своей мечты</b>, с которой</p>
+        <h2 class="cta-head">захочется <em>побеждать</em></h2>
+        <a class="btn btn-primary cta-btn" href="#search">Создать профиль →</a>
+      </div>
     </div>
   </div>
 </section>
