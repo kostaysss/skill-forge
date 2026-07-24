@@ -256,20 +256,43 @@
   .deck{
     position:relative;
     width:300px;height:440px;
+    perspective:1100px;
   }
   .card{
     position:absolute;inset:0;
     border-radius:18px;
-    background:linear-gradient(160deg, var(--gunmetal-2), var(--gunmetal) 70%);
-    border:1px solid rgba(237,234,230,0.08);
+    border:2px solid transparent;
+    background:
+      linear-gradient(160deg, var(--gunmetal-2), var(--gunmetal) 70%) padding-box,
+      linear-gradient(135deg, rgba(255,94,26,0.85), rgba(255,176,32,0.45) 42%, rgba(237,234,230,0.14) 72%) border-box;
     box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
     overflow:hidden;
     transition:transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease;
+    transform-style:preserve-3d;
     display:flex;
     flex-direction:column;
   }
   .card.leaving-right{transform:translate(560px,-40px) rotate(28deg) !important;opacity:0;}
   .card.leaving-left{transform:translate(-560px,-40px) rotate(-28deg) !important;opacity:0;}
+
+  /* lively top card: animated glow border + cursor shine */
+  .card.is-top{
+    animation:cardGlow 3.4s ease-in-out infinite;
+  }
+  @keyframes cardGlow{
+    0%,100%{box-shadow:0 30px 60px -20px rgba(0,0,0,0.7), 0 0 16px rgba(255,94,26,0.18);}
+    50%{box-shadow:0 30px 60px -20px rgba(0,0,0,0.7), 0 0 36px rgba(255,94,26,0.42);}
+  }
+  .card.is-top::after{
+    content:"";position:absolute;inset:0;z-index:6;pointer-events:none;
+    border-radius:16px;
+    background:radial-gradient(circle 200px at var(--mx,50%) var(--my,-10%), rgba(255,255,255,0.16), transparent 62%);
+    opacity:0;transition:opacity .25s ease;
+  }
+  .card.is-top:hover::after{opacity:1;}
+  @media (prefers-reduced-motion: reduce){
+    .card.is-top{animation:none;}
+  }
 
   .card-portrait{
     position:absolute;inset:0;
@@ -1106,7 +1129,7 @@
 
 (function(){
   const cards = [
-    {nick:"bdFROSTY", rank:"ACE ★2", role:"Fragger", rating:"Ace", style:"Aggressive", lang:"Russia", online:"Evening", photo:"assets/bdfrosty.jpg"},
+    {nick:"bdFROSTY", rank:"ACE ★2", role:"Fragger", rating:"Ace", style:"Aggressive", lang:"Russia", online:"Evening"},
     {nick:"wizard777", rank:"ACE ★2", role:"IGL", rating:"Ace", style:"Tactician", lang:"Russia", online:"Evening"},
     {nick:"mrFROSTY", rank:"ACE ★6", role:"Fragger", rating:"Ace Master", style:"Aggressive", lang:"Russia", online:"Evening"},
     {nick:"lexicaneg", rank:"CROWN ★4", role:"Support", rating:"Ace Dominator", style:"Tactical", lang:"Russia", online:"Morning"},
@@ -1134,8 +1157,11 @@
       const ty = i * 10;
       const sc = 1 - i * 0.045;
       const rot = i === 0 ? 0 : (i % 2 === 0 ? 2.5 : -2.5);
-      el.style.transform = `translateY(${ty}px) scale(${sc}) rotate(${rot}deg)`;
+      const baseTransform = `translateY(${ty}px) scale(${sc}) rotate(${rot}deg)`;
+      el.dataset.base = baseTransform;
+      el.style.transform = baseTransform;
       el.style.opacity = String(1 - i * 0.22);
+      if(i === 0) el.classList.add('is-top');
 
       el.innerHTML = `
         <div class="card-portrait">
@@ -1168,8 +1194,29 @@
         el.querySelectorAll('.act').forEach(btn=>{
           btn.addEventListener('click', ()=> swipe(btn.dataset.dir, el, btn));
         });
+        if(!reduceMotion) attachTilt(el);
       }
     }
+  }
+
+  function attachTilt(el){
+    el.addEventListener('pointermove', function(e){
+      if(locked) return;
+      const r = el.getBoundingClientRect();
+      const px = (e.clientX - r.left) / r.width;
+      const py = (e.clientY - r.top) / r.height;
+      const ry = (px - 0.5) * 15;      // rotateY: left/right
+      const rx = (0.5 - py) * 15;      // rotateX: up/down
+      el.style.transition = 'transform .08s ease-out';
+      el.style.transform = `rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) scale(1.03)`;
+      el.style.setProperty('--mx', (px*100).toFixed(1) + '%');
+      el.style.setProperty('--my', (py*100).toFixed(1) + '%');
+    });
+    el.addEventListener('pointerleave', function(){
+      if(locked) return;
+      el.style.transition = 'transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease';
+      el.style.transform = el.dataset.base || 'translateY(0) scale(1) rotate(0deg)';
+    });
   }
 
   function swipe(dir, el, btn){
@@ -1184,6 +1231,8 @@
       return;
     }
 
+    // restore smooth transition (tilt may have set a fast one) so the fly-out animates
+    el.style.transition = 'transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease';
     el.classList.add(dir === 'right' ? 'leaving-right' : 'leaving-left');
     setTimeout(()=>{
       order.push(order.shift());
