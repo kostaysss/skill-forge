@@ -100,7 +100,7 @@
 
   /* ---------- NAV ---------- */
   .nav{
-    position:sticky;top:0;z-index:50;
+    position:sticky;top:0;z-index:200;
     background:rgba(11,10,13,0.86);
     backdrop-filter:blur(10px);
     border-bottom:1px solid rgba(237,234,230,0.08);
@@ -163,6 +163,7 @@
   /* ---------- HERO ---------- */
   .hero{
     position:relative;
+    isolation:isolate;
     padding:76px 0 120px;
     background:
       radial-gradient(ellipse 900px 500px at 78% 15%, rgba(255,94,26,0.16), transparent 60%),
