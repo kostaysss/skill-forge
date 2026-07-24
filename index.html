@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>Skill Forge — найди тиммейта по скилу</title>
 <meta name="description" content="Skill Forge — комьюнити игроков PUBG Mobile для подбора тиммейтов по рейтингу и стилю игры.">
 <style>
@@ -109,7 +112,7 @@
     align-items:center;
     gap:10px;
     padding:14px 26px;
-    clip-path:polygon(10px 0,100% 0,calc(100% - 10px) 100%,0 100%);
+    border-radius:999px;
     transition:transform .15s ease, filter .15s ease;
   }
   .btn:hover{transform:translateY(-2px);}
@@ -250,38 +253,6 @@
     align-items:center;
     justify-content:center;
   }
-  .chute{
-    position:absolute;
-    opacity:0.5;
-    filter:blur(0.3px);
-  }
-  .chute .canopy{
-    width:120px;height:70px;
-    border-radius:120px 120px 0 0;
-    background:repeating-conic-gradient(from 0deg at 50% 100%, rgba(255,94,26,0.35) 0deg 20deg, rgba(237,234,230,0.08) 20deg 40deg);
-  }
-  .chute .lines{
-    width:1px;height:38px;
-    margin:0 auto;
-    background:rgba(237,234,230,0.25);
-  }
-  .chute.c1{top:0;left:-10px;transform:scale(0.55) rotate(-8deg);}
-  .chute.c2{top:60px;right:-30px;transform:scale(0.4) rotate(10deg);opacity:0.3;}
-  .crate{
-    position:absolute;
-    width:46px;height:46px;
-    border:2px solid rgba(255,176,32,0.35);
-    background:rgba(255,176,32,0.06);
-    opacity:0.55;
-  }
-  .crate::before,.crate::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(45deg, transparent 47%, rgba(255,176,32,0.4) 48%, rgba(255,176,32,0.4) 52%, transparent 53%);
-  }
-  .crate::after{transform:scaleX(-1);}
-  .crate.k1{bottom:20px;left:0;transform:rotate(-6deg);}
-  .crate.k2{top:10px;right:10px;transform:rotate(10deg) scale(0.7);opacity:0.35;}
-
   .deck{
     position:relative;
     width:300px;height:440px;
@@ -870,10 +841,6 @@
     </div>
 
     <div class="stage" id="deck">
-      <div class="chute c1"><div class="canopy"></div><div class="lines"></div></div>
-      <div class="chute c2"><div class="canopy"></div><div class="lines"></div></div>
-      <div class="crate k1"></div>
-      <div class="crate k2"></div>
       <div class="deck" id="cardDeck"></div>
     </div>
   </div>
