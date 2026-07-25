@@ -1253,6 +1253,27 @@
     const open = links.style.display === 'flex';
     links.style.cssText = open ? '' : 'display:flex;position:absolute;top:76px;left:0;right:0;background:#17151a;flex-direction:column;padding:20px 24px;gap:18px;border-bottom:1px solid rgba(237,234,230,0.08);';
   });
+
+  /* nav active underline: follow the clicked tab and the section in view */
+  const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+  function setActive(link){
+    navLinks.forEach(a => a.classList.toggle('active', a === link));
+  }
+  navLinks.forEach(a=>{
+    a.addEventListener('click', ()=> setActive(a));
+  });
+  // scroll-spy
+  const sections = navLinks
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+  function onScroll(){
+    const mark = window.scrollY + window.innerHeight * 0.35;
+    let idx = 0;
+    sections.forEach((s,i)=>{ if(s.offsetTop <= mark) idx = i; });
+    setActive(navLinks[idx]);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 })();
 </script>
 </body>
