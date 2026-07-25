@@ -807,25 +807,54 @@
   @media (max-width:760px){.guide-grid{grid-template-columns:repeat(2,1fr);}}
   @media (max-width:480px){.guide-grid{grid-template-columns:1fr;}}
   .gcard{
-    display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;
-    padding:22px 16px 18px;
-    border-radius:14px;
-    background:linear-gradient(170deg, rgba(38,33,45,0.55), rgba(15,13,18,0.7));
-    border:1px solid rgba(255,94,26,0.16);
-    transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;
+    position:relative;
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:11px;
+    padding:26px 18px 20px;
+    border-radius:16px;
+    background:linear-gradient(170deg, rgba(38,33,45,0.55), rgba(13,11,16,0.72));
+    border:1px solid rgba(237,234,230,0.07);
+    overflow:hidden;
+    transition:transform .28s cubic-bezier(.2,.8,.2,1), border-color .28s ease, box-shadow .28s ease;
+  }
+  .gcard::before{
+    content:"";position:absolute;top:0;left:22%;right:22%;height:2px;
+    background:linear-gradient(90deg, transparent, var(--signal), transparent);
+    opacity:0;transition:opacity .28s ease;
   }
   .gcard:hover{
-    transform:translateY(-5px);
-    border-color:rgba(255,94,26,0.5);
-    box-shadow:0 18px 34px -16px rgba(0,0,0,0.8), 0 0 22px rgba(255,94,26,0.12);
+    transform:translateY(-6px);
+    border-color:rgba(255,94,26,0.4);
+    box-shadow:0 20px 38px -16px rgba(0,0,0,0.85), 0 0 24px rgba(255,94,26,0.1);
   }
+  .gcard:hover::before{opacity:0.9;}
   .gcard-ico{
-    width:52px;height:52px;display:flex;align-items:center;justify-content:center;
+    position:relative;
+    width:58px;height:58px;display:flex;align-items:center;justify-content:center;
+    border-radius:16px;
     color:var(--ember);
-    animation:iconPulse 3.4s ease-in-out infinite;
+    background:
+      radial-gradient(circle at 32% 24%, rgba(255,176,32,0.22), transparent 60%),
+      linear-gradient(155deg, rgba(255,94,26,0.16), rgba(255,176,32,0.04));
+    border:1px solid rgba(255,94,26,0.3);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
+    transition:transform .28s cubic-bezier(.2,.8,.2,1), color .28s ease, background .28s ease, border-color .28s ease;
   }
-  .gcard:hover .gcard-ico{color:#fff;transform:scale(1.08);transition:transform .25s ease,color .25s ease;}
-  .gcard-ico svg{width:34px;height:34px;}
+  .gcard-ico::after{
+    content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+    animation:icoGlow 3.6s ease-in-out infinite;
+  }
+  @keyframes icoGlow{
+    0%,100%{box-shadow:0 0 0 0 rgba(255,94,26,0);}
+    50%{box-shadow:0 0 18px 1px rgba(255,94,26,0.28);}
+  }
+  .gcard:hover .gcard-ico{
+    color:#fff;
+    transform:translateY(-2px) scale(1.06);
+    border-color:rgba(255,176,32,0.7);
+    background:linear-gradient(155deg, rgba(255,94,26,0.4), rgba(255,176,32,0.16));
+  }
+  .gcard-ico svg{width:30px;height:30px;position:relative;z-index:1;}
+  @media (prefers-reduced-motion: reduce){.gcard-ico::after{animation:none;}}
   .gcard h4{margin:0;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.02em;color:var(--bone);}
   .gcard p{margin:0;font-size:11.5px;color:var(--ash);line-height:1.5;}
   .read-btn{
@@ -1141,19 +1170,19 @@
         </h3>
         <div class="guide-grid">
           <div class="gcard">
-            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l9 9M14.5 12.5L20 18l-2 2-5.5-5.5M4 20l5-5M20 4l-5 5"/></svg></span>
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7.5h12a3 3 0 0 1 3 3.2l-.7 5.4a2.4 2.4 0 0 1-4.3 1.2l-1-1.3H9l-1 1.3a2.4 2.4 0 0 1-4.3-1.2L3 10.7a3 3 0 0 1 3-3.2z"/><path d="M7.5 11.5h3M9 10v3"/><circle cx="15.5" cy="10.8" r="0.9" fill="currentColor" stroke="none"/><circle cx="17.3" cy="13" r="0.9" fill="currentColor" stroke="none"/></svg></span>
             <h4>Основы игры</h4>
             <p>Разбираем базовые механики, управление, интерфейс и ключевые моменты игры.</p>
             <button class="read-btn" type="button">Читать</button>
           </div>
           <div class="gcard">
-            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8V6a4 4 0 0 1 8 0v2M5 8h14l-1 12H6z"/><path d="M9 12v3M15 12v3"/></svg></span>
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 9a5.5 5.5 0 0 1 11 0v9.5a1.5 1.5 0 0 1-1.5 1.5H8a1.5 1.5 0 0 1-1.5-1.5z"/><path d="M9.5 9V7.2a2.5 2.5 0 0 1 5 0V9"/><rect x="9" y="13" width="6" height="4.2" rx="1"/><path d="M12 9v2.6"/></svg></span>
             <h4>Лут и снаряжение</h4>
             <p>Как правильно настроить подбор. Правильное распределение лута.</p>
             <button class="read-btn" type="button">Читать</button>
           </div>
           <div class="gcard">
-            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="5" r="2"/><path d="M13 8l-3 3 3 2 1 5M10 11l-4 1M14 13l3 3"/></svg></span>
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="15.5" cy="4.8" r="1.9"/><path d="M14.5 8.5L11 11l3 2.6 1 6.4"/><path d="M11 11l-3.5.6L5.5 14"/><path d="M14 13.6l3.4 1.1 1.6 3"/></svg></span>
             <h4>Движение и позиции</h4>
             <p>Как двигаться по карте, занимать позиции и избегать ошибок.</p>
             <button class="read-btn" type="button">Читать</button>
@@ -1165,7 +1194,7 @@
             <button class="read-btn" type="button">Читать</button>
           </div>
           <div class="gcard">
-            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span>
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4.5L3.5 6.5v13L9 17.5l6 2 5.5-2v-13L15 6.5z"/><path d="M9 4.5v13M15 6.5v13"/><path d="M11 10.5l1.5-1.5 1.5 1.5-1.5 1.5z"/></svg></span>
             <h4>Карта и ротации</h4>
             <p>Понимание карты, ротации, зоны и тайминги перемещений.</p>
             <button class="read-btn" type="button">Читать</button>
