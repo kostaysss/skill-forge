@@ -441,21 +441,27 @@
   .profile-card{
     position:relative;
     width:100%;max-width:400px;
-    border-radius:20px;
+    border-radius:22px;
     padding:26px 26px 30px;
-    background:linear-gradient(160deg, rgba(33,29,36,0.86), rgba(23,21,26,0.92));
-    border:1px solid rgba(255,94,26,0.28);
-    box-shadow:0 30px 70px -25px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,176,32,0.05) inset;
+    background:linear-gradient(160deg, rgba(44,39,50,0.34), rgba(16,14,20,0.5));
+    backdrop-filter:blur(12px) saturate(1.15);
+    -webkit-backdrop-filter:blur(12px) saturate(1.15);
+    border:1px solid rgba(255,255,255,0.16);
+    box-shadow:
+      0 30px 70px -25px rgba(0,0,0,0.85),
+      inset 0 1px 0 rgba(255,255,255,0.22),
+      inset 0 0 30px rgba(255,176,32,0.04);
     overflow:hidden;
     text-align:left;
   }
   .profile-card::after{
     content:"";position:absolute;inset:0;
     background:
-      radial-gradient(circle at 80% 20%, rgba(255,94,26,0.18), transparent 55%),
-      linear-gradient(200deg, rgba(74,69,78,0.35), transparent 60%);
+      linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 30%),
+      radial-gradient(circle at 82% 16%, rgba(255,94,26,0.16), transparent 55%);
     pointer-events:none;
-    z-index:0;
+    z-index:1;
+    mix-blend-mode:screen;
   }
   .profile-head{
     position:relative;z-index:1;
