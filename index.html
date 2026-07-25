@@ -715,6 +715,167 @@
     .hstep,.hcell:hover .hstep{transition:none;}
   }
 
+  /* ---------- GUIDES / MECHANICS ---------- */
+  .guides{
+    position:relative;
+    background:transparent;
+    padding:70px 0 96px;
+    overflow:hidden;
+  }
+  .guides .wrap{position:relative;z-index:1;}
+  .guides-figure{
+    position:absolute;top:2%;right:0;width:360px;max-width:42%;
+    z-index:0;pointer-events:none;user-select:none;
+    opacity:0.5;
+    -webkit-mask-image:linear-gradient(180deg, #000 45%, transparent 92%);
+    mask-image:linear-gradient(180deg, #000 45%, transparent 92%);
+    filter:brightness(0.82) contrast(1.05) saturate(0.95) drop-shadow(0 0 30px rgba(255,94,26,0.15));
+    animation:paraFloat 12s ease-in-out infinite;
+  }
+  @media (max-width:900px){.guides-figure{display:none;}}
+  .guides-title{
+    font-family:var(--font-display);
+    font-size:clamp(30px,4.4vw,52px);
+    text-transform:uppercase;
+    letter-spacing:-0.01em;
+    margin:0 0 14px;
+    text-wrap:balance;
+  }
+  .guides-title span{color:var(--bone);}
+  .guides-title .accent{
+    background:linear-gradient(100deg,var(--signal),var(--ember));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .guides-sub{
+    max-width:46ch;color:var(--ash);font-size:14.5px;line-height:1.6;margin:0 0 28px;
+  }
+
+  .gtabs{display:flex;gap:14px;margin-bottom:26px;flex-wrap:wrap;}
+  .gtab{
+    position:relative;
+    display:flex;flex-direction:column;align-items:flex-start;gap:2px;
+    min-width:230px;
+    padding:14px 20px;
+    border-radius:12px;
+    border:1px solid rgba(237,234,230,0.1);
+    background:linear-gradient(160deg, rgba(33,29,36,0.6), rgba(17,15,19,0.85));
+    color:var(--bone);
+    font-family:var(--font-body);
+    cursor:pointer;
+    text-align:left;
+    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+  }
+  .gtab b{font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.04em;display:flex;align-items:center;gap:8px;}
+  .gtab small{font-size:11.5px;color:var(--ash);font-family:var(--font-mono);letter-spacing:0.02em;}
+  .gtab:hover{transform:translateY(-2px);border-color:rgba(255,94,26,0.4);}
+  .gtab.active{
+    background:linear-gradient(120deg, var(--signal), var(--ember));
+    border-color:transparent;
+    box-shadow:0 12px 26px -10px rgba(255,94,26,0.6);
+  }
+  .gtab.active b,.gtab.active small{color:var(--void);}
+  .gtab .glock{width:15px;height:15px;}
+
+  .guides-cols{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 340px;
+    gap:22px;
+    align-items:start;
+  }
+  @media (max-width:1000px){.guides-cols{grid-template-columns:1fr;}}
+
+  .gpanel{
+    position:relative;
+    background:linear-gradient(160deg, rgba(20,18,24,0.72), rgba(10,9,13,0.82));
+    border:1px solid rgba(237,234,230,0.08);
+    border-radius:18px;
+    padding:26px 24px;
+    backdrop-filter:blur(6px);
+    -webkit-backdrop-filter:blur(6px);
+  }
+  .gpanel-title{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--font-body);font-weight:800;font-size:16px;
+    text-transform:uppercase;letter-spacing:0.04em;color:var(--bone);
+    margin:0 0 20px;
+  }
+  .gpanel-title svg{width:20px;height:20px;color:var(--signal);}
+
+  .guide-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+  }
+  @media (max-width:760px){.guide-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:480px){.guide-grid{grid-template-columns:1fr;}}
+  .gcard{
+    display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;
+    padding:22px 16px 18px;
+    border-radius:14px;
+    background:linear-gradient(170deg, rgba(38,33,45,0.55), rgba(15,13,18,0.7));
+    border:1px solid rgba(255,94,26,0.16);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;
+  }
+  .gcard:hover{
+    transform:translateY(-5px);
+    border-color:rgba(255,94,26,0.5);
+    box-shadow:0 18px 34px -16px rgba(0,0,0,0.8), 0 0 22px rgba(255,94,26,0.12);
+  }
+  .gcard-ico{
+    width:52px;height:52px;display:flex;align-items:center;justify-content:center;
+    color:var(--ember);
+    animation:iconPulse 3.4s ease-in-out infinite;
+  }
+  .gcard:hover .gcard-ico{color:#fff;transform:scale(1.08);transition:transform .25s ease,color .25s ease;}
+  .gcard-ico svg{width:34px;height:34px;}
+  .gcard h4{margin:0;font-size:14px;font-weight:800;text-transform:uppercase;letter-spacing:0.02em;color:var(--bone);}
+  .gcard p{margin:0;font-size:11.5px;color:var(--ash);line-height:1.5;}
+  .read-btn{
+    margin-top:6px;
+    font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--bone);
+    background:transparent;
+    border:1px solid rgba(237,234,230,0.25);
+    border-radius:999px;
+    padding:7px 20px;cursor:pointer;
+    transition:background .2s ease,border-color .2s ease,color .2s ease;
+  }
+  .read-btn:hover{background:var(--signal);border-color:var(--signal);color:var(--void);}
+
+  /* pro panel */
+  .gpro{
+    border-color:rgba(255,94,26,0.22);
+    background:
+      radial-gradient(circle at 80% 0%, rgba(255,94,26,0.12), transparent 55%),
+      linear-gradient(160deg, rgba(24,20,27,0.8), rgba(9,8,12,0.88));
+  }
+  .gpro .gpanel-title{font-size:18px;font-family:var(--font-display);letter-spacing:0.03em;}
+  .gpro-sub{margin:-12px 0 20px;color:var(--ash);font-size:12.5px;}
+  .gpro-list{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:16px;}
+  .gpro-item{display:flex;gap:12px;align-items:flex-start;}
+  .gpro-item svg{width:20px;height:20px;flex:none;color:var(--signal);margin-top:2px;}
+  .gpro-item b{display:block;font-size:13px;color:var(--bone);font-weight:700;margin-bottom:2px;}
+  .gpro-item span{font-size:11.5px;color:var(--ash);line-height:1.5;}
+  .gprice{
+    font-family:var(--font-display);
+    font-size:26px;color:var(--bone);text-align:center;margin:0 0 14px;
+    font-variant-numeric:tabular-nums;
+  }
+  .gprice em{color:var(--ash);font-style:normal;font-size:14px;font-family:var(--font-mono);}
+  .sub-btn{
+    display:block;width:100%;
+    font-family:var(--font-mono);font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--void);border:none;cursor:pointer;
+    background:linear-gradient(100deg,var(--signal),var(--ember));
+    border-radius:999px;padding:14px;
+    transition:filter .15s ease,transform .15s ease;
+  }
+  .sub-btn:hover{filter:brightness(1.08);transform:translateY(-2px);}
+  .lock-badge{
+    display:inline-flex;width:22px;height:22px;align-items:center;justify-content:center;
+    border-radius:6px;background:rgba(255,94,26,0.18);color:var(--ember);
+    animation:iconPulse 3s ease-in-out infinite;
+  }
+  .lock-badge svg{width:13px;height:13px;}
+
   /* ---------- FEATURES ---------- */
   .features{
     background:transparent;
@@ -841,7 +1002,7 @@
     <ul class="nav-links">
       <li><a href="#top" class="active">Главная</a></li>
       <li><a href="#search">Поиск тиммейта</a></li>
-      <li><a href="#process">Механика/Гайды</a></li>
+      <li><a href="#guides">Механика/Гайды</a></li>
       <li><a href="#support">Поддержка</a></li>
     </ul>
     <div class="nav-actions">
@@ -952,6 +1113,103 @@
   </div>
 </section>
 
+<section class="guides" id="guides">
+  <img class="bg-decor float-b" src="assets/para-crate.png" alt="" style="width:120px;left:2%;bottom:10%;">
+  <img class="guides-figure" src="assets/soldier.png" alt="" aria-hidden="true">
+  <div class="wrap">
+    <h2 class="guides-title"><span class="accent">Механика</span> <span>/ Гайды</span></h2>
+    <p class="guides-sub">Улучши свою игру — изучай механику, фишки и стратегии. Бесплатные разделы доступны всем, а подписка откроет полный доступ ко всем гайдам и разборам.</p>
+
+    <div class="gtabs">
+      <button class="gtab active" type="button" data-tab="free">
+        <b>Бесплатный доступ</b>
+        <small>Основы и полезные фишки</small>
+      </button>
+      <button class="gtab" type="button" data-tab="pro">
+        <b>Подписка
+          <svg class="glock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+        </b>
+        <small>Полные гайды и разборы</small>
+      </button>
+    </div>
+
+    <div class="guides-cols">
+      <div class="gpanel">
+        <h3 class="gpanel-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="9" r="2.4"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5M15 20c0-2 .5-3.6 2-4.4"/></svg>
+          Для всех игроков
+        </h3>
+        <div class="guide-grid">
+          <div class="gcard">
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l9 9M14.5 12.5L20 18l-2 2-5.5-5.5M4 20l5-5M20 4l-5 5"/></svg></span>
+            <h4>Основы игры</h4>
+            <p>Разбираем базовые механики, управление, интерфейс и ключевые моменты игры.</p>
+            <button class="read-btn" type="button">Читать</button>
+          </div>
+          <div class="gcard">
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 8V6a4 4 0 0 1 8 0v2M5 8h14l-1 12H6z"/><path d="M9 12v3M15 12v3"/></svg></span>
+            <h4>Лут и снаряжение</h4>
+            <p>Как правильно настроить подбор. Правильное распределение лута.</p>
+            <button class="read-btn" type="button">Читать</button>
+          </div>
+          <div class="gcard">
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="14" cy="5" r="2"/><path d="M13 8l-3 3 3 2 1 5M10 11l-4 1M14 13l3 3"/></svg></span>
+            <h4>Движение и позиции</h4>
+            <p>Как двигаться по карте, занимать позиции и избегать ошибок.</p>
+            <button class="read-btn" type="button">Читать</button>
+          </div>
+          <div class="gcard">
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg></span>
+            <h4>Стрельба и отдача</h4>
+            <p>Как работает отдача, настройки чувствительности, тренировка аима.</p>
+            <button class="read-btn" type="button">Читать</button>
+          </div>
+          <div class="gcard">
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.3-6-10a6 6 0 0 1 12 0c0 4.7-6 10-6 10z"/><circle cx="12" cy="11" r="2.2"/></svg></span>
+            <h4>Карта и ротации</h4>
+            <p>Понимание карты, ротации, зоны и тайминги перемещений.</p>
+            <button class="read-btn" type="button">Читать</button>
+          </div>
+          <div class="gcard">
+            <span class="gcard-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.3 1 2.5h6c0-1.2.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg></span>
+            <h4>Ситуации и решения</h4>
+            <p>Как принимать решения в разных ситуациях и побеждать чаще.</p>
+            <button class="read-btn" type="button">Читать</button>
+          </div>
+        </div>
+      </div>
+
+      <aside class="gpanel gpro">
+        <h3 class="gpanel-title">
+          Полный доступ
+          <span class="lock-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+        </h3>
+        <p class="gpro-sub">Открой все гайды и фишки.</p>
+        <ul class="gpro-list">
+          <li class="gpro-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h6"/></svg>
+            <div><b>Детальные гайды</b><span>Пополнение фишек, улучшение контента и качества гайдов.</span></div>
+          </li>
+          <li class="gpro-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+            <div><b>Разбор от ai coach-а</b><span>Анализ матчей, ошибок и стратегий.</span></div>
+          </li>
+          <li class="gpro-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-4 10.5c.7.7 1 1.3 1 2.5h6c0-1.2.3-1.8 1-2.5A6 6 0 0 0 12 3z"/></svg>
+            <div><b>Продвинутые фишки</b><span>Секреты, о которых знают только топы.</span></div>
+          </li>
+          <li class="gpro-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="5" width="16" height="16" rx="2"/><path d="M4 9h16M8 3v4M16 3v4M9 14l2 2 3-3"/></svg>
+            <div><b>Обновления каждый месяц</b><span>Новые гайды и разборы ежемесячно.</span></div>
+          </li>
+        </ul>
+        <div class="gprice">499 ₽ <em>/ месяц</em></div>
+        <button class="sub-btn" type="button">Оформить подписку</button>
+      </aside>
+    </div>
+  </div>
+</section>
+
 <section class="howto" id="process">
   <img class="bg-decor float-a" src="assets/para-crate.png" alt="" style="width:130px;right:3%;top:0;">
   <img class="bg-decor float-c" src="assets/para-soldier.png" alt="" style="width:180px;left:-40px;bottom:4%;">
@@ -1058,7 +1316,7 @@
       <ul class="foot-links">
         <li><a href="#top">Главная</a></li>
         <li><a href="#deck">Поиск тиммейта</a></li>
-        <li><a href="#process">Механика/Гайды</a></li>
+        <li><a href="#guides">Механика/Гайды</a></li>
         <li><a href="#support">Поддержка</a></li>
       </ul>
     </div>
@@ -1274,6 +1532,22 @@
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
+
+  /* guides access tabs */
+  const gtabs = Array.from(document.querySelectorAll('.gtab'));
+  const proPanel = document.querySelector('.gpro');
+  gtabs.forEach(t=>{
+    t.addEventListener('click', ()=>{
+      gtabs.forEach(x=> x.classList.toggle('active', x===t));
+      if(t.dataset.tab === 'pro' && proPanel){
+        proPanel.scrollIntoView({behavior:'smooth', block:'center'});
+        proPanel.animate(
+          [{boxShadow:'0 0 0 0 rgba(255,94,26,0)'},{boxShadow:'0 0 0 3px rgba(255,94,26,0.6)'},{boxShadow:'0 0 0 0 rgba(255,94,26,0)'}],
+          {duration:900, easing:'ease-out'}
+        );
+      }
+    });
+  });
 })();
 </script>
 </body>
