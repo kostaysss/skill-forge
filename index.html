@@ -267,13 +267,13 @@
       linear-gradient(135deg, rgba(255,94,26,0.85), rgba(255,176,32,0.45) 42%, rgba(237,234,230,0.14) 72%) border-box;
     box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
     overflow:hidden;
-    transition:transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease;
+    transition:transform .72s cubic-bezier(.22,.61,.28,1), opacity .72s ease-in-out, filter .72s ease;
     transform-style:preserve-3d;
     display:flex;
     flex-direction:column;
   }
-  .card.leaving-right{transform:translate(560px,-40px) rotate(28deg) !important;opacity:0;}
-  .card.leaving-left{transform:translate(-560px,-40px) rotate(-28deg) !important;opacity:0;}
+  .card.leaving-right{transform:translate(520px,-24px) rotate(20deg) scale(0.9) !important;opacity:0;filter:blur(4px);}
+  .card.leaving-left{transform:translate(-520px,-24px) rotate(-20deg) scale(0.9) !important;opacity:0;filter:blur(4px);}
 
   /* lively top card: animated glow border + cursor shine */
   .card.is-top{
@@ -1523,13 +1523,13 @@
     }
 
     // restore smooth transition (tilt may have set a fast one) so the fly-out animates
-    el.style.transition = 'transform .5s cubic-bezier(.2,.8,.2,1), opacity .5s ease';
+    el.style.transition = 'transform .72s cubic-bezier(.22,.61,.28,1), opacity .72s ease-in-out, filter .72s ease';
     el.classList.add(dir === 'right' ? 'leaving-right' : 'leaving-left');
     setTimeout(()=>{
       order.push(order.shift());
       render();
       locked = false;
-    }, 480);
+    }, 700);
   }
 
   render();
