@@ -267,7 +267,7 @@
       linear-gradient(135deg, rgba(255,94,26,0.85), rgba(255,176,32,0.45) 42%, rgba(237,234,230,0.14) 72%) border-box;
     box-shadow:0 30px 60px -20px rgba(0,0,0,0.7);
     overflow:hidden;
-    transition:transform .72s cubic-bezier(.22,.61,.28,1), opacity .72s ease-in-out, filter .72s ease;
+    transition:transform 1.1s cubic-bezier(.22,.61,.28,1), opacity 1.1s ease-in-out, filter 1.1s ease;
     transform-style:preserve-3d;
     display:flex;
     flex-direction:column;
@@ -1523,13 +1523,13 @@
     }
 
     // restore smooth transition (tilt may have set a fast one) so the fly-out animates
-    el.style.transition = 'transform .72s cubic-bezier(.22,.61,.28,1), opacity .72s ease-in-out, filter .72s ease';
+    el.style.transition = 'transform 1.1s cubic-bezier(.22,.61,.28,1), opacity 1.1s ease-in-out, filter 1.1s ease';
     el.classList.add(dir === 'right' ? 'leaving-right' : 'leaving-left');
     setTimeout(()=>{
       order.push(order.shift());
       render();
       locked = false;
-    }, 700);
+    }, 1050);
   }
 
   render();
