@@ -905,6 +905,100 @@
   }
   .lock-badge svg{width:13px;height:13px;}
 
+  /* ---------- SUBSCRIPTION PERKS ---------- */
+  .subs{position:relative;background:transparent;padding:16px 0 96px;overflow:hidden;}
+  .subs .wrap{position:relative;z-index:1;display:flex;flex-direction:column;gap:26px;}
+  .subs-panel{
+    position:relative;
+    background:linear-gradient(160deg, rgba(20,18,24,0.72), rgba(9,8,12,0.84));
+    border:1px solid rgba(237,234,230,0.08);
+    border-radius:20px;
+    padding:28px 28px 30px;
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+    overflow:hidden;
+  }
+  .subs-title{
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    font-family:var(--font-display);
+    font-size:clamp(19px,2.5vw,27px);
+    text-transform:uppercase;margin:0 0 22px;letter-spacing:0.01em;color:var(--bone);
+  }
+  .subs-title .only{color:var(--signal);}
+  .subs-title .tlock{
+    display:inline-flex;width:24px;height:24px;align-items:center;justify-content:center;
+    border-radius:7px;background:rgba(255,94,26,0.16);color:var(--ember);
+    animation:iconPulse 3s ease-in-out infinite;
+  }
+  .subs-title .tlock svg{width:14px;height:14px;}
+
+  .vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media(max-width:860px){.vid-grid{grid-template-columns:1fr;}}
+  .vidcard{
+    position:relative;height:300px;border-radius:15px;overflow:hidden;
+    border:1px solid rgba(237,234,230,0.09);
+    cursor:pointer;isolation:isolate;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease;
+  }
+  .vidcard:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.5);box-shadow:0 22px 40px -18px rgba(0,0,0,0.85), 0 0 24px rgba(255,94,26,0.12);}
+  .vidcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .55s ease, filter .3s ease;filter:saturate(0.95);}
+  .vidcard:hover img{transform:scale(1.07);}
+  .vidcard::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 26%, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.96) 100%);
+  }
+  .vid-meta{position:absolute;left:14px;top:14px;z-index:3;display:flex;gap:8px;align-items:center;}
+  .vid-dur{
+    font-family:var(--font-mono);font-size:11px;font-weight:700;
+    background:rgba(0,0,0,0.55);border:1px solid rgba(255,176,32,0.45);color:var(--ember);
+    padding:4px 10px;border-radius:999px;backdrop-filter:blur(3px);
+  }
+  .vid-lock{
+    display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;
+    border-radius:8px;background:rgba(0,0,0,0.55);border:1px solid rgba(255,94,26,0.4);color:var(--ember);
+    backdrop-filter:blur(3px);
+  }
+  .vid-lock svg{width:13px;height:13px;}
+  .vid-play{
+    position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);z-index:3;
+    width:58px;height:58px;border-radius:50%;
+    background:linear-gradient(135deg,var(--signal),var(--ember));color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 8px rgba(255,94,26,0.14), 0 10px 24px rgba(0,0,0,0.5);
+    opacity:0.92;transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s ease, box-shadow .28s ease;
+  }
+  .vid-play svg{width:22px;height:22px;margin-left:3px;}
+  .vidcard:hover .vid-play{transform:translate(-50%,-50%) scale(1.14);opacity:1;box-shadow:0 0 0 12px rgba(255,94,26,0.16), 0 10px 24px rgba(0,0,0,0.55);}
+  .vid-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px 18px;}
+  .vid-body h3{font-family:var(--font-display);font-size:18px;text-transform:uppercase;margin:0 0 7px;color:var(--bone);}
+  .vid-body p{font-size:11.5px;color:var(--ash);margin:0;line-height:1.5;max-width:26ch;}
+  .vid-level{
+    position:absolute;right:16px;bottom:18px;z-index:3;
+    font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+    color:var(--bone);background:rgba(255,94,26,0.85);padding:3px 9px;border-radius:999px;
+  }
+
+  /* tips panel */
+  .tips-panel{min-height:280px;}
+  .tips-figure{
+    position:absolute;right:-2%;bottom:0;width:46%;max-width:480px;z-index:0;
+    pointer-events:none;user-select:none;opacity:0.85;
+    -webkit-mask-image:linear-gradient(90deg, transparent 0%, #000 42%);
+    mask-image:linear-gradient(90deg, transparent 0%, #000 42%);
+    filter:drop-shadow(0 0 30px rgba(255,94,26,0.12));
+  }
+  @media(max-width:820px){.tips-figure{opacity:0.28;width:70%;}}
+  .tips-list{position:relative;z-index:1;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:15px;max-width:60%;}
+  @media(max-width:820px){.tips-list{max-width:100%;}}
+  .tips-list li{display:flex;gap:13px;align-items:flex-start;font-size:14.5px;color:var(--bone);line-height:1.4;}
+  .tips-list .tico{
+    flex:none;width:26px;height:26px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(150deg, rgba(255,94,26,0.2), rgba(255,176,32,0.06));
+    border:1px solid rgba(255,94,26,0.3);color:var(--ember);margin-top:1px;
+  }
+  .tips-list .tico svg{width:14px;height:14px;}
+  @media (prefers-reduced-motion: reduce){.subs-title .tlock{animation:none;}}
+
   /* ---------- FEATURES ---------- */
   .features{
     background:transparent;
@@ -1236,6 +1330,68 @@
         <button class="sub-btn" type="button">Оформить подписку</button>
       </aside>
     </div>
+  </div>
+</section>
+
+<section class="subs" id="subs">
+  <img class="bg-decor float-a" src="assets/para-crate.png" alt="" style="width:120px;left:1%;top:6%;">
+  <img class="bg-decor float-c" src="assets/para-soldier.png" alt="" style="width:170px;right:2%;bottom:2%;">
+  <div class="wrap">
+
+    <div class="subs-panel">
+      <h2 class="subs-title">
+        Видео-гайды <span class="only">(только для подписчиков)</span>
+        <span class="tlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+      </h2>
+      <div class="vid-grid">
+        <article class="vidcard">
+          <img src="assets/card-3.jpg" alt="">
+          <div class="vid-meta"><span class="vid-dur">5 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
+          <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
+          <span class="vid-level">Новички</span>
+          <div class="vid-body">
+            <h3>Тренировка аима</h3>
+            <p>Эффективные упражнения и wow-карты для прокачки стрельбы — заметно поднимут твой аим.</p>
+          </div>
+        </article>
+        <article class="vidcard">
+          <img src="assets/card-1.jpg" alt="">
+          <div class="vid-meta"><span class="vid-dur">7 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
+          <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
+          <span class="vid-level">Средний</span>
+          <div class="vid-body">
+            <h3>Контроль отдачи</h3>
+            <p>Продвинутые настройки на мейновые ганы и подбор оптимальной сенсы.</p>
+          </div>
+        </article>
+        <article class="vidcard">
+          <img src="assets/card-2.jpg" alt="">
+          <div class="vid-meta"><span class="vid-dur">6 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
+          <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
+          <span class="vid-level">Про</span>
+          <div class="vid-body">
+            <h3>Механика гранат</h3>
+            <p>Тактическое применение гранат: правильная раскидка и тайминги.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="subs-panel tips-panel">
+      <img class="tips-figure" src="assets/card-4.jpg" alt="" aria-hidden="true">
+      <h2 class="subs-title">
+        Все фишки игры <span class="only">(только для подписчиков)</span>
+        <span class="tlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
+      </h2>
+      <ul class="tips-list">
+        <li><span class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span>One-way смоки и как правильно их ставить.</li>
+        <li><span class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span>Как грамотно высаживаться и драйвбаить противников.</li>
+        <li><span class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span>Карты и маршруты под индивидуальную тренировку стрельбы.</li>
+        <li><span class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span>Как взять первого Завоевателя или Легенду.</li>
+        <li><span class="tico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span>И это далеко не всё — полный список открывается по подписке.</li>
+      </ul>
+    </div>
+
   </div>
 </section>
 
