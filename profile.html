@@ -181,7 +181,7 @@
 
   /* ---- profile ---- */
   const FIELDS = [
-    {key:'role',   label:'Роль',  type:'select', opts:['Fragger','IGL','Support','Sniper','Assault']},
+    {key:'role',   label:'Роль',  type:'select', opts:['Fragger','IGL','Support','Sniper']},
     {key:'gameId', label:'Игровой ID', type:'text', ph:'0000000000'},
     {key:'kd',     label:'K/D', type:'text', ph:'3.5'},
     {key:'device', label:'Устройство', type:'text', ph:'Телефон / Планшет / Эмулятор'},
@@ -265,11 +265,11 @@
     {nick:'wizard777', role:'IGL', kd:'4.2', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер'},
     {nick:'mrFROSTY', role:'Fragger', kd:'5.1', device:'Эмулятор', voice:'TeamSpeak', tg:'@frosty_ace', age:'24', online:'Ночь'},
     {nick:'MEXICANEC', role:'Support', kd:'3.4', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро'},
-    {nick:'ShadowReaper', role:'Assault', kd:'4.8', device:'Телефон', voice:'Есть микрофон', tg:'@shadow_rpr', age:'22', online:'День'},
+    {nick:'ShadowReaper', role:'Fragger', kd:'4.8', device:'Телефон', voice:'Есть микрофон', tg:'@shadow_rpr', age:'22', online:'День'},
     {nick:'nightstalk', role:'Sniper', kd:'3.9', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь'},
     {nick:'AceHunter', role:'Fragger', kd:'6.0', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
   ];
-  const ROLES = ['Все','Fragger','IGL','Support','Sniper','Assault'];
+  const ROLES = ['Все','Fragger','IGL','Support','Sniper'];
   let activeRole = 'Все';
 
   const filtersEl = document.getElementById('filters');
