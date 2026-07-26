@@ -940,8 +940,8 @@
     transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease;
   }
   .vidcard:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.5);box-shadow:0 22px 40px -18px rgba(0,0,0,0.85), 0 0 24px rgba(255,94,26,0.12);}
-  .vidcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .55s ease, filter .3s ease;filter:saturate(0.95);}
-  .vidcard:hover img{transform:scale(1.07);}
+  .vidcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;transition:transform .6s ease;filter:contrast(1.07) saturate(1.1) brightness(1.02);image-rendering:auto;}
+  .vidcard:hover img{transform:scale(1.06);}
   /* clean premium thumbnail scenes */
   .vid-scene{position:absolute;inset:0;z-index:0;overflow:hidden;background:#0a0810;transition:transform .6s ease;}
   .vidcard:hover .vid-scene{transform:scale(1.05);}
@@ -1372,9 +1372,7 @@
       </h2>
       <div class="vid-grid">
         <article class="vidcard">
-          <div class="vid-scene s-aim" aria-hidden="true">
-            <span class="vid-emblem"><svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="42"/><circle cx="50" cy="50" r="27"/><path d="M50 3v20M50 77v20M3 50h20M77 50h20" stroke-width="5"/><circle cx="50" cy="50" r="5" fill="currentColor" stroke="none"/></svg></span>
-          </div>
+          <img src="assets/vid-1.jpg" alt="" style="object-position:60% 35%;">
           <div class="vid-meta"><span class="vid-dur">5 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
           <span class="vid-level">Новички</span>
@@ -1384,9 +1382,7 @@
           </div>
         </article>
         <article class="vidcard">
-          <div class="vid-scene s-recoil" aria-hidden="true">
-            <span class="vid-emblem"><svg viewBox="0 0 120 74" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M6 30h74l6-11h13a3 3 0 0 1 3 3v5h13v9H99l-7 12h-9l-3-12H45l-4 20H27l3-20H6a3 3 0 0 1-3-3v-3a3 3 0 0 1 3-3z"/><rect x="20" y="39" width="9" height="17" rx="2"/><rect x="60" y="14" width="20" height="5" rx="2"/></svg></span>
-          </div>
+          <img src="assets/vid-2.jpg" alt="" style="object-position:center 40%;">
           <div class="vid-meta"><span class="vid-dur">7 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
           <span class="vid-level">Средний</span>
@@ -1396,9 +1392,7 @@
           </div>
         </article>
         <article class="vidcard">
-          <div class="vid-scene s-nade" aria-hidden="true">
-            <span class="vid-emblem"><svg viewBox="0 0 84 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M30 26h24v6a22 22 0 1 1-24 0z"/><rect x="30" y="10" width="20" height="12" rx="3"/><path d="M50 12l20-7v7L54 20z" /><circle cx="70" cy="7" r="3.5" fill="none" stroke="currentColor" stroke-width="3"/></svg></span>
-          </div>
+          <img src="assets/vid-3.jpg" alt="" style="object-position:center 28%;">
           <div class="vid-meta"><span class="vid-dur">6 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
           <span class="vid-level">Про</span>
