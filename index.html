@@ -1265,7 +1265,7 @@
       </div>
     </div>
 
-    <form class="profile-card" onsubmit="return false;">
+    <form class="profile-card" id="profileForm">
       <div class="profile-figure" aria-hidden="true">
         <img src="assets/soldier.png" alt="">
       </div>
@@ -1833,6 +1833,28 @@
       }
     });
   });
+
+  /* save profile on submit -> go to dashboard */
+  const pForm = document.getElementById('profileForm');
+  if(pForm){
+    pForm.addEventListener('submit', function(e){
+      e.preventDefault();
+      const val = id => (document.getElementById(id)||{}).value || '';
+      const profile = {
+        nick: val('p-nick').trim() || 'Игрок',
+        role: val('p-role'),
+        gameId: val('p-id').trim(),
+        kd: val('p-kd').trim(),
+        device: val('p-device').trim(),
+        voice: val('p-voice').trim(),
+        tg: val('p-tg').trim(),
+        age: val('p-age').trim(),
+        created: Date.now()
+      };
+      try{ localStorage.setItem('sf_profile', JSON.stringify(profile)); }catch(_){}
+      location.href = 'profile.html';
+    });
+  }
 })();
 </script>
 </body>
