@@ -942,6 +942,14 @@
   .vidcard:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.5);box-shadow:0 22px 40px -18px rgba(0,0,0,0.85), 0 0 24px rgba(255,94,26,0.12);}
   .vidcard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .55s ease, filter .3s ease;filter:saturate(0.95);}
   .vidcard:hover img{transform:scale(1.07);}
+  .vid-scene{position:absolute;inset:0;z-index:0;overflow:hidden;}
+  .vid-scene svg{width:100%;height:100%;display:block;transition:transform .6s ease;}
+  .vidcard:hover .vid-scene svg{transform:scale(1.06);}
+  .vid-scene .spin{transform-origin:center;animation:vidSpin 26s linear infinite;}
+  .vid-scene .pulse{animation:vidPulse 3.4s ease-in-out infinite;transform-origin:center;}
+  @keyframes vidSpin{to{transform:rotate(360deg);}}
+  @keyframes vidPulse{0%,100%{opacity:0.35;}50%{opacity:0.9;}}
+  @media (prefers-reduced-motion: reduce){.vid-scene .spin,.vid-scene .pulse{animation:none;}}
   .vidcard::after{
     content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
     background:linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 26%, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.96) 100%);
@@ -1345,7 +1353,22 @@
       </h2>
       <div class="vid-grid">
         <article class="vidcard">
-          <img src="assets/card-3.jpg" alt="">
+          <div class="vid-scene" aria-hidden="true">
+            <svg viewBox="0 0 320 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+              <defs><radialGradient id="aimBg" cx="55%" cy="38%" r="80%"><stop offset="0" stop-color="#2a1c15"/><stop offset="1" stop-color="#08070a"/></radialGradient></defs>
+              <rect width="320" height="300" fill="url(#aimBg)"/>
+              <g stroke="rgba(237,234,230,0.05)" stroke-width="1"><path d="M0 60H320M0 120H320M0 180H320M0 240H320M60 0V300M120 0V300M180 0V300M240 0V300"/></g>
+              <g transform="translate(176 118)" fill="none">
+                <circle r="76" stroke="rgba(255,94,26,0.16)" stroke-width="2"/>
+                <circle r="54" stroke="rgba(255,94,26,0.3)" stroke-width="2"/>
+                <circle class="pulse" r="34" stroke="rgba(255,176,32,0.6)" stroke-width="2"/>
+                <circle r="14" stroke="rgba(255,176,32,0.9)" stroke-width="2"/>
+                <circle r="3.5" fill="#ffb020"/>
+              </g>
+              <g transform="translate(176 118)" stroke="#ff5e1a" stroke-width="2.6" stroke-linecap="round"><path d="M-100 0h-20M100 0h20M0 -100v-20M0 100v20"/></g>
+              <g fill="#ffb020"><circle cx="190" cy="100" r="2.6"/><circle cx="164" cy="132" r="2"/><circle cx="184" cy="126" r="1.6"/></g>
+            </svg>
+          </div>
           <div class="vid-meta"><span class="vid-dur">5 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
           <span class="vid-level">Новички</span>
@@ -1355,7 +1378,20 @@
           </div>
         </article>
         <article class="vidcard">
-          <img src="assets/card-1.jpg" alt="">
+          <div class="vid-scene" aria-hidden="true">
+            <svg viewBox="0 0 320 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+              <defs><linearGradient id="recBg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2c1a12"/><stop offset="1" stop-color="#08070a"/></linearGradient></defs>
+              <rect width="320" height="300" fill="url(#recBg)"/>
+              <g stroke="rgba(237,234,230,0.05)" stroke-width="1"><path d="M0 60H320M0 120H320M0 180H320M0 240H320M60 0V300M120 0V300M180 0V300M240 0V300"/></g>
+              <path d="M160 262 C154 214 176 186 150 150 C132 124 178 104 158 72 C148 56 166 44 160 30" fill="none" stroke="rgba(255,176,32,0.5)" stroke-width="2" stroke-dasharray="2 7" stroke-linecap="round"/>
+              <g fill="#ff5e1a">
+                <circle cx="160" cy="258" r="5"/><circle cx="152" cy="228" r="4.4"/><circle cx="168" cy="200" r="4"/>
+                <circle cx="150" cy="172" r="3.6"/><circle cx="170" cy="146" r="3.2"/><circle cx="152" cy="120" r="2.8"/>
+                <circle cx="166" cy="96" r="2.4"/><circle cx="156" cy="72" r="2"/><circle cx="162" cy="48" r="1.7"/>
+              </g>
+              <g transform="translate(160 264)" stroke="#ffb020" stroke-width="2.2" fill="none"><circle class="pulse" r="12"/><path d="M0 -20v7M0 20v-7M-20 0h7M20 0h-7"/></g>
+            </svg>
+          </div>
           <div class="vid-meta"><span class="vid-dur">7 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
           <span class="vid-level">Средний</span>
@@ -1365,7 +1401,27 @@
           </div>
         </article>
         <article class="vidcard">
-          <img src="assets/card-2.jpg" alt="">
+          <div class="vid-scene" aria-hidden="true">
+            <svg viewBox="0 0 320 300" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <radialGradient id="nadeBg" cx="72%" cy="55%" r="80%"><stop offset="0" stop-color="#301c12"/><stop offset="1" stop-color="#08070a"/></radialGradient>
+                <radialGradient id="blast" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="rgba(255,176,32,0.4)"/><stop offset="1" stop-color="rgba(255,94,26,0)"/></radialGradient>
+              </defs>
+              <rect width="320" height="300" fill="url(#nadeBg)"/>
+              <g stroke="rgba(237,234,230,0.05)" stroke-width="1"><path d="M0 60H320M0 120H320M0 180H320M0 240H320M60 0V300M120 0V300M180 0V300M240 0V300"/></g>
+              <path d="M56 256 Q150 20 244 160" fill="none" stroke="rgba(255,176,32,0.55)" stroke-width="2.5" stroke-dasharray="3 9" stroke-linecap="round"/>
+              <circle cx="244" cy="160" r="52" fill="url(#blast)"/>
+              <circle class="pulse" cx="244" cy="160" r="46" fill="none" stroke="rgba(255,94,26,0.45)" stroke-width="2" stroke-dasharray="5 6"/>
+              <g transform="translate(244 160)" stroke="#ffb020" stroke-width="2.4" stroke-linecap="round"><path d="M0 -18v-12M0 18v12M-18 0h-12M18 0h12M-13 -13l-8 -8M13 13l8 8M13 -13l8 -8M-13 13l-8 8"/></g>
+              <g transform="translate(56 254)">
+                <rect x="-11" y="-8" width="22" height="30" rx="7" fill="#3a4a34" stroke="#5a6b50" stroke-width="1.5"/>
+                <path d="M-11 -2h22M-11 6h22M-11 14h22" stroke="#26311f" stroke-width="1.4"/>
+                <rect x="-6" y="-15" width="12" height="8" rx="2" fill="#59503a"/>
+                <path d="M6 -12l12 -5" stroke="#ffb020" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="18" cy="-17" r="3" fill="none" stroke="#ffb020" stroke-width="2"/>
+              </g>
+            </svg>
+          </div>
           <div class="vid-meta"><span class="vid-dur">6 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
           <span class="vid-level">Про</span>
