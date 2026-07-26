@@ -934,6 +934,7 @@
   .vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
   @media(max-width:860px){.vid-grid{grid-template-columns:1fr;}}
   .vidcard{
+    display:block;text-decoration:none;color:inherit;
     position:relative;height:300px;border-radius:15px;overflow:hidden;
     border:1px solid rgba(237,234,230,0.09);
     cursor:pointer;isolation:isolate;
@@ -1433,7 +1434,7 @@
         <span class="tlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
       </h2>
       <div class="vid-grid">
-        <article class="vidcard">
+        <a class="vidcard" href="guide.html?id=aim" aria-label="Открыть гайд: Тренировка аима">
           <img src="assets/vid-1.jpg" alt="" style="object-position:60% 35%;">
           <div class="vid-meta"><span class="vid-dur">5 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
@@ -1442,8 +1443,8 @@
             <h3>Тренировка аима</h3>
             <p>Эффективные упражнения и wow-карты для прокачки стрельбы — заметно поднимут твой аим.</p>
           </div>
-        </article>
-        <article class="vidcard">
+        </a>
+        <a class="vidcard" href="guide.html?id=recoil" aria-label="Открыть гайд: Контроль отдачи">
           <img src="assets/vid-2.jpg" alt="" style="object-position:center 40%;">
           <div class="vid-meta"><span class="vid-dur">7 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
@@ -1452,8 +1453,8 @@
             <h3>Контроль отдачи</h3>
             <p>Продвинутые настройки на мейновые ганы и подбор оптимальной сенсы.</p>
           </div>
-        </article>
-        <article class="vidcard">
+        </a>
+        <a class="vidcard" href="guide.html?id=nade" aria-label="Открыть гайд: Механика гранат">
           <img src="assets/vid-3.jpg" alt="" style="object-position:center 28%;">
           <div class="vid-meta"><span class="vid-dur">6 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
@@ -1462,7 +1463,7 @@
             <h3>Механика гранат</h3>
             <p>Тактическое применение гранат: правильная раскидка и тайминги.</p>
           </div>
-        </article>
+        </a>
       </div>
     </div>
 

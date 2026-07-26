@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Skill Forge — Гайд</title>
+<style>
+  :root{
+    --void:#0b0a0d; --gunmetal:#17151a; --gunmetal-2:#211d24; --steel:#4a454e;
+    --bone:#edeae6; --ash:#a89fa8; --signal:#ff5e1a; --ember:#ffb020; --intel:#2fe0a8;
+    --grid-line: rgba(237,234,230,0.05);
+    --font-display: "Arial Black","Haettenschweiler","Franklin Gothic Bold","Segoe UI",sans-serif;
+    --font-body: -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --font-mono: "SF Mono","Cascadia Code","Consolas","Roboto Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--void);color:var(--bone);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  ::selection{background:var(--signal);color:var(--void);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px;}
+
+  body::before{
+    content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background:
+      radial-gradient(ellipse 900px 620px at 82% 0%, rgba(255,94,26,0.16), transparent 58%),
+      radial-gradient(ellipse 760px 520px at 12% 42%, rgba(255,94,26,0.10), transparent 60%),
+      linear-gradient(180deg, var(--void), #0d0b0f 55%, var(--void));
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+    background-image:linear-gradient(var(--grid-line) 1px, transparent 1px),linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(ellipse 120% 90% at 60% 30%, black, transparent 85%);
+    mask-image:radial-gradient(ellipse 120% 90% at 60% 30%, black, transparent 85%);
+  }
+  .ember-global{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none;}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 clamp(20px,4vw,40px);}
+
+  .btn{
+    font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    text-decoration:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;
+    padding:13px 24px;border-radius:999px;transition:transform .15s ease, filter .15s ease, border-color .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:linear-gradient(100deg,var(--signal),var(--ember));color:var(--void);}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{background:var(--gunmetal-2);color:var(--bone);border:1px solid var(--steel);}
+  .btn-ghost:hover{border-color:var(--signal);}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:200;background:rgba(11,10,13,0.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(237,234,230,0.08);}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1180px;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand svg{width:32px;height:32px;}
+  .brand-word{font-family:var(--font-display);font-size:18px;color:var(--bone);display:flex;align-items:center;gap:6px;}
+  .brand-word .tag{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--signal);border:1px solid var(--signal);border-radius:999px;padding:3px 8px;}
+
+  main{padding:44px 0 90px;position:relative;z-index:1;}
+
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    font-family:var(--font-mono);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ash);
+    margin-bottom:26px;transition:color .15s ease, gap .15s ease;
+  }
+  .back-link:hover{color:var(--signal);gap:12px;}
+  .back-link svg{width:16px;height:16px;}
+
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ash);display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .eyebrow .chip{border:1px solid rgba(255,94,26,0.4);color:var(--ember);border-radius:999px;padding:3px 10px;}
+  .eyebrow .chip.lock{display:inline-flex;align-items:center;gap:6px;}
+  .eyebrow .chip.lock svg{width:12px;height:12px;}
+
+  .guide-head{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center;margin-bottom:38px;}
+  @media(max-width:760px){.guide-head{grid-template-columns:1fr;}}
+  h1.guide-title{font-family:var(--font-display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;line-height:1.02;margin:16px 0 16px;text-wrap:balance;}
+  h1.guide-title .accent{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lead{color:var(--ash);font-size:16px;margin:0;max-width:52ch;}
+
+  .guide-hero{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/10;border:1px solid rgba(237,234,230,0.1);box-shadow:0 26px 50px -22px rgba(0,0,0,0.8);}
+  .guide-hero img{width:100%;height:100%;object-fit:cover;filter:contrast(1.08) saturate(1.12);animation:ken 20s ease-in-out infinite alternate;transform-origin:60% 40%;}
+  @keyframes ken{from{transform:scale(1.03);}to{transform:scale(1.12);}}
+  .guide-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 10%, rgba(255,120,40,0.14), transparent 55%),linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.65));}
+
+  /* video placeholder */
+  .video-box{
+    position:relative;border-radius:18px;border:1.5px dashed rgba(255,94,26,0.35);
+    background:linear-gradient(160deg, rgba(33,29,36,0.6), rgba(12,11,15,0.8));
+    padding:46px 24px;text-align:center;margin-bottom:40px;overflow:hidden;
+  }
+  .video-box .vp{
+    width:70px;height:70px;border-radius:50%;margin:0 auto 16px;
+    background:linear-gradient(135deg,var(--signal),var(--ember));color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 10px rgba(255,94,26,0.12);animation:vpPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes vpPulse{0%,100%{box-shadow:0 0 0 8px rgba(255,94,26,0.1);}50%{box-shadow:0 0 0 16px rgba(255,94,26,0.05);}}
+  .video-box .vp svg{width:26px;height:26px;margin-left:3px;}
+  .video-box h3{font-family:var(--font-display);text-transform:uppercase;font-size:18px;margin:0 0 6px;}
+  .video-box p{color:var(--ash);font-size:13.5px;margin:0;}
+
+  .guide-content{max-width:760px;}
+  .guide-content section{margin-bottom:30px;}
+  .guide-content h2{font-family:var(--font-body);font-weight:800;text-transform:uppercase;letter-spacing:0.02em;font-size:19px;margin:0 0 12px;display:flex;align-items:center;gap:10px;}
+  .guide-content h2::before{content:"";width:8px;height:22px;border-radius:3px;background:linear-gradient(180deg,var(--signal),var(--ember));flex:none;}
+  .guide-content p{color:var(--ash);font-size:15px;margin:0 0 10px;}
+  .learn{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:11px;}
+  .learn li{display:flex;gap:12px;align-items:flex-start;color:var(--bone);font-size:14.5px;}
+  .learn .ico{flex:none;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,rgba(255,94,26,0.2),rgba(255,176,32,0.06));border:1px solid rgba(255,94,26,0.32);color:var(--ember);}
+  .learn .ico svg{width:14px;height:14px;}
+
+  .guide-foot{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .lock-note{font-family:var(--font-mono);font-size:11.5px;color:var(--ash);display:inline-flex;align-items:center;gap:8px;}
+  .lock-note svg{width:14px;height:14px;color:var(--ember);}
+
+  @media (prefers-reduced-motion: reduce){.guide-hero img,.video-box .vp{animation:none;}}
+</style>
+</head>
+<body>
+<canvas class="ember-global" data-embers aria-hidden="true"></canvas>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="15" stroke="#ff5e1a" stroke-width="2"/><path d="M17 4V30 M4 17H30" stroke="#ffb020" stroke-width="1.4" opacity="0.6"/><circle cx="17" cy="17" r="4.5" fill="#ff5e1a"/></svg>
+      <span class="brand-word">SKILL <span class="tag">FORGE</span></span>
+    </a>
+    <a class="btn btn-primary" href="index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> На главную</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> Назад к гайдам</a>
+
+    <div class="guide-head">
+      <div class="guide-hero"><img id="g-img" src="" alt=""></div>
+      <div class="guide-intro">
+        <span class="eyebrow" id="g-eyebrow"></span>
+        <h1 class="guide-title" id="g-title"></h1>
+        <p class="lead" id="g-lead"></p>
+      </div>
+    </div>
+
+    <div class="video-box">
+      <div class="vp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></div>
+      <h3>Видео скоро появится</h3>
+      <p>Мы готовим подробный видео-разбор к этому гайду. А пока — полное текстовое описание ниже.</p>
+    </div>
+
+    <article class="guide-content" id="g-content"></article>
+
+    <div class="guide-foot">
+      <a class="btn btn-primary" href="index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> Вернуться на главную</a>
+      <span class="lock-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg> Полные видео-разборы доступны по подписке</span>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  const GUIDES = {
+    aim: {
+      title: ['Тренировка ', 'аима'],
+      level: 'Новички', duration: '5 мин', img: 'assets/vid-1.jpg',
+      lead: 'Точный аим — фундамент любых побед. Разберём, как настроить управление и системно тренироваться, чтобы попадать стабильно, а не «на удачу».',
+      learn: [
+        'Как подобрать чувствительность под свой стиль игры',
+        'Какие тренировочные (wow) карты реально прокачивают стрельбу',
+        'Правильную разминку перед игровой сессией',
+        'Разницу между стрельбой от бедра и в прицеле (ADS)'
+      ],
+      sections: [
+        {h:'Настройка чувствительности', p:'Начни с базовой сенсы и меняй её маленькими шагами. Отдельно настраивай чувствительность для стрельбы от бедра, ADS и разных прицелов (красная точка, x2, x3, x4). Главное правило — ты должен уверенно доводить прицел до цели одним движением, без «дёрганья».'},
+        {h:'Тренировочные карты', p:'Заходи на кастомные wow-карты для аима: движущиеся мишени, отслеживание (tracking) и щелчки по статичным целям (flick). 10–15 минут в день дадут больше, чем часы бездумной игры.'},
+        {h:'Разминка перед игрой', p:'Перед ранкедом сделай короткую разминку: 5 минут по мишеням и пара матчей в аркаде. «Холодный» аим почти всегда мажет — прогревай руку заранее.'},
+        {h:'Частые ошибки', p:'Слишком высокая сенса, из-за которой прицел «улетает»; стрельба длинными очередями на дальней дистанции; и привычка стрелять от бедра там, где нужен прицел. Отследи их у себя и убери по одной.'}
+      ]
+    },
+    recoil: {
+      title: ['Контроль ', 'отдачи'],
+      level: 'Средний', duration: '7 мин', img: 'assets/vid-2.jpg',
+      lead: 'Отдача решает, кто победит в ближнем и среднем бою. Научимся гасить её так, чтобы очередь ложилась в одну точку, а не разлеталась по экрану.',
+      learn: [
+        'Как читать паттерн отдачи (спрей) любого оружия',
+        'Технику компенсации — «стягивание» прицела вниз',
+        'Настройки чувствительности именно под контроль отдачи',
+        'Особенности популярных стволов: M416, AKM, Beryl'
+      ],
+      sections: [
+        {h:'Что такое паттерн отдачи', p:'У каждого автомата отдача идёт по своей траектории: сначала резко вверх, затем вправо-влево. Запомнить этот «рисунок» — половина успеха. Тренируйся расстреливать магазин по стене и смотри, куда уходят пули.'},
+        {h:'Компенсация отдачи', p:'Пока стреляешь, плавно тяни прицел вниз (и слегка в сторону, против увода), гася подъём ствола. Движение должно повторять паттерн зеркально. Начинай медленно, потом ускоряйся.'},
+        {h:'Настройки под контроль', p:'Для контроля отдачи чуть повышай ADS-чувствительность на прицелах x3–x4, чтобы успевать стягивать ствол. Обвесы (компенсатор, тактическая рукоять) заметно упрощают удержание — ставь их в первую очередь.'},
+        {h:'По оружию', p:'M416 — мягкая и предсказуемая, идеальна для новичка. AKM бьёт больно, но сильно кидает вверх — стреляй короткими очередями. Beryl M762 самый мощный, но и самый «дикий» по отдаче: только для уверенного контроля.'}
+      ]
+    },
+    nade: {
+      title: ['Механика ', 'гранат'],
+      level: 'Про', duration: '6 мин', img: 'assets/vid-3.jpg',
+      lead: 'Гранаты — оружие тех, кто думает на шаг вперёд. Разберём тайминги, раскидки и ситуации, где граната решает раунд без единого выстрела.',
+      learn: [
+        'Типы гранат и когда какую применять',
+        'Тайминг «прожарки» (cook) осколочной гранаты',
+        'Готовые раскидки и one-way дымы',
+        'Как выкуривать и добивать врагов в укрытии'
+      ],
+      sections: [
+        {h:'Типы гранат', p:'Осколочная — урон и добивание; дымовая — прикрытие передвижений и оживления; молотова — перекрыть проход и выбить из угла; шумовая (flash) — ослепить перед входом. Носи набор под свою роль, а не всё подряд.'},
+        {h:'Тайминг и прожарка', p:'Осколочная взрывается примерно через 5 секунд. «Прожарь» её 2–3 секунды в руке, чтобы враг не успел убежать от прилёта. Но не передержи — иначе взорвётся в руках.'},
+        {h:'Раскидки и one-way', p:'Заучи пару точек, откуда дым ложится «в одну сторону» (one-way): ты видишь врага, а он тебя нет. Молотовы кидай так, чтобы огонь перекрывал узкий проход или лестницу целиком.'},
+        {h:'Ситуации применения', p:'Враг засел в доме — заходи через дым, добивай осколочной под дверь. Нужно оживить тиммейта под огнём — ставь дым между собой и противником. В финальных зонах граната часто выбивает «кемперов» из последнего укрытия.'}
+      ]
+    }
+  };
+
+  function getId(){
+    const p = new URLSearchParams(location.search).get('id');
+    return GUIDES[p] ? p : 'aim';
+  }
+  const g = GUIDES[getId()];
+
+  document.title = 'Skill Forge — ' + g.title.join('');
+  const img = document.getElementById('g-img');
+  img.src = g.img; img.alt = g.title.join('');
+  document.getElementById('g-eyebrow').innerHTML =
+    '<span class="chip">Гайд</span><span class="chip">' + g.level + '</span><span class="chip">' + g.duration + '</span>' +
+    '<span class="chip lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>для подписчиков</span>';
+  document.getElementById('g-title').innerHTML = '<span class="accent">' + g.title[0].trim() + '</span> ' + g.title[1];
+  document.getElementById('g-lead').textContent = g.lead;
+
+  const check = '<span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg></span>';
+  let html = '<section><h2>Что вы освоите</h2><ul class="learn">' +
+    g.learn.map(function(l){ return '<li>' + check + '<span>' + l + '</span></li>'; }).join('') +
+    '</ul></section>';
+  html += g.sections.map(function(s){ return '<section><h2>' + s.h + '</h2><p>' + s.p + '</p></section>'; }).join('');
+  document.getElementById('g-content').innerHTML = html;
+})();
+
+/* embers (same as main page) */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('canvas[data-embers]').forEach(function(canvas){
+    const ctx = canvas.getContext('2d');
+    let w,h,particles=[],raf=null;
+    const DPR = Math.min(window.devicePixelRatio||1,2);
+    function resize(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;canvas.width=w*DPR;canvas.height=h*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);const c=Math.round(Math.min(90,Math.max(36,w*h/16000)));particles=Array.from({length:c},makeP);}
+    function makeP(){return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.4,vy:-(Math.random()*0.5+0.15),vx:(Math.random()-0.5)*0.4,life:Math.random(),flick:Math.random()*0.04+0.01,hue:Math.random()>0.5?28:18};}
+    function tick(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.life+=p.flick;p.vx+=(Math.random()-0.5)*0.02;if(p.y<-6||p.x<-6||p.x>w+6){Object.assign(p,makeP(),{y:h+6,x:Math.random()*w});}const a=0.35+Math.abs(Math.sin(p.life))*0.55;const gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);gr.addColorStop(0,'hsla('+p.hue+',100%,62%,'+a+')');gr.addColorStop(1,'hsla('+p.hue+',100%,50%,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(p.x,p.y,p.r*3.2,0,Math.PI*2);ctx.fill();ctx.fillStyle='hsla('+p.hue+',100%,80%,'+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r*0.7,0,Math.PI*2);ctx.fill();}raf=requestAnimationFrame(tick);}
+    let rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(resize,150);});
+    resize();tick();
+  });
+})();
+</script>
+</body>
+</html>
