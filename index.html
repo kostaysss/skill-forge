@@ -1233,7 +1233,7 @@
       <li><a href="#support">Поддержка</a></li>
     </ul>
     <div class="nav-actions">
-      <a class="btn btn-primary" href="#profileForm" style="padding:11px 20px;">Войти / Регистрация →</a>
+      <a class="btn btn-primary" href="#profileCard" id="navRegBtn" style="padding:11px 20px;">Войти / Регистрация →</a>
       <button class="nav-burger" aria-label="Открыть меню">☰</button>
     </div>
   </div>
@@ -1880,15 +1880,18 @@
   const regForm = document.getElementById('regForm');
   const loginForm = document.getElementById('loginForm');
   const loginError = document.getElementById('loginError');
-  if(pcTabs.length){
-    pcTabs.forEach(t=>t.addEventListener('click', ()=>{
-      const tab = t.dataset.ptab;
-      pcTabs.forEach(x=>x.classList.toggle('active', x===t));
-      regForm.hidden = tab!=='reg';
-      loginForm.hidden = tab!=='login';
-      if(loginError) loginError.hidden = true;
-    }));
+  function selectPcTab(name){
+    pcTabs.forEach(x=>x.classList.toggle('active', x.dataset.ptab===name));
+    if(regForm) regForm.hidden = name!=='reg';
+    if(loginForm) loginForm.hidden = name!=='login';
+    if(loginError) loginError.hidden = true;
   }
+  if(pcTabs.length){
+    pcTabs.forEach(t=>t.addEventListener('click', ()=> selectPcTab(t.dataset.ptab)));
+  }
+  /* nav "Войти / Регистрация" -> open registration tab on the card */
+  const navRegBtn = document.getElementById('navRegBtn');
+  if(navRegBtn){ navRegBtn.addEventListener('click', ()=> selectPcTab('reg')); }
 
   /* register -> save profile (with password) -> dashboard */
   if(regForm){
