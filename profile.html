@@ -23,27 +23,9 @@
   ::selection{background:var(--signal);color:var(--void);}
   a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ember);outline-offset:2px;}
 
-  body::before{content:"";position:fixed;inset:-15%;z-index:-2;pointer-events:none;
-    background:radial-gradient(38% 34% at 80% 10%, rgba(255,94,26,0.22), transparent 62%),radial-gradient(34% 34% at 14% 44%, rgba(255,120,40,0.14), transparent 64%),radial-gradient(42% 40% at 60% 96%, rgba(255,80,20,0.12), transparent 64%);
-    background-size:220% 220%, 220% 220%, 220% 220%;background-position:0% 0%, 100% 50%, 50% 100%;animation:bgDrift 34s ease-in-out infinite alternate;}
-  @keyframes bgDrift{0%{background-position:0% 0%, 100% 50%, 50% 100%;}100%{background-position:26% 18%, 74% 34%, 40% 84%;}}
-  body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
-    background-image:linear-gradient(var(--grid-line) 1px, transparent 1px),linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);background-size:66px 66px;
-    -webkit-mask-image:radial-gradient(ellipse 125% 92% at 55% 32%, black 48%, transparent 90%);mask-image:radial-gradient(ellipse 125% 92% at 55% 32%, black 48%, transparent 90%);}
-  @media (prefers-reduced-motion: reduce){ body::before{animation:none;} }
+  .bg-topo{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:0.16;}
+  .bg-topo svg{width:100%;height:100%;display:block;}
   .ember-global{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none;}
-  .bg-art{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;}
-  .bg-art svg{position:absolute;display:block;color:rgba(255,150,70,0.9);}
-  .ba-zone{right:-150px;top:4%;width:min(540px,58vw);height:min(540px,58vw);opacity:0.1;}
-  .ba-zone .ba-rot{transform-box:fill-box;transform-origin:center;animation:baSpin 120s linear infinite;}
-  .ba-compass{left:2%;bottom:7%;width:128px;height:128px;opacity:0.12;animation:baFloat 15s ease-in-out infinite;}
-  .ba-topo{right:3%;bottom:-5%;width:min(340px,44vw);opacity:0.07;color:rgba(255,185,95,0.9);}
-  .ba-cross{left:8%;top:15%;width:54px;height:54px;opacity:0.12;animation:baPulse 5.5s ease-in-out infinite;}
-  @media(max-width:720px){.ba-topo,.ba-cross{display:none;} .ba-compass{opacity:0.08;}}
-  @keyframes baSpin{to{transform:rotate(360deg);}}
-  @keyframes baFloat{0%,100%{transform:translateY(0) rotate(0);}50%{transform:translateY(-10px) rotate(3deg);}}
-  @keyframes baPulse{0%,100%{opacity:0.12;}50%{opacity:0.05;}}
-  @media (prefers-reduced-motion: reduce){.ba-zone .ba-rot,.ba-compass,.ba-cross{animation:none;}}
 
   .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,4vw,40px);}
 
@@ -144,32 +126,20 @@
 <body>
 <canvas class="ember-global" data-embers aria-hidden="true"></canvas>
 
-<div class="bg-art" aria-hidden="true">
-  <svg class="ba-zone" viewBox="0 0 200 200" fill="none" stroke="currentColor">
-    <circle cx="100" cy="100" r="95" stroke-width="1"/>
-    <circle class="ba-rot" cx="100" cy="100" r="68" stroke-width="1.4" stroke-dasharray="4 8"/>
-    <circle cx="100" cy="100" r="40" stroke-width="1"/>
-    <path d="M100 4v22M100 174v22M4 100h22M174 100h22" stroke-width="1"/>
-    <circle cx="100" cy="100" r="2.6" fill="currentColor" stroke="none"/>
-  </svg>
-  <svg class="ba-compass" viewBox="0 0 120 120" fill="none" stroke="currentColor">
-    <circle cx="60" cy="60" r="54" stroke-width="1"/>
-    <circle cx="60" cy="60" r="44" stroke-width="0.6" stroke-dasharray="1 6"/>
-    <path d="M60 12l7 42-7 6-7-6z" fill="currentColor" stroke="none" opacity="0.6"/>
-    <path d="M60 108l7-42-7-6-7 6z" fill="currentColor" stroke="none" opacity="0.25"/>
-    <path d="M60 2v8M60 110v8M2 60h8M110 60h8" stroke-width="1"/>
-  </svg>
-  <svg class="ba-topo" viewBox="0 0 200 160" fill="none" stroke="currentColor" stroke-width="1">
-    <path d="M20 120 C50 90 90 96 120 78 S180 60 196 40"/>
-    <path d="M14 138 C52 104 96 112 130 92 S190 74 208 52"/>
-    <path d="M40 70 C60 55 84 58 100 46 S140 34 150 24" opacity="0.7"/>
-    <ellipse cx="96" cy="86" rx="30" ry="18" opacity="0.5"/>
-    <ellipse cx="96" cy="86" rx="16" ry="9" opacity="0.5"/>
-  </svg>
-  <svg class="ba-cross" viewBox="0 0 60 60" fill="none" stroke="currentColor" stroke-width="1.4">
-    <circle cx="30" cy="30" r="16"/>
-    <path d="M30 2v12M30 46v12M2 30h12M46 30h12"/>
-    <circle cx="30" cy="30" r="2" fill="currentColor" stroke="none"/>
+<div class="bg-topo" aria-hidden="true">
+  <svg width="100%" height="100%" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="topoF" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+        <feTurbulence type="fractalNoise" baseFrequency="0.0045 0.0058" numOctaves="2" seed="14" stitchTiles="stitch" result="n"/>
+        <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  1 0 0 0 0" result="field"/>
+        <feComponentTransfer in="field" result="lines">
+          <feFuncA type="discrete" tableValues="0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1"/>
+        </feComponentTransfer>
+        <feColorMatrix in="lines" type="matrix" values="0 0 0 0 1  0 0 0 0 0.66  0 0 0 0 0.34  0 0 0 1 0" result="warm"/>
+        <feGaussianBlur in="warm" stdDeviation="0.3"/>
+      </filter>
+    </defs>
+    <rect width="100%" height="100%" filter="url(#topoF)"/>
   </svg>
 </div>
 
