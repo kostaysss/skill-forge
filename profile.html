@@ -154,12 +154,12 @@
   }
   function build(){
     const w=window.innerWidth, h=window.innerHeight; if(!w||!h) return;
-    const cell=15, cols=Math.ceil(w/cell)+1, rows=Math.ceil(h/cell)+1, scale=0.0125;
+    const cell=10, cols=Math.ceil(w/cell)+1, rows=Math.ceil(h/cell)+1, scale=0.0125;
     const noise=makeNoise(9);
     const field=new Float32Array(cols*rows);
     for(let j=0;j<rows;j++) for(let i=0;i<cols;i++) field[j*cols+i]=noise(i*cell*scale, j*cell*scale);
     const at=(i,j)=>field[j*cols+i];
-    const levels=[]; for(let t=0.12;t<=0.88;t+=0.05) levels.push(t);
+    const levels=[]; for(let t=0.13;t<=0.87;t+=0.062) levels.push(t);
     let d='';
     for(const lv of levels){
       for(let j=0;j<rows-1;j++){

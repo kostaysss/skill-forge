@@ -1245,7 +1245,7 @@
     const h = window.innerHeight;
     if(!w || !h) return;
 
-    const cell  = 15;                       // grid spacing in px (smaller = smoother curves)
+    const cell  = 10;                       // grid spacing in px (smaller = smoother curves)
     const cols  = Math.ceil(w / cell) + 1;
     const rows  = Math.ceil(h / cell) + 1;
     const scale = 0.0125;                    // controls blob size of the terrain (smaller = larger flowing loops)
@@ -1262,7 +1262,7 @@
 
     // marching squares at evenly spaced elevation levels
     const levels = [];
-    for(let t = 0.12; t <= 0.88; t += 0.05) levels.push(t);
+    for(let t = 0.13; t <= 0.87; t += 0.062) levels.push(t);
 
     let d = '';
     const ix = (a, b, t) => a + (b - a) * t;           // interpolation factor along an edge
