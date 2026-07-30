@@ -1168,6 +1168,30 @@
   }
   .step p{color:var(--ash);font-size:14.5px;margin:0;max-width:32ch;}
 
+  /* ---------- SUPPORT CONTACT ---------- */
+  .support-box{
+    margin-top:36px;
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    padding:26px 30px;border-radius:18px;
+    background:
+      radial-gradient(circle at 88% 20%, rgba(255,94,26,0.14), transparent 55%),
+      linear-gradient(160deg, rgba(33,29,36,0.72), rgba(12,11,15,0.85));
+    border:1px solid rgba(255,94,26,0.28);
+    backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  }
+  .support-box h3{font-family:var(--font-display);text-transform:uppercase;font-size:20px;margin:0 0 8px;color:var(--bone);}
+  .support-box p{margin:0;color:var(--ash);font-size:14px;max-width:52ch;}
+  .tg-support{
+    flex:none;display:inline-flex;align-items:center;gap:10px;text-decoration:none;
+    font-family:var(--font-mono);font-size:14px;font-weight:700;letter-spacing:0.04em;
+    color:#fff;background:linear-gradient(100deg,#2aabee,#229ed9);
+    padding:14px 24px;border-radius:999px;
+    box-shadow:0 12px 26px -10px rgba(34,158,217,0.6);
+    transition:transform .15s ease, filter .15s ease;
+  }
+  .tg-support:hover{transform:translateY(-2px);filter:brightness(1.08);}
+  .tg-support svg{width:20px;height:20px;}
+
   /* ---------- FOOTER ---------- */
   footer{
     background:rgba(9,8,11,0.72);
@@ -1720,6 +1744,17 @@
         <h3><em>Лучше</em> результаты</h3>
         <p>Слаженный отряд выигрывает чаще. Прокачивай ранг вместе с теми, кто усиливает твою игру.</p>
       </div>
+    </div>
+
+    <div class="support-box">
+      <div>
+        <h3>Нужна помощь?</h3>
+        <p>Вопросы, жалобы или предложения — пиши напрямую в наш Telegram, ответим и поможем.</p>
+      </div>
+      <a class="tg-support" href="https://t.me/skillforgeru" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.5L18.5 20c-.25 1.1-.92 1.37-1.86.85l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.23L17.9 6.2c.42-.37-.09-.58-.65-.21L6.14 12.9l-5.06-1.58c-1.1-.34-1.12-1.1.23-1.63L20.5 2.9c.92-.34 1.72.21 1.4 1.6z"/></svg>
+        @skillforgeru
+      </a>
     </div>
   </div>
 </section>
