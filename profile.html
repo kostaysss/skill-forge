@@ -254,6 +254,7 @@
     {key:'role',   label:'Роль',  type:'select', opts:['Fragger','IGL','Support','Sniper']},
     {key:'gameId', label:'Игровой ID', type:'text', ph:'0000000000'},
     {key:'kd',     label:'K/D', type:'text', ph:'3.5'},
+    {key:'kdu',    label:'K/D Ultimate', type:'text', ph:'5.0'},
     {key:'device', label:'Устройство', type:'text', ph:'Телефон / Планшет / Эмулятор'},
     {key:'voice',  label:'Приложение для связи', type:'select', opts:['Discord','Parallel']},
     {key:'tg',     label:'Telegram', type:'text', ph:'@username'},
@@ -332,12 +333,12 @@
 
   /* ---- teammate search ---- */
   const MOCK = [
-    {nick:'wizard777', role:'IGL', kd:'4.2', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер'},
-    {nick:'mrFROSTY', role:'Fragger', kd:'5.1', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
-    {nick:'MEXICANEC', role:'Support', kd:'3.4', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро'},
-    {nick:'ShadowReaper', role:'Fragger', kd:'4.8', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
-    {nick:'nightstalk', role:'Sniper', kd:'3.9', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь'},
-    {nick:'AceHunter', role:'Fragger', kd:'6.0', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
+    {nick:'wizard777', role:'IGL', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер'},
+    {nick:'mrFROSTY', role:'Fragger', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
+    {nick:'MEXICANEC', role:'Support', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро'},
+    {nick:'ShadowReaper', role:'Fragger', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
+    {nick:'nightstalk', role:'Sniper', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь'},
+    {nick:'AceHunter', role:'Fragger', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
   ];
   const ROLES = ['Все','Fragger','IGL','Support','Sniper'];
   let activeRole = 'Все';
@@ -369,6 +370,7 @@
         '<div class="pc-top"><div class="pc-av">'+esc((p.nick||'И').charAt(0).toUpperCase())+'</div><div><div class="pn">'+esc(p.nick||'Игрок')+'</div><div class="pr">Role: '+esc(p.role||'—')+'</div></div></div>'+
         '<div class="pc-stats">'+
           '<span class="sk">K/D</span><span class="sv">'+esc(p.kd||'—')+'</span>'+
+          '<span class="sk">K/D Ult</span><span class="sv">'+esc(p.kdu||'—')+'</span>'+
           '<span class="sk">Устройство</span><span class="sv">'+esc(p.device||'—')+'</span>'+
           '<span class="sk">Голос</span><span class="sv">'+esc(p.voice||'—')+'</span>'+
           '<span class="sk">Онлайн</span><span class="sv"><span class="pc-online">'+esc(p.online||'—')+'</span></span>'+
