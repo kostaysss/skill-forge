@@ -1218,6 +1218,62 @@
   @media (prefers-reduced-motion: reduce){
     .card{transition:none;}
   }
+
+  /* ============ MOBILE / PHONE ADAPTATION (desktop untouched) ============ */
+  @media (max-width:640px){
+    /* nav: compact so logo + login + burger fit */
+    .nav .wrap{height:62px;}
+    .brand-word{font-size:16px;}
+    .nav-actions{gap:10px;}
+    .nav-actions .btn-primary{font-size:10.5px;letter-spacing:0.04em;padding:9px 13px !important;gap:6px;}
+
+    /* trim the big desktop section paddings */
+    .hero{padding:38px 0 52px;}
+    .search{padding:46px 0 54px;}
+    .guides{padding:34px 0 56px;}
+    .subs{padding:6px 0 56px;}
+    .howto{padding:10px 0 56px;}
+    .features{padding:50px 0;}
+    footer{padding:34px 0 26px;}
+
+    /* hero */
+    .hero .wrap{gap:26px;}
+    .hero-copy h1{font-size:clamp(26px,8vw,36px);}
+    .hero-copy p{font-size:15px;}
+    .hero-cta-row{gap:16px;}
+    .hero-stats{gap:16px;}
+    .stage{height:auto;padding:8px 0 4px;}
+    .deck{width:min(300px,82vw);height:min(440px,120vw);}
+
+    /* panels & cards: less inner padding, softer radius */
+    .gpanel,.subs-panel{padding:20px 15px;border-radius:16px;}
+    .profile-card{padding:20px 16px 24px;}
+    .vidcard{height:250px;}
+    .support-box{padding:20px 18px;flex-direction:column;align-items:flex-start;text-align:left;}
+    .support-box .tg-support{width:100%;justify-content:center;}
+
+    /* guides: full-width access tabs, tighter grid */
+    .gtabs{gap:8px;}
+    .gtab{min-width:0;flex:1 1 46%;padding:11px 12px;}
+    .guides-cols{gap:16px;}
+    .guide-grid{gap:12px;}
+    .gcard{padding:20px 14px 16px;}
+
+    /* section headings scale down */
+    .section-head h2,.howto-title,.subs-title{font-size:clamp(20px,6.5vw,28px);}
+    .guides-title{font-size:clamp(26px,9vw,40px);}
+
+    /* profile form: comfortable tap targets */
+    .pfield input,.pfield select{font-size:15px;padding:11px 13px;}
+    .btn{padding:13px 22px;}
+  }
+
+  @media (max-width:380px){
+    .wrap{padding:0 15px;}
+    .deck{width:86vw;height:126vw;}
+    .nav-actions .btn-primary{font-size:10px;padding:8px 11px !important;}
+    .hero-stats{flex-wrap:wrap;}
+  }
 </style>
 </head>
 <body>
@@ -1962,7 +2018,7 @@
   const links = document.querySelector('.nav-links');
   burger.addEventListener('click', ()=>{
     const open = links.style.display === 'flex';
-    links.style.cssText = open ? '' : 'display:flex;position:absolute;top:76px;left:0;right:0;background:#17151a;flex-direction:column;padding:20px 24px;gap:18px;border-bottom:1px solid rgba(237,234,230,0.08);';
+    links.style.cssText = open ? '' : 'display:flex;position:absolute;top:100%;left:0;right:0;background:#17151a;flex-direction:column;padding:18px 24px;gap:16px;border-bottom:1px solid rgba(237,234,230,0.08);box-shadow:0 20px 40px -18px rgba(0,0,0,0.8);';
   });
 
   /* nav active underline: follow the clicked tab and the section in view */
@@ -1971,7 +2027,7 @@
     navLinks.forEach(a => a.classList.toggle('active', a === link));
   }
   navLinks.forEach(a=>{
-    a.addEventListener('click', ()=> setActive(a));
+    a.addEventListener('click', ()=>{ setActive(a); links.style.cssText = ''; });
   });
   // scroll-spy
   const sections = navLinks

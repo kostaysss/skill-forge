@@ -121,6 +121,29 @@
   .tg-btn:hover{filter:brightness(1.08);}
   .tg-btn.disabled{background:var(--gunmetal-2);color:var(--steel);border:1px solid var(--steel);pointer-events:none;}
   .tg-btn svg{width:16px;height:16px;}
+
+  /* ============ MOBILE / PHONE ADAPTATION ============ */
+  @media (max-width:640px){
+    .nav .wrap{height:60px;}
+    .brand-word{font-size:16px;}
+    .nav .btn{font-size:11px;padding:9px 14px;}
+    main{padding:26px 0 64px;}
+    .page-title{font-size:clamp(22px,7vw,32px);margin-bottom:18px;}
+    .tabs{gap:8px;}
+    .tab{flex:1 1 46%;justify-content:center;padding:11px 12px;font-size:12px;}
+    .profile-top{padding:20px 18px;}
+    .who{gap:12px;}
+    .avatar{width:54px;height:54px;font-size:22px;}
+    .who .nm{font-size:20px;}
+    #editBtn{width:100%;justify-content:center;}
+    .grid2{grid-template-columns:1fr;}
+    .drow{padding:13px 18px;}
+    .card-actions2{padding:18px;}
+    .card-actions2 .btn{flex:1 1 44%;justify-content:center;}
+    .search-head p{font-size:13px;}
+    .players{grid-template-columns:1fr;}
+  }
+  @media (max-width:380px){ .wrap{padding:0 15px;} }
 </style>
 </head>
 <body>
