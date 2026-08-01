@@ -61,7 +61,7 @@
   @media(max-width:860px){.lib-grid{grid-template-columns:1fr;}}
   .vidcard{
     display:block;text-decoration:none;color:inherit;
-    position:relative;height:320px;border-radius:16px;overflow:hidden;
+    position:relative;height:300px;border-radius:15px;overflow:hidden;
     border:1px solid rgba(237,234,230,0.09);
     cursor:pointer;isolation:isolate;
     transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease;
@@ -90,17 +90,15 @@
   }
   .vid-meta{position:absolute;left:14px;top:14px;z-index:3;display:flex;gap:8px;align-items:center;}
   .vid-dur{font-family:var(--font-mono);font-size:11px;font-weight:700;background:rgba(0,0,0,0.55);border:1px solid rgba(255,176,32,0.45);color:var(--ember);padding:4px 10px;border-radius:999px;backdrop-filter:blur(3px);}
-  .vid-type{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;background:rgba(0,0,0,0.55);border:1px solid rgba(255,94,26,0.4);color:var(--ember);padding:4px 10px;border-radius:999px;backdrop-filter:blur(3px);}
-  .vid-type svg{width:13px;height:13px;}
+  .vid-lock{display:inline-flex;width:26px;height:26px;align-items:center;justify-content:center;border-radius:8px;background:rgba(0,0,0,0.55);border:1px solid rgba(255,94,26,0.4);color:var(--ember);backdrop-filter:blur(3px);}
+  .vid-lock svg{width:13px;height:13px;}
   .vid-play{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);z-index:3;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--signal),var(--ember));color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(255,94,26,0.14), 0 10px 24px rgba(0,0,0,0.5);opacity:0.92;transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s ease, box-shadow .28s ease;}
   .vid-play svg{width:22px;height:22px;margin-left:3px;}
   .vidcard:hover .vid-play{transform:translate(-50%,-50%) scale(1.14);opacity:1;box-shadow:0 0 0 12px rgba(255,94,26,0.16), 0 10px 24px rgba(0,0,0,0.55);}
   .vid-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px 18px;}
   .vid-body h3{font-family:var(--font-display);font-size:19px;text-transform:uppercase;margin:0 0 7px;color:var(--bone);}
-  .vid-body p{font-size:12px;color:var(--ash);margin:0 0 12px;line-height:1.5;max-width:30ch;}
-  .vid-open{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--ember);}
-  .vid-open svg{width:14px;height:14px;transition:transform .2s ease;}
-  .vidcard:hover .vid-open svg{transform:translateX(4px);}
+  .vid-body h3{font-size:18px;}
+  .vid-body p{font-size:11.5px;color:var(--ash);margin:0;line-height:1.5;max-width:26ch;}
   .vid-level{position:absolute;right:16px;bottom:18px;z-index:3;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--bone);background:rgba(255,94,26,0.85);padding:3px 9px;border-radius:999px;}
 
   @media (prefers-reduced-motion: reduce){ .vidcard img{animation:none;} .vidcard:hover::before{animation:none;} }
@@ -142,46 +140,34 @@
     <div class="lib-grid">
       <a class="vidcard" href="guide.html?id=aim" aria-label="Открыть гайд: Тренировка аима">
         <img src="assets/vid-1.jpg" alt="" style="object-position:60% 35%;">
-        <div class="vid-meta">
-          <span class="vid-dur">5 мин</span>
-          <span class="vid-type"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Видео + текст</span>
-        </div>
+        <div class="vid-meta"><span class="vid-dur">5 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
         <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
         <span class="vid-level">Новички</span>
         <div class="vid-body">
           <h3>Тренировка аима</h3>
           <p>Эффективные упражнения и wow-карты для прокачки стрельбы — заметно поднимут твой аим.</p>
-          <span class="vid-open">Открыть гайд <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
         </div>
       </a>
 
       <a class="vidcard" href="guide.html?id=recoil" aria-label="Открыть гайд: Контроль отдачи">
         <img src="assets/vid-2.jpg" alt="" style="object-position:center 40%;">
-        <div class="vid-meta">
-          <span class="vid-dur">7 мин</span>
-          <span class="vid-type"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Видео + текст</span>
-        </div>
+        <div class="vid-meta"><span class="vid-dur">7 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
         <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
         <span class="vid-level">Средний</span>
         <div class="vid-body">
           <h3>Контроль отдачи</h3>
           <p>Продвинутые настройки на мейновые ганы и подбор оптимальной сенсы.</p>
-          <span class="vid-open">Открыть гайд <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
         </div>
       </a>
 
       <a class="vidcard" href="guide.html?id=nade" aria-label="Открыть гайд: Механика гранат">
         <img src="assets/vid-3.jpg" alt="" style="object-position:center 28%;">
-        <div class="vid-meta">
-          <span class="vid-dur">6 мин</span>
-          <span class="vid-type"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Видео + текст</span>
-        </div>
+        <div class="vid-meta"><span class="vid-dur">6 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
         <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
         <span class="vid-level">Про</span>
         <div class="vid-body">
           <h3>Механика гранат</h3>
           <p>Тактическое применение гранат: правильная раскидка и тайминги.</p>
-          <span class="vid-open">Открыть гайд <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
         </div>
       </a>
     </div>
