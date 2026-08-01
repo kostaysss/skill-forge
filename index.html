@@ -1431,7 +1431,7 @@
     <ul class="nav-links">
       <li><a href="#top" class="active">Главная</a></li>
       <li><a href="#search">Поиск тиммейта</a></li>
-      <li><a href="#guides">Механика/Гайды</a></li>
+      <li><a href="guides.html">Механика/Гайды</a></li>
       <li><a href="#support">Поддержка</a></li>
     </ul>
     <div class="nav-actions">
@@ -1676,7 +1676,7 @@
         <span class="tlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
       </h2>
       <div class="vid-grid">
-        <a class="vidcard" href="guide.html?id=aim" aria-label="Открыть гайд: Тренировка аима">
+        <a class="vidcard" href="guides.html" aria-label="Открыть гайды: Тренировка аима">
           <img src="assets/vid-1.jpg" alt="" style="object-position:60% 35%;">
           <div class="vid-meta"><span class="vid-dur">5 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
@@ -1686,7 +1686,7 @@
             <p>Эффективные упражнения и wow-карты для прокачки стрельбы — заметно поднимут твой аим.</p>
           </div>
         </a>
-        <a class="vidcard" href="guide.html?id=recoil" aria-label="Открыть гайд: Контроль отдачи">
+        <a class="vidcard" href="guides.html" aria-label="Открыть гайды: Контроль отдачи">
           <img src="assets/vid-2.jpg" alt="" style="object-position:center 40%;">
           <div class="vid-meta"><span class="vid-dur">7 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
@@ -1696,7 +1696,7 @@
             <p>Продвинутые настройки на мейновые ганы и подбор оптимальной сенсы.</p>
           </div>
         </a>
-        <a class="vidcard" href="guide.html?id=nade" aria-label="Открыть гайд: Механика гранат">
+        <a class="vidcard" href="guides.html" aria-label="Открыть гайды: Механика гранат">
           <img src="assets/vid-3.jpg" alt="" style="object-position:center 28%;">
           <div class="vid-meta"><span class="vid-dur">6 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
           <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
@@ -1840,7 +1840,7 @@
       <ul class="foot-links">
         <li><a href="#top">Главная</a></li>
         <li><a href="#deck">Поиск тиммейта</a></li>
-        <li><a href="#guides">Механика/Гайды</a></li>
+        <li><a href="guides.html">Механика/Гайды</a></li>
         <li><a href="#support">Поддержка</a></li>
       </ul>
     </div>
@@ -2044,15 +2044,15 @@
   navLinks.forEach(a=>{
     a.addEventListener('click', ()=>{ setActive(a); links.style.cssText = ''; });
   });
-  // scroll-spy
-  const sections = navLinks
-    .map(a => document.querySelector(a.getAttribute('href')))
+  // scroll-spy (only for in-page hash links; external links like guides.html are skipped)
+  const spy = navLinks
+    .map(a => { const href = a.getAttribute('href'); const sec = href && href.charAt(0) === '#' ? document.querySelector(href) : null; return sec ? {link:a, sec} : null; })
     .filter(Boolean);
   function onScroll(){
     const mark = window.scrollY + window.innerHeight * 0.35;
-    let idx = 0;
-    sections.forEach((s,i)=>{ if(s.offsetTop <= mark) idx = i; });
-    setActive(navLinks[idx]);
+    let cur = spy[0];
+    spy.forEach(p=>{ if(p.sec.offsetTop <= mark) cur = p; });
+    if(cur) setActive(cur.link);
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();

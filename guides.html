@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Skill Forge — Механика / Гайды</title>
+<style>
+  :root{
+    --void:#0b0a0d; --gunmetal:#17151a; --gunmetal-2:#211d24; --steel:#4a454e;
+    --bone:#edeae6; --ash:#a89fa8; --signal:#ff5e1a; --ember:#ffb020; --intel:#2fe0a8;
+    --grid-line: rgba(237,234,230,0.05);
+    --font-display: "Arial Black","Haettenschweiler","Franklin Gothic Bold","Segoe UI",sans-serif;
+    --font-body: -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --font-mono: "SF Mono","Cascadia Code","Consolas","Roboto Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{background:radial-gradient(150% 120% at 50% 38%, #100c13 42%, #08070b 100%), var(--void);background-attachment:fixed;color:var(--bone);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  ::selection{background:var(--signal);color:var(--void);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px;}
+
+  .bg-topo{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:0.22;}
+  .bg-topo svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .ember-global{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none;}
+
+  .wrap{max-width:1160px;margin:0 auto;padding:0 clamp(20px,4vw,40px);}
+
+  .btn{font-family:var(--font-mono);font-size:12.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:999px;transition:transform .15s ease, filter .15s ease, border-color .15s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:linear-gradient(100deg,var(--signal),var(--ember));color:var(--void);}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{background:var(--gunmetal-2);color:var(--bone);border:1px solid var(--steel);}
+  .btn-ghost:hover{border-color:var(--signal);}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:200;background:rgba(11,10,13,0.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(237,234,230,0.08);}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1180px;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand svg{width:32px;height:32px;}
+  .brand-word{font-family:var(--font-display);font-size:18px;color:var(--bone);display:flex;align-items:center;gap:6px;}
+  .brand-word .tag{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--signal);border:1px solid var(--signal);border-radius:999px;padding:3px 8px;}
+
+  main{padding:44px 0 90px;position:relative;z-index:1;}
+  .back-link{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:var(--font-mono);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ash);margin-bottom:22px;transition:color .15s ease, gap .15s ease;}
+  .back-link:hover{color:var(--signal);gap:12px;}
+  .back-link svg{width:16px;height:16px;}
+
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ash);display:inline-flex;align-items:center;gap:10px;}
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--signal);box-shadow:0 0 10px 2px rgba(255,94,26,0.6);}
+  h1.page-title{font-family:var(--font-display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;line-height:1.02;margin:14px 0 14px;text-wrap:balance;}
+  h1.page-title .accent{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lead{color:var(--ash);font-size:16px;margin:0 0 36px;max-width:60ch;}
+
+  /* guide cards (same look as the main page video block) */
+  .lib-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:860px){.lib-grid{grid-template-columns:1fr;}}
+  .vidcard{
+    display:block;text-decoration:none;color:inherit;
+    position:relative;height:320px;border-radius:16px;overflow:hidden;
+    border:1px solid rgba(237,234,230,0.09);
+    cursor:pointer;isolation:isolate;
+    transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease;
+  }
+  .vidcard:hover{transform:translateY(-6px);border-color:rgba(255,94,26,0.5);box-shadow:0 24px 44px -18px rgba(0,0,0,0.85), 0 0 24px rgba(255,94,26,0.12);}
+  .vidcard img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+    filter:contrast(1.1) saturate(1.14) brightness(1.03);
+    transform-origin:60% 40%;
+    animation:kenBurns 22s ease-in-out infinite alternate;
+    transition:filter .3s ease;
+  }
+  .vidcard:nth-child(2) img{transform-origin:42% 58%;animation-duration:26s;animation-direction:alternate-reverse;}
+  .vidcard:nth-child(3) img{transform-origin:52% 30%;animation-duration:24s;animation-delay:-5s;}
+  .vidcard:hover img{filter:contrast(1.14) saturate(1.2) brightness(1.08);}
+  @keyframes kenBurns{from{transform:scale(1.04);}to{transform:scale(1.15);}}
+  .vidcard::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.16) 50%, transparent 62%);transform:translateX(-130%);}
+  .vidcard:hover::before{animation:vidSheen 1.1s ease-out;}
+  @keyframes vidSheen{to{transform:translateX(130%);}}
+  .vidcard::after{
+    content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:
+      radial-gradient(120% 80% at 50% 12%, rgba(255,120,40,0.12), transparent 55%),
+      radial-gradient(140% 120% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%),
+      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, transparent 26%, rgba(0,0,0,0.5) 58%, rgba(0,0,0,0.96) 100%);
+  }
+  .vid-meta{position:absolute;left:14px;top:14px;z-index:3;display:flex;gap:8px;align-items:center;}
+  .vid-dur{font-family:var(--font-mono);font-size:11px;font-weight:700;background:rgba(0,0,0,0.55);border:1px solid rgba(255,176,32,0.45);color:var(--ember);padding:4px 10px;border-radius:999px;backdrop-filter:blur(3px);}
+  .vid-type{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:700;background:rgba(0,0,0,0.55);border:1px solid rgba(255,94,26,0.4);color:var(--ember);padding:4px 10px;border-radius:999px;backdrop-filter:blur(3px);}
+  .vid-type svg{width:13px;height:13px;}
+  .vid-play{position:absolute;top:40%;left:50%;transform:translate(-50%,-50%);z-index:3;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--signal),var(--ember));color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 8px rgba(255,94,26,0.14), 0 10px 24px rgba(0,0,0,0.5);opacity:0.92;transition:transform .28s cubic-bezier(.2,.8,.2,1), opacity .28s ease, box-shadow .28s ease;}
+  .vid-play svg{width:22px;height:22px;margin-left:3px;}
+  .vidcard:hover .vid-play{transform:translate(-50%,-50%) scale(1.14);opacity:1;box-shadow:0 0 0 12px rgba(255,94,26,0.16), 0 10px 24px rgba(0,0,0,0.55);}
+  .vid-body{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:16px 18px 18px;}
+  .vid-body h3{font-family:var(--font-display);font-size:19px;text-transform:uppercase;margin:0 0 7px;color:var(--bone);}
+  .vid-body p{font-size:12px;color:var(--ash);margin:0 0 12px;line-height:1.5;max-width:30ch;}
+  .vid-open{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--ember);}
+  .vid-open svg{width:14px;height:14px;transition:transform .2s ease;}
+  .vidcard:hover .vid-open svg{transform:translateX(4px);}
+  .vid-level{position:absolute;right:16px;bottom:18px;z-index:3;font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--bone);background:rgba(255,94,26,0.85);padding:3px 9px;border-radius:999px;}
+
+  @media (prefers-reduced-motion: reduce){ .vidcard img{animation:none;} .vidcard:hover::before{animation:none;} }
+
+  @media (max-width:640px){
+    .nav .wrap{height:60px;}
+    .brand-word{font-size:16px;}
+    .nav .btn{font-size:11px;padding:9px 14px;}
+    main{padding:26px 0 64px;}
+    h1.page-title{font-size:clamp(26px,8vw,40px);}
+    .lead{font-size:15px;margin-bottom:26px;}
+    .lib-grid{gap:16px;}
+    .vidcard{height:250px;}
+  }
+  @media (max-width:380px){ .wrap{padding:0 15px;} }
+</style>
+</head>
+<body>
+<canvas class="ember-global" data-embers aria-hidden="true"></canvas>
+<div class="bg-topo" data-topo aria-hidden="true"></div>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="15" stroke="#ff5e1a" stroke-width="2"/><path d="M17 4V30 M4 17H30" stroke="#ffb020" stroke-width="1.4" opacity="0.6"/><circle cx="17" cy="17" r="4.5" fill="#ff5e1a"/></svg>
+      <span class="brand-word">SKILL <span class="tag">FORGE</span></span>
+    </a>
+    <a class="btn btn-ghost" href="index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> На главную</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <a class="back-link" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> На главную</a>
+    <span class="eyebrow">Обучение и разборы</span>
+    <h1 class="page-title"><span class="accent">Механика</span> / Гайды</h1>
+    <p class="lead">Видео-обзоры и текстовые гайды по PUBG Mobile. Выбирай тему, а внутри — подробный разбор с пошаговым объяснением. Нажми на гайд, чтобы открыть полную информацию.</p>
+
+    <div class="lib-grid">
+      <a class="vidcard" href="guide.html?id=aim" aria-label="Открыть гайд: Тренировка аима">
+        <img src="assets/vid-1.jpg" alt="" style="object-position:60% 35%;">
+        <div class="vid-meta">
+          <span class="vid-dur">5 мин</span>
+          <span class="vid-type"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Видео + текст</span>
+        </div>
+        <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
+        <span class="vid-level">Новички</span>
+        <div class="vid-body">
+          <h3>Тренировка аима</h3>
+          <p>Эффективные упражнения и wow-карты для прокачки стрельбы — заметно поднимут твой аим.</p>
+          <span class="vid-open">Открыть гайд <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+
+      <a class="vidcard" href="guide.html?id=recoil" aria-label="Открыть гайд: Контроль отдачи">
+        <img src="assets/vid-2.jpg" alt="" style="object-position:center 40%;">
+        <div class="vid-meta">
+          <span class="vid-dur">7 мин</span>
+          <span class="vid-type"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Видео + текст</span>
+        </div>
+        <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
+        <span class="vid-level">Средний</span>
+        <div class="vid-body">
+          <h3>Контроль отдачи</h3>
+          <p>Продвинутые настройки на мейновые ганы и подбор оптимальной сенсы.</p>
+          <span class="vid-open">Открыть гайд <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+
+      <a class="vidcard" href="guide.html?id=nade" aria-label="Открыть гайд: Механика гранат">
+        <img src="assets/vid-3.jpg" alt="" style="object-position:center 28%;">
+        <div class="vid-meta">
+          <span class="vid-dur">6 мин</span>
+          <span class="vid-type"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg>Видео + текст</span>
+        </div>
+        <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
+        <span class="vid-level">Про</span>
+        <div class="vid-body">
+          <h3>Механика гранат</h3>
+          <p>Тактическое применение гранат: правильная раскидка и тайминги.</p>
+          <span class="vid-open">Открыть гайд <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+        </div>
+      </a>
+    </div>
+  </div>
+</main>
+
+<script>
+/* ---- procedural topographic contour lines (marching squares over value-noise) ---- */
+(function(){
+  const host = document.querySelector('[data-topo]');
+  if(!host) return;
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  function makeNoise(seed){
+    function rand(x, y){
+      let n = (x|0)*374761393 + (y|0)*668265263 + seed*1274126177;
+      n = (n ^ (n >> 13)) >>> 0; n = (n * 1274126177) >>> 0; n = (n ^ (n >> 16)) >>> 0;
+      return n / 4294967295;
+    }
+    const smooth = t => t*t*(3-2*t); const lerp = (a,b,t) => a+(b-a)*t;
+    function vnoise(x, y){
+      const xi=Math.floor(x), yi=Math.floor(y); const xf=x-xi, yf=y-yi;
+      const u=smooth(xf), v=smooth(yf);
+      return lerp(lerp(rand(xi,yi),rand(xi+1,yi),u), lerp(rand(xi,yi+1),rand(xi+1,yi+1),u), v);
+    }
+    return function(x, y){
+      let amp=1, freq=1, sum=0, norm=0;
+      for(let o=0;o<2;o++){ sum+=amp*vnoise(x*freq,y*freq); norm+=amp; amp*=0.45; freq*=2.0; }
+      return sum/norm;
+    };
+  }
+  function build(){
+    const w=window.innerWidth, h=window.innerHeight; if(!w||!h) return;
+    const cell=10, cols=Math.ceil(w/cell)+1, rows=Math.ceil(h/cell)+1, scale=0.0125;
+    const noise=makeNoise(9);
+    const field=new Float32Array(cols*rows);
+    for(let j=0;j<rows;j++) for(let i=0;i<cols;i++) field[j*cols+i]=noise(i*cell*scale, j*cell*scale);
+    const at=(i,j)=>field[j*cols+i];
+    const levels=[]; for(let t=0.13;t<=0.87;t+=0.062) levels.push(t);
+    let d='';
+    for(const lv of levels){
+      for(let j=0;j<rows-1;j++){
+        for(let i=0;i<cols-1;i++){
+          const x=i*cell, y=j*cell;
+          const tl=at(i,j), tr=at(i+1,j), bl=at(i,j+1), br=at(i+1,j+1);
+          let c=0; if(tl>lv)c|=8; if(tr>lv)c|=4; if(br>lv)c|=2; if(bl>lv)c|=1;
+          if(c===0||c===15) continue;
+          const top=[x+cell*((lv-tl)/(tr-tl)),y];
+          const right=[x+cell, y+cell*((lv-tr)/(br-tr))];
+          const bottom=[x+cell*((lv-bl)/(br-bl)), y+cell];
+          const left=[x, y+cell*((lv-tl)/(bl-tl))];
+          const seg=(a,b)=>{ d+='M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+'L'+b[0].toFixed(1)+' '+b[1].toFixed(1); };
+          switch(c){
+            case 1: case 14: seg(left,bottom); break;
+            case 2: case 13: seg(bottom,right); break;
+            case 3: case 12: seg(left,right); break;
+            case 4: case 11: seg(top,right); break;
+            case 6: case 9: seg(top,bottom); break;
+            case 7: case 8: seg(left,top); break;
+            case 5: seg(left,top); seg(bottom,right); break;
+            case 10: seg(left,bottom); seg(top,right); break;
+          }
+        }
+      }
+    }
+    const svg=document.createElementNS(SVGNS,'svg');
+    svg.setAttribute('viewBox','0 0 '+w+' '+h); svg.setAttribute('preserveAspectRatio','none');
+    const path=document.createElementNS(SVGNS,'path');
+    path.setAttribute('d',d); path.setAttribute('fill','none');
+    path.setAttribute('stroke','#ffb267'); path.setAttribute('stroke-width','1.25');
+    path.setAttribute('stroke-linecap','round'); path.setAttribute('stroke-linejoin','round');
+    svg.appendChild(path); host.replaceChildren(svg);
+  }
+  build();
+  let rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(build,200); });
+})();
+
+/* embers */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('canvas[data-embers]').forEach(function(canvas){
+    const ctx=canvas.getContext('2d');let w,h,particles=[],raf=null;const DPR=Math.min(window.devicePixelRatio||1,2);
+    function resize(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;canvas.width=w*DPR;canvas.height=h*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);const c=Math.round(Math.min(90,Math.max(36,w*h/16000)));particles=Array.from({length:c},makeP);}
+    function makeP(){return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.4,vy:-(Math.random()*0.5+0.15),vx:(Math.random()-0.5)*0.4,life:Math.random(),flick:Math.random()*0.04+0.01,hue:Math.random()>0.5?28:18};}
+    function tick(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.life+=p.flick;p.vx+=(Math.random()-0.5)*0.02;if(p.y<-6||p.x<-6||p.x>w+6){Object.assign(p,makeP(),{y:h+6,x:Math.random()*w});}const a=0.35+Math.abs(Math.sin(p.life))*0.55;const gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);gr.addColorStop(0,'hsla('+p.hue+',100%,62%,'+a+')');gr.addColorStop(1,'hsla('+p.hue+',100%,50%,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(p.x,p.y,p.r*3.2,0,Math.PI*2);ctx.fill();ctx.fillStyle='hsla('+p.hue+',100%,80%,'+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r*0.7,0,Math.PI*2);ctx.fill();}raf=requestAnimationFrame(tick);}
+    let rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(resize,150);});resize();tick();
+  });
+})();
+</script>
+</body>
+</html>
