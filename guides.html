@@ -179,46 +179,49 @@
 (function(){
   const host = document.querySelector('[data-topo]');
   if(!host) return;
-  const SVGNS = 'http://www.w3.org/2000/svg';
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas=document.createElement('canvas');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;';
+  host.replaceChildren(canvas);
+  const ctx=canvas.getContext('2d');
+  const DPR=Math.min(window.devicePixelRatio||1,1.5);
+  const cell=11, scale=0.0125;
+  const levels=[]; for(let t=0.13;t<=0.87;t+=0.062) levels.push(t);
   function makeNoise(seed){
-    function rand(x, y){
-      let n = (x|0)*374761393 + (y|0)*668265263 + seed*1274126177;
-      n = (n ^ (n >> 13)) >>> 0; n = (n * 1274126177) >>> 0; n = (n ^ (n >> 16)) >>> 0;
-      return n / 4294967295;
-    }
-    const smooth = t => t*t*(3-2*t); const lerp = (a,b,t) => a+(b-a)*t;
-    function vnoise(x, y){
-      const xi=Math.floor(x), yi=Math.floor(y); const xf=x-xi, yf=y-yi;
-      const u=smooth(xf), v=smooth(yf);
-      return lerp(lerp(rand(xi,yi),rand(xi+1,yi),u), lerp(rand(xi,yi+1),rand(xi+1,yi+1),u), v);
-    }
-    return function(x, y){
-      let amp=1, freq=1, sum=0, norm=0;
-      for(let o=0;o<2;o++){ sum+=amp*vnoise(x*freq,y*freq); norm+=amp; amp*=0.45; freq*=2.0; }
-      return sum/norm;
-    };
+    function rand(x,y){ let n=(x|0)*374761393+(y|0)*668265263+seed*1274126177; n=(n^(n>>13))>>>0; n=(n*1274126177)>>>0; n=(n^(n>>16))>>>0; return n/4294967295; }
+    const sm=t=>t*t*(3-2*t), lp=(a,b,t)=>a+(b-a)*t;
+    function vn(x,y){ const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=sm(xf),v=sm(yf); return lp(lp(rand(xi,yi),rand(xi+1,yi),u),lp(rand(xi,yi+1),rand(xi+1,yi+1),u),v); }
+    return function(x,y){ let a=1,f=1,s=0,nm=0; for(let o=0;o<2;o++){s+=a*vn(x*f,y*f);nm+=a;a*=0.45;f*=2;} return s/nm; };
   }
-  function build(){
-    const w=window.innerWidth, h=window.innerHeight; if(!w||!h) return;
-    const cell=10, cols=Math.ceil(w/cell)+1, rows=Math.ceil(h/cell)+1, scale=0.0125;
-    const noise=makeNoise(9);
-    const field=new Float32Array(cols*rows);
-    for(let j=0;j<rows;j++) for(let i=0;i<cols;i++) field[j*cols+i]=noise(i*cell*scale, j*cell*scale);
+  const noise=makeNoise(9);
+  let W=0,H=0,cols=0,rows=0,field=null,raf=null,ox=0,oy=0,last=0;
+  function resize(){
+    W=window.innerWidth; H=window.innerHeight; if(!W||!H) return;
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    cols=Math.ceil(W/cell)+2; rows=Math.ceil(H/cell)+2;
+    field=new Float32Array(cols*rows);
+  }
+  function render(){
+    if(!field) return;
+    for(let j=0;j<rows;j++){ const sy=(j*cell+oy)*scale; for(let i=0;i<cols;i++){ field[j*cols+i]=noise((i*cell+ox)*scale,sy); } }
     const at=(i,j)=>field[j*cols+i];
-    const levels=[]; for(let t=0.13;t<=0.87;t+=0.062) levels.push(t);
-    let d='';
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#ffb267'; ctx.lineWidth=1.15; ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath();
     for(const lv of levels){
       for(let j=0;j<rows-1;j++){
+        const y=j*cell;
         for(let i=0;i<cols-1;i++){
-          const x=i*cell, y=j*cell;
-          const tl=at(i,j), tr=at(i+1,j), bl=at(i,j+1), br=at(i+1,j+1);
+          const tl=at(i,j),tr=at(i+1,j),bl=at(i,j+1),br=at(i+1,j+1);
           let c=0; if(tl>lv)c|=8; if(tr>lv)c|=4; if(br>lv)c|=2; if(bl>lv)c|=1;
           if(c===0||c===15) continue;
+          const x=i*cell;
           const top=[x+cell*((lv-tl)/(tr-tl)),y];
-          const right=[x+cell, y+cell*((lv-tr)/(br-tr))];
-          const bottom=[x+cell*((lv-bl)/(br-bl)), y+cell];
-          const left=[x, y+cell*((lv-tl)/(bl-tl))];
-          const seg=(a,b)=>{ d+='M'+a[0].toFixed(1)+' '+a[1].toFixed(1)+'L'+b[0].toFixed(1)+' '+b[1].toFixed(1); };
+          const right=[x+cell,y+cell*((lv-tr)/(br-tr))];
+          const bottom=[x+cell*((lv-bl)/(br-bl)),y+cell];
+          const left=[x,y+cell*((lv-tl)/(bl-tl))];
+          const seg=(a,b)=>{ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);};
           switch(c){
             case 1: case 14: seg(left,bottom); break;
             case 2: case 13: seg(bottom,right); break;
@@ -232,16 +235,13 @@
         }
       }
     }
-    const svg=document.createElementNS(SVGNS,'svg');
-    svg.setAttribute('viewBox','0 0 '+w+' '+h); svg.setAttribute('preserveAspectRatio','none');
-    const path=document.createElementNS(SVGNS,'path');
-    path.setAttribute('d',d); path.setAttribute('fill','none');
-    path.setAttribute('stroke','#ffb267'); path.setAttribute('stroke-width','1.25');
-    path.setAttribute('stroke-linecap','round'); path.setAttribute('stroke-linejoin','round');
-    svg.appendChild(path); host.replaceChildren(svg);
+    ctx.stroke();
   }
-  build();
-  let rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(build,200); });
+  function loop(ts){ if(!last)last=ts; const dt=Math.min(50,ts-last); last=ts; ox+=dt*0.011; oy+=dt*0.005; render(); raf=requestAnimationFrame(loop); }
+  resize(); render();
+  if(!reduce){ last=0; raf=requestAnimationFrame(loop); }
+  let rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); render(); },200); });
+  document.addEventListener('visibilitychange', function(){ if(document.hidden){ if(raf){cancelAnimationFrame(raf);raf=null;} } else if(!reduce&&!raf){ last=0; raf=requestAnimationFrame(loop); } });
 })();
 
 /* embers */
