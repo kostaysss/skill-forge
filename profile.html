@@ -122,6 +122,37 @@
   .tg-btn.disabled{background:var(--gunmetal-2);color:var(--steel);border:1px solid var(--steel);pointer-events:none;}
   .tg-btn svg{width:16px;height:16px;}
 
+  /* tab count badge */
+  .tab-count{display:inline-flex;align-items:center;justify-content:center;min-width:19px;height:19px;padding:0 5px;border-radius:999px;background:var(--signal);color:var(--void);font-size:11px;font-weight:800;line-height:1;margin-left:3px;}
+  .tab.active .tab-count{background:var(--void);color:var(--ember);}
+
+  /* like heart + match cards */
+  .pcard{cursor:pointer;}
+  .like-heart{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(237,234,230,0.14);background:rgba(11,10,13,0.6);color:var(--ash);cursor:pointer;transition:transform .16s ease, border-color .16s ease, color .16s ease, background .16s ease;z-index:2;}
+  .like-heart svg{width:19px;height:19px;}
+  .like-heart:hover{border-color:var(--signal);color:var(--signal);transform:scale(1.08);}
+  .like-heart.liked{background:linear-gradient(120deg,var(--signal),var(--ember));border-color:transparent;color:var(--void);}
+  .match-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--intel);border:1px solid rgba(47,224,168,0.4);background:rgba(47,224,168,0.08);border-radius:999px;padding:4px 10px;margin-bottom:13px;}
+  .match-badge svg{width:13px;height:13px;}
+  .match-badge.pending{color:var(--ember);border-color:rgba(255,176,32,0.4);background:rgba(255,176,32,0.08);}
+  .like-back-btn{width:100%;justify-content:center;background:var(--gunmetal-2);color:var(--bone);border:1px solid var(--signal);margin-bottom:9px;}
+  .like-back-btn:hover{background:rgba(255,94,26,0.12);}
+  .like-back-btn svg{width:15px;height:15px;}
+
+  /* player detail modal */
+  .pmodal{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(6,5,9,0.72);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .pmodal.open{display:flex;animation:fadeIn .25s ease;}
+  .pmodal-card{width:min(460px,100%);max-height:88vh;overflow:auto;position:relative;}
+  .pm-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:10px;border:1px solid rgba(237,234,230,0.14);background:rgba(11,10,13,0.7);color:var(--ash);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;}
+  .pm-close:hover{color:var(--bone);border-color:var(--signal);}
+  .pm-close svg{width:16px;height:16px;}
+  .pm-head{display:flex;align-items:center;gap:16px;padding:26px 26px 20px;border-bottom:1px solid rgba(237,234,230,0.08);}
+  .pm-av{width:60px;height:60px;border-radius:15px;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:24px;color:var(--void);background:linear-gradient(135deg,var(--signal),var(--ember));}
+  .pm-nm{font-family:var(--font-display);font-size:22px;line-height:1;}
+  .pm-rl{font-family:var(--font-mono);font-size:11px;color:var(--signal);text-transform:uppercase;margin-top:6px;display:inline-block;border:1px solid rgba(255,94,26,0.4);border-radius:999px;padding:3px 10px;}
+  .pm-actions{padding:18px 26px 24px;display:flex;flex-direction:column;gap:10px;}
+  .pm-actions .btn{width:100%;justify-content:center;}
+
   /* ============ MOBILE / PHONE ADAPTATION ============ */
   @media (max-width:640px){
     .nav .wrap{height:60px;}
@@ -245,32 +276,49 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         Поиск тиммейта
       </button>
+      <button class="tab" data-tab="matches" type="button">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.2C.5 8 2 4.5 5.6 4c2-.3 3.8.7 4.9 2.3C11.6 4.7 13.4 3.7 15.4 4c3.6.5 5.1 4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>
+        Мэтчи
+        <span class="tab-count" id="matchCount" style="display:none">0</span>
+      </button>
     </div>
 
     <section class="tabpanel active" id="tab-profile"></section>
 
     <section class="tabpanel" id="tab-search">
       <div class="search-head">
-        <p>Игроки, оставившие анкету. Найди того, кто подходит по роли и стилю, и напиши ему.</p>
+        <p>Игроки, оставившие анкету. Найди того, кто подходит по роли и стилю, лайкни анкету или напиши ему.</p>
         <div class="filters" id="filters"></div>
       </div>
       <div class="players" id="players"></div>
     </section>
+
+    <section class="tabpanel" id="tab-matches">
+      <div class="search-head">
+        <p>Игроки, которым понравилась твоя анкета. Ответь взаимностью — и пишите друг другу.</p>
+      </div>
+      <div class="players" id="matches"></div>
+    </section>
   </div>
 </main>
+
+<div class="pmodal" id="pmodal" aria-hidden="true">
+  <div class="glass pmodal-card" id="pmodalCard"></div>
+</div>
 
 <script>
 (function(){
   /* ---- tabs ---- */
   const tabs = Array.from(document.querySelectorAll('.tab'));
-  const panels = {profile:document.getElementById('tab-profile'), search:document.getElementById('tab-search')};
+  const panels = {profile:document.getElementById('tab-profile'), search:document.getElementById('tab-search'), matches:document.getElementById('tab-matches')};
   function selectTab(name){
     tabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
     Object.keys(panels).forEach(k=>panels[k].classList.toggle('active', k===name));
     if(location.hash.replace('#','')!==name) history.replaceState(null,'','#'+name);
   }
   tabs.forEach(t=>t.addEventListener('click', ()=>selectTab(t.dataset.tab)));
-  if(location.hash==='#search') selectTab('search');
+  const initHash = location.hash.replace('#','');
+  if(initHash==='search'||initHash==='matches') selectTab(initHash);
 
   /* ---- profile ---- */
   const FIELDS = [
@@ -346,7 +394,7 @@
         role: g('f-role'), gameId: g('f-gameId').trim(), kd: g('f-kd').trim(),
         device: g('f-device').trim(), voice: g('f-voice').trim(), tg: g('f-tg').trim(), age: g('f-age').trim()
       });
-      saveProfile(np); renderView(np); renderPlayers();
+      saveProfile(np); renderView(np); refreshAll();
     });
     document.getElementById('cancelBtn').addEventListener('click', ()=>renderView(p));
   }
@@ -356,15 +404,116 @@
 
   /* ---- teammate search ---- */
   const MOCK = [
-    {nick:'wizard777', role:'IGL', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер'},
-    {nick:'mrFROSTY', role:'Fragger', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
-    {nick:'MEXICANEC', role:'Support', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро'},
-    {nick:'ShadowReaper', role:'Fragger', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
-    {nick:'nightstalk', role:'Sniper', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь'},
-    {nick:'AceHunter', role:'Fragger', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
+    {nick:'wizard777', role:'IGL', gameId:'5217830194', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер', likedYou:true},
+    {nick:'mrFROSTY', role:'Fragger', gameId:'5688201475', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
+    {nick:'MEXICANEC', role:'Support', gameId:'5109384726', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро', likedYou:true},
+    {nick:'ShadowReaper', role:'Fragger', gameId:'5473019286', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
+    {nick:'nightstalk', role:'Sniper', gameId:'5990172634', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь', likedYou:true},
+    {nick:'AceHunter', role:'Fragger', gameId:'5342087611', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
   ];
   const ROLES = ['Все','Fragger','IGL','Support','Sniper'];
   let activeRole = 'Все';
+
+  /* likes persistence */
+  function loadLikes(){ try{ return JSON.parse(localStorage.getItem('sf_likes')) || []; }catch(_){ return []; } }
+  function saveLikes(a){ try{ localStorage.setItem('sf_likes', JSON.stringify(a)); }catch(_){} }
+  function isLiked(nick){ return loadLikes().indexOf(nick) >= 0; }
+  function toggleLike(nick){ const a=loadLikes(); const i=a.indexOf(nick); if(i>=0)a.splice(i,1); else a.push(nick); saveLikes(a); }
+
+  function tgLink(tg){ if(!tg) return null; return 'https://t.me/'+tg.replace(/^@/,''); }
+  function heartSvg(){ return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.2C.5 8 2 4.5 5.6 4c2-.3 3.8.7 4.9 2.3C11.6 4.7 13.4 3.7 15.4 4c3.6.5 5.1 4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>'; }
+  function closeSvg(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'; }
+  function initial(nick){ return esc((nick||'И').charAt(0).toUpperCase()); }
+
+  function tgBtnHTML(tg){
+    const link = tgLink(tg);
+    return link
+      ? '<a class="btn tg-btn" href="'+link+'" target="_blank" rel="noopener" data-stop><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.5L18.5 20c-.25 1.1-.92 1.37-1.86.85l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.23L17.9 6.2c.42-.37-.09-.58-.65-.21L6.14 12.9l-5.06-1.58c-1.1-.34-1.12-1.1.23-1.63L20.5 2.9c.92-.34 1.72.21 1.4 1.6z"/></svg> Написать в Telegram</a>'
+      : '<span class="btn tg-btn disabled">Telegram не указан</span>';
+  }
+  function statsHTML(p){
+    return '<div class="pc-stats">'+
+      '<span class="sk">K/D</span><span class="sv">'+esc(p.kd||'—')+'</span>'+
+      '<span class="sk">K/D Ult</span><span class="sv">'+esc(p.kdu||'—')+'</span>'+
+      '<span class="sk">Устройство</span><span class="sv">'+esc(p.device||'—')+'</span>'+
+      '<span class="sk">Голос</span><span class="sv">'+esc(p.voice||'—')+'</span>'+
+      '<span class="sk">Онлайн</span><span class="sv"><span class="pc-online">'+esc(p.online||'—')+'</span></span>'+
+    '</div>';
+  }
+  function playerCardHTML(p, mode){
+    const liked = isLiked(p.nick);
+    let topRight = p.you
+      ? '<span class="you-badge">Это вы</span>'
+      : '<button class="like-heart'+(liked?' liked':'')+'" data-like="'+esc(p.nick)+'" data-stop aria-label="Лайкнуть анкету">'+heartSvg()+'</button>';
+    let matchLine = '', actions = '';
+    if(mode==='match'){
+      if(liked){
+        matchLine = '<div class="match-badge">'+heartSvg()+' Взаимный мэтч</div>';
+        actions = tgBtnHTML(p.tg);
+      } else {
+        matchLine = '<div class="match-badge pending">'+heartSvg()+' Лайкнул твою анкету</div>';
+        actions = '<button class="btn like-back-btn" data-like="'+esc(p.nick)+'" data-stop>'+heartSvg()+' Лайкнуть в ответ</button>'+tgBtnHTML(p.tg);
+      }
+    } else {
+      actions = tgBtnHTML(p.tg);
+    }
+    return '<div class="pcard'+(p.you?' you':'')+'" data-open="'+esc(p.nick)+'">'+
+      topRight+ matchLine+
+      '<div class="pc-top"><div class="pc-av">'+initial(p.nick)+'</div><div><div class="pn">'+esc(p.nick||'Игрок')+'</div><div class="pr">Role: '+esc(p.role||'—')+'</div></div></div>'+
+      statsHTML(p)+ actions+
+    '</div>';
+  }
+
+  function findPlayer(nick){
+    const mine = loadProfile();
+    if(mine && (mine.nick||'Игрок')===nick) return Object.assign({you:true, online:'Сейчас'}, mine);
+    return MOCK.filter(x=>x.nick===nick)[0] || null;
+  }
+
+  /* full-info modal */
+  const DETAIL = [
+    ['Роль','role'],['Игровой ID','gameId'],['K/D','kd'],['K/D Ultimate','kdu'],
+    ['Устройство','device'],['Приложение для связи','voice'],['Telegram','tg'],['Возраст','age'],['Онлайн','online']
+  ];
+  const modal = document.getElementById('pmodal');
+  const modalCard = document.getElementById('pmodalCard');
+  function openModal(p){
+    const liked = isLiked(p.nick);
+    const rows = DETAIL.map(function(f){
+      const v = p[f[1]];
+      return '<div class="drow"><span class="k">'+f[0]+'</span>'+(v?'<span class="v">'+esc(v)+'</span>':'<span class="v empty">не указано</span>')+'</div>';
+    }).join('');
+    const likeBtn = p.you ? '' : '<button class="btn '+(liked?'btn-primary':'btn-ghost')+'" id="pmLike">'+heartSvg()+' '+(liked?'Вы лайкнули':'Лайкнуть анкету')+'</button>';
+    modalCard.innerHTML =
+      '<button class="pm-close" id="pmClose" aria-label="Закрыть">'+closeSvg()+'</button>'+
+      '<div class="pm-head"><div class="pm-av">'+initial(p.nick)+'</div><div><div class="pm-nm">'+esc(p.nick||'Игрок')+'</div><span class="pm-rl">Role: '+esc(p.role||'—')+'</span></div></div>'+
+      '<div class="grid2">'+rows+'</div>'+
+      '<div class="pm-actions">'+likeBtn+tgBtnHTML(p.tg)+'</div>';
+    modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+    document.getElementById('pmClose').addEventListener('click', closeModal);
+    const lb = document.getElementById('pmLike');
+    if(lb) lb.addEventListener('click', function(){ toggleLike(p.nick); refreshAll(); openModal(findPlayer(p.nick)); });
+  }
+  function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
+  modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+
+  function bindGrid(grid){
+    grid.querySelectorAll('.pcard').forEach(function(card){
+      card.addEventListener('click', function(e){
+        if(e.target.closest('[data-stop]')) return;
+        const p = findPlayer(card.getAttribute('data-open'));
+        if(p) openModal(p);
+      });
+    });
+    grid.querySelectorAll('[data-like]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        toggleLike(btn.getAttribute('data-like'));
+        refreshAll();
+      });
+    });
+  }
 
   const filtersEl = document.getElementById('filters');
   filtersEl.innerHTML = ROLES.map((r,i)=>'<button class="fchip'+(i===0?' active':'')+'" data-role="'+r+'" type="button">'+r+'</button>').join('');
@@ -374,8 +523,6 @@
     renderPlayers();
   }));
 
-  function tgLink(tg){ if(!tg) return null; return 'https://t.me/'+tg.replace(/^@/,''); }
-
   function renderPlayers(){
     const mine = loadProfile();
     let list = MOCK.slice();
@@ -383,26 +530,34 @@
     if(activeRole!=='Все') list = list.filter(p=>p.role===activeRole);
     const grid = document.getElementById('players');
     if(!list.length){ grid.innerHTML = '<p style="color:var(--ash)">Никого с такой ролью пока нет.</p>'; return; }
-    grid.innerHTML = list.map(p=>{
-      const link = tgLink(p.tg);
-      const btn = link
-        ? '<a class="btn tg-btn" href="'+link+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.5L18.5 20c-.25 1.1-.92 1.37-1.86.85l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.23L17.9 6.2c.42-.37-.09-.58-.65-.21L6.14 12.9l-5.06-1.58c-1.1-.34-1.12-1.1.23-1.63L20.5 2.9c.92-.34 1.72.21 1.4 1.6z"/></svg> Написать в Telegram</a>'
-        : '<span class="btn tg-btn disabled">Telegram не указан</span>';
-      return '<div class="pcard'+(p.you?' you':'')+'">'+
-        (p.you?'<span class="you-badge">Это вы</span>':'')+
-        '<div class="pc-top"><div class="pc-av">'+esc((p.nick||'И').charAt(0).toUpperCase())+'</div><div><div class="pn">'+esc(p.nick||'Игрок')+'</div><div class="pr">Role: '+esc(p.role||'—')+'</div></div></div>'+
-        '<div class="pc-stats">'+
-          '<span class="sk">K/D</span><span class="sv">'+esc(p.kd||'—')+'</span>'+
-          '<span class="sk">K/D Ult</span><span class="sv">'+esc(p.kdu||'—')+'</span>'+
-          '<span class="sk">Устройство</span><span class="sv">'+esc(p.device||'—')+'</span>'+
-          '<span class="sk">Голос</span><span class="sv">'+esc(p.voice||'—')+'</span>'+
-          '<span class="sk">Онлайн</span><span class="sv"><span class="pc-online">'+esc(p.online||'—')+'</span></span>'+
-        '</div>'+
-        btn+
-      '</div>';
-    }).join('');
+    grid.innerHTML = list.map(p=>playerCardHTML(p,'search')).join('');
+    bindGrid(grid);
   }
-  renderPlayers();
+
+  function incomingLikes(){ return loadProfile() ? MOCK.filter(p=>p.likedYou) : []; }
+  function emptyMatchesHTML(msg){
+    return '<div class="glass empty-state" style="grid-column:1/-1">'+
+      '<div class="es-ico">'+heartSvg()+'</div>'+
+      '<h3>Мэтчей пока нет</h3><p>'+esc(msg)+'</p>'+
+      (loadProfile()?'':'<a class="btn btn-primary" href="index.html#search">Создать профиль →</a>')+
+    '</div>';
+  }
+  function renderMatches(){
+    const grid = document.getElementById('matches');
+    if(!loadProfile()){ grid.innerHTML = emptyMatchesHTML('Создай профиль, чтобы игроки могли находить и лайкать твою анкету.'); return; }
+    const list = incomingLikes();
+    if(!list.length){ grid.innerHTML = emptyMatchesHTML('Пока никто не лайкнул твою анкету. Загляни позже или сам полайкай игроков в поиске.'); return; }
+    grid.innerHTML = list.map(p=>playerCardHTML(p,'match')).join('');
+    bindGrid(grid);
+  }
+  function updateMatchCount(){
+    const el = document.getElementById('matchCount');
+    const n = incomingLikes().length;
+    if(n>0){ el.textContent = n; el.style.display=''; } else { el.style.display='none'; }
+  }
+
+  function refreshAll(){ renderPlayers(); renderMatches(); updateMatchCount(); }
+  refreshAll();
 })();
 
 /* embers */
