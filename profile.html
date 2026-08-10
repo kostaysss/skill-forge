@@ -69,6 +69,12 @@
   .profile-top{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:24px 26px;border-bottom:1px solid rgba(237,234,230,0.08);flex-wrap:wrap;}
   .who{display:flex;align-items:center;gap:16px;}
   .avatar{width:64px;height:64px;border-radius:16px;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:26px;color:var(--void);background:linear-gradient(135deg,var(--signal),var(--ember));box-shadow:0 0 22px rgba(255,94,26,0.3);}
+  .avatar.has-photo{background-size:cover;background-position:center;color:transparent;}
+
+  .photo-up{display:flex;align-items:center;gap:12px;}
+  .photo-thumb{width:50px;height:50px;border-radius:12px;flex:none;background:rgba(11,10,13,0.6) center/cover no-repeat;border:1px solid rgba(237,234,230,0.14);}
+  .photo-pick{font-family:var(--font-mono);font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--bone);background:var(--gunmetal-2);border:1px solid var(--steel);border-radius:999px;padding:9px 16px;cursor:pointer;transition:border-color .15s ease;}
+  .photo-pick:hover{border-color:var(--signal);}
   .who .nm{font-family:var(--font-display);font-size:24px;line-height:1;}
   .who .rl{font-family:var(--font-mono);font-size:12px;color:var(--signal);text-transform:uppercase;letter-spacing:0.05em;margin-top:6px;display:inline-block;border:1px solid rgba(255,94,26,0.4);border-radius:999px;padding:3px 10px;}
 
@@ -112,7 +118,17 @@
   /* dossier header band (no photo) */
   .pc-head{position:relative;height:104px;overflow:hidden;background:linear-gradient(140deg, rgba(255,94,26,0.16), rgba(33,29,36,0.5) 46%, rgba(13,11,16,0.9));border-bottom:1px solid rgba(255,94,26,0.14);}
   .pc-head .wm{position:absolute;right:-8px;bottom:-30px;font-family:var(--font-display);font-size:120px;line-height:1;color:rgba(237,234,230,0.05);pointer-events:none;user-select:none;}
+  .pc-photo{position:absolute;inset:0;background-size:cover;background-position:50% 26%;}
+  .pc-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,10,13,0.08) 38%,rgba(13,11,16,0.96));}
+  .pc-head.has-photo{background:var(--void);}
   .pc-rank{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.05em;color:var(--void);background:linear-gradient(120deg,var(--signal),var(--ember));border-radius:8px;padding:4px 9px;box-shadow:0 6px 16px -6px rgba(255,94,26,0.7);}
+  .pc-rank.r-conq{background:linear-gradient(120deg,#ff3b3b,#ffb020);color:#1a0606;box-shadow:0 6px 16px -6px rgba(255,59,59,0.7);}
+  .pc-rank.r-ace{background:linear-gradient(120deg,var(--signal),var(--ember));color:var(--void);box-shadow:0 6px 16px -6px rgba(255,94,26,0.7);}
+  .pc-rank.r-crown{background:linear-gradient(120deg,#8b5cf6,#c084fc);color:#160a2b;box-shadow:0 6px 16px -6px rgba(139,92,246,0.7);}
+  .pc-rank.r-diam{background:linear-gradient(120deg,#22d3ee,#38bdf8);color:#04141a;box-shadow:0 6px 16px -6px rgba(34,211,238,0.6);}
+  .pc-rank.r-plat{background:linear-gradient(120deg,#5eead4,#67e8f9);color:#04140f;}
+  .pc-rank.r-gold{background:linear-gradient(120deg,#fbbf24,#fde047);color:#1a1400;}
+  .pc-rank.r-def{background:var(--gunmetal-2);color:var(--bone);box-shadow:none;}
   .pc-online{position:absolute;top:12px;right:12px;z-index:2;font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--bone);background:rgba(11,10,13,0.55);backdrop-filter:blur(4px);border:1px solid rgba(237,234,230,0.14);border-radius:999px;padding:4px 10px;display:inline-flex;align-items:center;gap:6px;}
   .pc-online::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--intel);box-shadow:0 0 7px 1px rgba(47,224,168,0.8);}
   .pc-name{position:absolute;left:16px;bottom:11px;z-index:2;right:14px;}
@@ -158,6 +174,7 @@
   .pm-close svg{width:16px;height:16px;}
   .pm-head{display:flex;align-items:center;gap:16px;padding:26px 26px 20px;border-bottom:1px solid rgba(237,234,230,0.08);}
   .pm-av{width:60px;height:60px;border-radius:15px;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:24px;color:var(--void);background:linear-gradient(135deg,var(--signal),var(--ember));}
+  .pm-av.has-photo{background-size:cover;background-position:center;color:transparent;}
   .pm-nm{font-family:var(--font-display);font-size:22px;line-height:1;}
   .pm-rl{font-family:var(--font-mono);font-size:11px;color:var(--signal);text-transform:uppercase;margin-top:6px;display:inline-block;border:1px solid rgba(255,94,26,0.4);border-radius:999px;padding:3px 10px;}
   .pm-actions{padding:18px 26px 24px;display:flex;flex-direction:column;gap:10px;}
@@ -366,11 +383,12 @@
       const disp = v ? esc(v) : '<span class="v empty">не указано</span>';
       return '<div class="drow"><span class="k">'+f.label+'</span>'+(v?'<span class="v">'+esc(v)+'</span>':disp)+'</div>';
     }).join('');
-    const initial = esc((p.nick||'И').charAt(0).toUpperCase());
+    const initialCh = esc((p.nick||'И').charAt(0).toUpperCase());
+    const avatar = p.photo ? '<div class="avatar has-photo"'+photoStyle(p.photo)+'></div>' : '<div class="avatar">'+initialCh+'</div>';
     panel.innerHTML =
       '<div class="glass">'+
         '<div class="profile-top">'+
-          '<div class="who"><div class="avatar">'+initial+'</div><div><div class="nm">'+esc(p.nick||'Игрок')+'</div><span class="rl">Role: '+esc(p.role||'—')+'</span></div></div>'+
+          '<div class="who">'+avatar+'<div><div class="nm">'+esc(p.nick||'Игрок')+'</div><span class="rl">Role: '+esc(p.role||'—')+'</span></div></div>'+
           '<button class="btn btn-primary" id="editBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L18.5 9.5a2.1 2.1 0 0 0-3-3L5 17v3z"/><path d="M13.5 6.5l3 3"/></svg> Редактировать профиль</button>'+
         '</div>'+
         '<div class="grid2">'+rows+'</div>'+
@@ -379,7 +397,9 @@
   }
 
   function renderEdit(p){
+    let editPhoto = p.photo || '';
     let rows = ['<div class="drow"><span class="k">Никнейм</span><input id="f-nick" type="text" value="'+esc(p.nick||'')+'" placeholder="Твой ник"></div>'];
+    rows.push('<div class="drow"><span class="k">Фото анкеты</span><div class="photo-up"><div class="photo-thumb" id="e-photoThumb"'+photoStyle(editPhoto)+'></div><label class="photo-pick" for="e-photo">Загрузить</label><input id="e-photo" type="file" accept="image/*" hidden></div></div>');
     rows = rows.concat(FIELDS.map(f=>{
       let ctrl;
       if(f.type==='select'){
@@ -389,21 +409,28 @@
       }
       return '<div class="drow"><span class="k">'+f.label+'</span>'+ctrl+'</div>';
     }));
+    const headAvatar = editPhoto ? '<div class="avatar has-photo"'+photoStyle(editPhoto)+'></div>' : '<div class="avatar">'+esc((p.nick||'И').charAt(0).toUpperCase())+'</div>';
     panel.innerHTML =
       '<div class="glass">'+
-        '<div class="profile-top"><div class="who"><div class="avatar">'+esc((p.nick||'И').charAt(0).toUpperCase())+'</div><div><div class="nm">Редактирование</div><span class="rl">Обнови свои данные</span></div></div></div>'+
+        '<div class="profile-top"><div class="who">'+headAvatar+'<div><div class="nm">Редактирование</div><span class="rl">Обнови свои данные</span></div></div></div>'+
         '<div class="grid2">'+rows.join('')+'</div>'+
         '<div class="card-actions2">'+
           '<button class="btn btn-primary" id="saveBtn">Сохранить</button>'+
           '<button class="btn btn-ghost" id="cancelBtn">Отмена</button>'+
         '</div>'+
       '</div>';
+    const ei = document.getElementById('e-photo'), et = document.getElementById('e-photoThumb');
+    if(ei){ ei.addEventListener('change', function(){
+      const f = ei.files && ei.files[0]; if(!f) return;
+      downscaleImage(f, 640, function(url){ if(url){ editPhoto = url; if(et) et.style.backgroundImage = 'url("'+url+'")'; } });
+    }); }
     document.getElementById('saveBtn').addEventListener('click', ()=>{
       const g = id => (document.getElementById(id)||{}).value || '';
       const np = Object.assign({}, p, {
         nick: g('f-nick').trim() || 'Игрок',
-        role: g('f-role'), gameId: g('f-gameId').trim(), kd: g('f-kd').trim(),
-        device: g('f-device').trim(), voice: g('f-voice').trim(), tg: g('f-tg').trim(), age: g('f-age').trim()
+        role: g('f-role'), gameId: g('f-gameId').trim(), kd: g('f-kd').trim(), kdu: g('f-kdu').trim(),
+        device: g('f-device').trim(), voice: g('f-voice').trim(), tg: g('f-tg').trim(), age: g('f-age').trim(),
+        photo: editPhoto
       });
       saveProfile(np); renderView(np); refreshAll();
     });
@@ -415,12 +442,12 @@
 
   /* ---- teammate search ---- */
   const MOCK = [
-    {nick:'wizard777', rank:'ACE ★2', role:'IGL', gameId:'5217830194', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер', likedYou:true},
-    {nick:'mrFROSTY', rank:'ACE ★6', role:'Fragger', gameId:'5688201475', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
-    {nick:'MEXICANEC', rank:'ACE ★13', role:'Support', gameId:'5109384726', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро', likedYou:true},
-    {nick:'ShadowReaper', rank:'CONQ ★3', role:'Fragger', gameId:'5473019286', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
-    {nick:'nightstalk', rank:'ACE ★4', role:'Sniper', gameId:'5990172634', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь', likedYou:true},
-    {nick:'AceHunter', rank:'CONQ ★7', role:'Fragger', gameId:'5342087611', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
+    {nick:'wizard777', rank:'ACE ★2', role:'IGL', gameId:'5217830194', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер', photo:'assets/card-2.jpg', likedYou:true},
+    {nick:'mrFROSTY', rank:'ACE ★6', role:'Fragger', gameId:'5688201475', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь', photo:'assets/bdfrosty.jpg'},
+    {nick:'MEXICANEC', rank:'ACE ★13', role:'Support', gameId:'5109384726', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро', photo:'assets/card-4.jpg', likedYou:true},
+    {nick:'ShadowReaper', rank:'CONQ ★3', role:'Fragger', gameId:'5473019286', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День', photo:'assets/card-1.jpg'},
+    {nick:'nightstalk', rank:'ACE ★4', role:'Sniper', gameId:'5990172634', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь', photo:'assets/vid-1.jpg', likedYou:true},
+    {nick:'AceHunter', rank:'CONQ ★7', role:'Fragger', gameId:'5342087611', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер', photo:'assets/card-3.jpg'}
   ];
   const ROLES = ['Все','Fragger','IGL','Support','Sniper'];
   let activeRole = 'Все';
@@ -435,6 +462,35 @@
   function heartSvg(){ return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.2C.5 8 2 4.5 5.6 4c2-.3 3.8.7 4.9 2.3C11.6 4.7 13.4 3.7 15.4 4c3.6.5 5.1 4 3.6 7.8-2.5 4.6-10 9.2-10 9.2z"/></svg>'; }
   function closeSvg(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'; }
   function initial(nick){ return esc((nick||'И').charAt(0).toUpperCase()); }
+  function rankClass(rank){
+    const r = String(rank||'').toLowerCase();
+    if(r.indexOf('conq')>=0 || r.indexOf('конк')>=0) return 'r-conq';
+    if(r.indexOf('ace')>=0 || r.indexOf('эйс')>=0) return 'r-ace';
+    if(r.indexOf('crown')>=0 || r.indexOf('коро')>=0) return 'r-crown';
+    if(r.indexOf('diam')>=0 || r.indexOf('алмаз')>=0) return 'r-diam';
+    if(r.indexOf('plat')>=0 || r.indexOf('плат')>=0) return 'r-plat';
+    if(r.indexOf('gold')>=0 || r.indexOf('золо')>=0) return 'r-gold';
+    return 'r-def';
+  }
+  function downscaleImage(file, max, cb){
+    const reader = new FileReader();
+    reader.onload = function(){
+      const img = new Image();
+      img.onload = function(){
+        let w = img.width, h = img.height;
+        const scale = Math.min(1, max/Math.max(w,h));
+        w = Math.round(w*scale); h = Math.round(h*scale);
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        c.getContext('2d').drawImage(img,0,0,w,h);
+        try{ cb(c.toDataURL('image/jpeg',0.82)); }catch(_){ cb(null); }
+      };
+      img.onerror = function(){ cb(null); };
+      img.src = reader.result;
+    };
+    reader.onerror = function(){ cb(null); };
+    reader.readAsDataURL(file);
+  }
+  function photoStyle(url){ return url ? ' style="background-image:url(\''+url+'\')"' : ''; }
 
   function tgBtnHTML(tg){
     const link = tgLink(tg);
@@ -444,7 +500,8 @@
   }
   function playerCardHTML(p, mode){
     const liked = isLiked(p.nick);
-    const rankBadge = p.rank ? '<span class="pc-rank">'+esc(p.rank)+'</span>' : '';
+    const rankBadge = p.rank ? '<span class="pc-rank '+rankClass(p.rank)+'">'+esc(p.rank)+'</span>' : '';
+    const photoLayer = p.photo ? '<span class="pc-photo"'+photoStyle(p.photo)+'></span>' : '<span class="wm">'+initial(p.nick)+'</span>';
     const topRight = p.you
       ? '<span class="you-badge">Это вы</span>'
       : '<span class="pc-online">'+esc(p.online||'—')+'</span>';
@@ -462,8 +519,8 @@
       actions = '<div class="pc-acts">'+heart+tgBtnHTML(p.tg)+'</div>';
     }
     return '<div class="pcard'+(p.you?' you':'')+'" data-open="'+esc(p.nick)+'">'+
-      '<div class="pc-head">'+
-        '<span class="wm">'+initial(p.nick)+'</span>'+
+      '<div class="pc-head'+(p.photo?' has-photo':'')+'">'+
+        photoLayer+
         rankBadge+ topRight+
         '<div class="pc-name"><div class="n">'+esc(p.nick||'Игрок')+'</div><div class="r">'+esc(p.role||'—')+'</div></div>'+
       '</div>'+
@@ -484,7 +541,7 @@
 
   /* full-info modal */
   const DETAIL = [
-    ['Роль','role'],['Игровой ID','gameId'],['K/D','kd'],['K/D Ultimate','kdu'],
+    ['Ранг','rank'],['Роль','role'],['Игровой ID','gameId'],['K/D','kd'],['K/D Ultimate','kdu'],
     ['Устройство','device'],['Приложение для связи','voice'],['Telegram','tg'],['Возраст','age'],['Онлайн','online']
   ];
   const modal = document.getElementById('pmodal');
@@ -498,7 +555,7 @@
     const likeBtn = p.you ? '' : '<button class="btn '+(liked?'btn-primary':'btn-ghost')+'" id="pmLike">'+heartSvg()+' '+(liked?'Вы лайкнули':'Лайкнуть анкету')+'</button>';
     modalCard.innerHTML =
       '<button class="pm-close" id="pmClose" aria-label="Закрыть">'+closeSvg()+'</button>'+
-      '<div class="pm-head"><div class="pm-av">'+initial(p.nick)+'</div><div><div class="pm-nm">'+esc(p.nick||'Игрок')+'</div><span class="pm-rl">Role: '+esc(p.role||'—')+'</span></div></div>'+
+      '<div class="pm-head">'+(p.photo?'<div class="pm-av has-photo"'+photoStyle(p.photo)+'></div>':'<div class="pm-av">'+initial(p.nick)+'</div>')+'<div><div class="pm-nm">'+esc(p.nick||'Игрок')+'</div><span class="pm-rl">Role: '+esc(p.role||'—')+'</span></div></div>'+
       '<div class="grid2">'+rows+'</div>'+
       '<div class="pm-actions">'+likeBtn+tgBtnHTML(p.tg)+'</div>';
     modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
