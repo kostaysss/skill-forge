@@ -104,19 +104,29 @@
   .players{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
   @media(max-width:820px){.players{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:520px){.players{grid-template-columns:1fr;}}
-  .pcard{position:relative;border-radius:16px;padding:20px;border:1px solid rgba(237,234,230,0.08);background:linear-gradient(160deg, rgba(38,33,45,0.55), rgba(13,11,16,0.72));transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;}
-  .pcard:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.45);box-shadow:0 20px 38px -16px rgba(0,0,0,0.85), 0 0 22px rgba(255,94,26,0.1);}
+  .pcard{position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(237,234,230,0.09);background:linear-gradient(160deg, rgba(38,33,45,0.55), rgba(13,11,16,0.75));transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;}
+  .pcard:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.5);box-shadow:0 24px 44px -18px rgba(0,0,0,0.85), 0 0 24px rgba(255,94,26,0.12);}
   .pcard.you{border-color:rgba(255,176,32,0.55);}
-  .you-badge{position:absolute;top:14px;right:14px;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--void);background:var(--ember);border-radius:999px;padding:3px 9px;}
-  .pc-top{display:flex;align-items:center;gap:13px;margin-bottom:14px;}
-  .pc-av{width:46px;height:46px;border-radius:12px;flex:none;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:19px;color:var(--void);background:linear-gradient(135deg,var(--signal),var(--ember));}
-  .pc-top .pn{font-family:var(--font-display);font-size:18px;line-height:1;}
-  .pc-top .pr{font-family:var(--font-mono);font-size:11px;color:var(--signal);text-transform:uppercase;margin-top:5px;}
-  .pc-stats{display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-family:var(--font-mono);font-size:12px;margin-bottom:16px;}
-  .pc-stats .sk{color:var(--steel);text-transform:uppercase;letter-spacing:0.04em;}
-  .pc-stats .sv{color:var(--bone);}
-  .pc-online{display:inline-flex;align-items:center;gap:6px;}
-  .pc-online::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--intel);box-shadow:0 0 8px 1px rgba(47,224,168,0.7);}
+  .you-badge{position:absolute;top:12px;right:12px;z-index:3;font-family:var(--font-mono);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--void);background:var(--ember);border-radius:999px;padding:4px 9px;}
+
+  /* dossier header band (no photo) */
+  .pc-head{position:relative;height:104px;overflow:hidden;background:linear-gradient(140deg, rgba(255,94,26,0.16), rgba(33,29,36,0.5) 46%, rgba(13,11,16,0.9));border-bottom:1px solid rgba(255,94,26,0.14);}
+  .pc-head .wm{position:absolute;right:-8px;bottom:-30px;font-family:var(--font-display);font-size:120px;line-height:1;color:rgba(237,234,230,0.05);pointer-events:none;user-select:none;}
+  .pc-rank{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.05em;color:var(--void);background:linear-gradient(120deg,var(--signal),var(--ember));border-radius:8px;padding:4px 9px;box-shadow:0 6px 16px -6px rgba(255,94,26,0.7);}
+  .pc-online{position:absolute;top:12px;right:12px;z-index:2;font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--bone);background:rgba(11,10,13,0.55);backdrop-filter:blur(4px);border:1px solid rgba(237,234,230,0.14);border-radius:999px;padding:4px 10px;display:inline-flex;align-items:center;gap:6px;}
+  .pc-online::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--intel);box-shadow:0 0 7px 1px rgba(47,224,168,0.8);}
+  .pc-name{position:absolute;left:16px;bottom:11px;z-index:2;right:14px;}
+  .pc-name .n{font-family:var(--font-display);font-size:21px;line-height:1;word-break:break-word;}
+  .pc-name .r{font-family:var(--font-mono);font-size:11px;color:var(--ember);text-transform:uppercase;margin-top:5px;}
+  .pc-body{padding:14px 16px 16px;}
+  .pc-hero{display:flex;align-items:flex-end;gap:14px;padding-bottom:13px;margin-bottom:13px;border-bottom:1px solid rgba(237,234,230,0.08);}
+  .pc-kd{font-family:var(--font-display);font-size:34px;line-height:.9;background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .pc-kd small{display:block;font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--steel);text-transform:uppercase;-webkit-text-fill-color:var(--steel);margin-bottom:3px;}
+  .pc-mini{font-family:var(--font-mono);font-size:12px;color:var(--ash);display:flex;flex-direction:column;gap:3px;}
+  .pc-mini b{color:var(--bone);}
+  .pc-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+  .pc-chip{font-family:var(--font-mono);font-size:11px;color:var(--ash);background:rgba(20,18,24,0.7);border:1px solid rgba(237,234,230,0.1);border-radius:999px;padding:5px 11px;}
+  .pc-acts{display:flex;gap:9px;}
   .tg-btn{width:100%;justify-content:center;background:linear-gradient(100deg,#2aabee,#229ed9);color:#fff;}
   .tg-btn:hover{filter:brightness(1.08);}
   .tg-btn.disabled{background:var(--gunmetal-2);color:var(--steel);border:1px solid var(--steel);pointer-events:none;}
@@ -128,7 +138,7 @@
 
   /* like heart + match cards */
   .pcard{cursor:pointer;}
-  .like-heart{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(237,234,230,0.14);background:rgba(11,10,13,0.6);color:var(--ash);cursor:pointer;transition:transform .16s ease, border-color .16s ease, color .16s ease, background .16s ease;z-index:2;}
+  .like-heart{width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(237,234,230,0.14);background:rgba(11,10,13,0.6);color:var(--ash);cursor:pointer;transition:transform .16s ease, border-color .16s ease, color .16s ease, background .16s ease;}
   .like-heart svg{width:19px;height:19px;}
   .like-heart:hover{border-color:var(--signal);color:var(--signal);transform:scale(1.08);}
   .like-heart.liked{background:linear-gradient(120deg,var(--signal),var(--ember));border-color:transparent;color:var(--void);}
@@ -405,12 +415,12 @@
 
   /* ---- teammate search ---- */
   const MOCK = [
-    {nick:'wizard777', role:'IGL', gameId:'5217830194', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер', likedYou:true},
-    {nick:'mrFROSTY', role:'Fragger', gameId:'5688201475', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
-    {nick:'MEXICANEC', role:'Support', gameId:'5109384726', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро', likedYou:true},
-    {nick:'ShadowReaper', role:'Fragger', gameId:'5473019286', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
-    {nick:'nightstalk', role:'Sniper', gameId:'5990172634', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь', likedYou:true},
-    {nick:'AceHunter', role:'Fragger', gameId:'5342087611', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
+    {nick:'wizard777', rank:'ACE ★2', role:'IGL', gameId:'5217830194', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер', likedYou:true},
+    {nick:'mrFROSTY', rank:'ACE ★6', role:'Fragger', gameId:'5688201475', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
+    {nick:'MEXICANEC', rank:'ACE ★13', role:'Support', gameId:'5109384726', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро', likedYou:true},
+    {nick:'ShadowReaper', rank:'CONQ ★3', role:'Fragger', gameId:'5473019286', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
+    {nick:'nightstalk', rank:'ACE ★4', role:'Sniper', gameId:'5990172634', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь', likedYou:true},
+    {nick:'AceHunter', rank:'CONQ ★7', role:'Fragger', gameId:'5342087611', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
   ];
   const ROLES = ['Все','Fragger','IGL','Support','Sniper'];
   let activeRole = 'Все';
@@ -432,36 +442,37 @@
       ? '<a class="btn tg-btn" href="'+link+'" target="_blank" rel="noopener" data-stop><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.5L18.5 20c-.25 1.1-.92 1.37-1.86.85l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.23L17.9 6.2c.42-.37-.09-.58-.65-.21L6.14 12.9l-5.06-1.58c-1.1-.34-1.12-1.1.23-1.63L20.5 2.9c.92-.34 1.72.21 1.4 1.6z"/></svg> Написать в Telegram</a>'
       : '<span class="btn tg-btn disabled">Telegram не указан</span>';
   }
-  function statsHTML(p){
-    return '<div class="pc-stats">'+
-      '<span class="sk">K/D</span><span class="sv">'+esc(p.kd||'—')+'</span>'+
-      '<span class="sk">K/D Ult</span><span class="sv">'+esc(p.kdu||'—')+'</span>'+
-      '<span class="sk">Устройство</span><span class="sv">'+esc(p.device||'—')+'</span>'+
-      '<span class="sk">Голос</span><span class="sv">'+esc(p.voice||'—')+'</span>'+
-      '<span class="sk">Онлайн</span><span class="sv"><span class="pc-online">'+esc(p.online||'—')+'</span></span>'+
-    '</div>';
-  }
   function playerCardHTML(p, mode){
     const liked = isLiked(p.nick);
-    let topRight = p.you
+    const rankBadge = p.rank ? '<span class="pc-rank">'+esc(p.rank)+'</span>' : '';
+    const topRight = p.you
       ? '<span class="you-badge">Это вы</span>'
-      : '<button class="like-heart'+(liked?' liked':'')+'" data-like="'+esc(p.nick)+'" data-stop aria-label="Лайкнуть анкету">'+heartSvg()+'</button>';
+      : '<span class="pc-online">'+esc(p.online||'—')+'</span>';
+    const heart = p.you ? '' : '<button class="like-heart'+(liked?' liked':'')+'" data-like="'+esc(p.nick)+'" data-stop aria-label="Лайкнуть анкету">'+heartSvg()+'</button>';
     let matchLine = '', actions = '';
     if(mode==='match'){
       if(liked){
         matchLine = '<div class="match-badge">'+heartSvg()+' Взаимный мэтч</div>';
-        actions = tgBtnHTML(p.tg);
+        actions = '<div class="pc-acts">'+tgBtnHTML(p.tg)+'</div>';
       } else {
         matchLine = '<div class="match-badge pending">'+heartSvg()+' Лайкнул твою анкету</div>';
-        actions = '<button class="btn like-back-btn" data-like="'+esc(p.nick)+'" data-stop>'+heartSvg()+' Лайкнуть в ответ</button>'+tgBtnHTML(p.tg);
+        actions = '<button class="btn like-back-btn" data-like="'+esc(p.nick)+'" data-stop>'+heartSvg()+' Лайкнуть в ответ</button><div class="pc-acts">'+tgBtnHTML(p.tg)+'</div>';
       }
     } else {
-      actions = tgBtnHTML(p.tg);
+      actions = '<div class="pc-acts">'+heart+tgBtnHTML(p.tg)+'</div>';
     }
     return '<div class="pcard'+(p.you?' you':'')+'" data-open="'+esc(p.nick)+'">'+
-      topRight+ matchLine+
-      '<div class="pc-top"><div class="pc-av">'+initial(p.nick)+'</div><div><div class="pn">'+esc(p.nick||'Игрок')+'</div><div class="pr">Role: '+esc(p.role||'—')+'</div></div></div>'+
-      statsHTML(p)+ actions+
+      '<div class="pc-head">'+
+        '<span class="wm">'+initial(p.nick)+'</span>'+
+        rankBadge+ topRight+
+        '<div class="pc-name"><div class="n">'+esc(p.nick||'Игрок')+'</div><div class="r">'+esc(p.role||'—')+'</div></div>'+
+      '</div>'+
+      '<div class="pc-body">'+
+        matchLine+
+        '<div class="pc-hero"><div class="pc-kd"><small>K/D</small>'+esc(p.kd||'—')+'</div><div class="pc-mini"><span>K/D Ult <b>'+esc(p.kdu||'—')+'</b></span><span>Возраст <b>'+esc(p.age||'—')+'</b></span></div></div>'+
+        '<div class="pc-tags"><span class="pc-chip">'+esc(p.device||'—')+'</span><span class="pc-chip">'+esc(p.voice||'—')+'</span></div>'+
+        actions+
+      '</div>'+
     '</div>';
   }
 
