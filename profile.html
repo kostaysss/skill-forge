@@ -99,6 +99,55 @@
   .empty-state h3{font-family:var(--font-display);text-transform:uppercase;font-size:20px;margin:0 0 8px;}
   .empty-state p{color:var(--ash);margin:0 0 22px;}
 
+  /* search toolbar */
+  .search-toolbar{margin-bottom:20px;}
+  .sb-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px;}
+  .sb-search{flex:1 1 240px;display:flex;align-items:center;gap:9px;background:rgba(20,18,24,0.7);border:1px solid rgba(237,234,230,0.12);border-radius:12px;padding:0 14px;transition:border-color .15s ease;}
+  .sb-search:focus-within{border-color:var(--signal);}
+  .sb-search svg{width:17px;height:17px;color:var(--steel);flex:none;}
+  .sb-search input{flex:1;background:none;border:none;outline:none;color:var(--bone);font-family:var(--font-body);font-size:14px;padding:12px 0;}
+  .sb-search input::placeholder{color:var(--steel);}
+  .sb-select{appearance:none;font-family:var(--font-mono);font-size:12px;letter-spacing:0.03em;color:var(--bone);background:rgba(20,18,24,0.7);border:1px solid rgba(237,234,230,0.12);border-radius:10px;padding:10px 30px 10px 13px;cursor:pointer;transition:border-color .15s ease;
+    background-image:linear-gradient(45deg,transparent 50%,var(--ash) 50%),linear-gradient(135deg,var(--ash) 50%,transparent 50%);background-position:calc(100% - 15px) 50%,calc(100% - 10px) 50%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;}
+  .sb-select:hover,.sb-select:focus{border-color:var(--signal);outline:none;}
+  .sb-toggle{font-family:var(--font-mono);font-size:11.5px;letter-spacing:0.04em;text-transform:uppercase;cursor:pointer;padding:9px 14px;border-radius:10px;border:1px solid rgba(237,234,230,0.14);background:rgba(20,18,24,0.6);color:var(--ash);transition:all .15s ease;display:inline-flex;align-items:center;gap:7px;}
+  .sb-toggle:hover{border-color:rgba(255,94,26,0.5);color:var(--bone);}
+  .sb-toggle.active{background:linear-gradient(120deg,var(--signal),var(--ember));color:var(--void);border-color:transparent;}
+  .sb-toggle .dot{width:7px;height:7px;border-radius:50%;background:var(--intel);box-shadow:0 0 7px 1px rgba(47,224,168,0.7);}
+  .sb-count{font-family:var(--font-mono);font-size:12px;color:var(--ash);}
+  .sb-count b{color:var(--bone);}
+
+  /* compatibility badge */
+  .compat{display:inline-flex;align-items:center;gap:7px;font-family:var(--font-mono);font-size:11px;letter-spacing:0.04em;text-transform:uppercase;border-radius:999px;padding:5px 11px;margin-bottom:13px;}
+  .compat .cnum{font-weight:700;}
+  .compat.c-hi{color:var(--intel);border:1px solid rgba(47,224,168,0.4);background:rgba(47,224,168,0.08);}
+  .compat.c-mid{color:var(--ember);border:1px solid rgba(255,176,32,0.4);background:rgba(255,176,32,0.08);}
+  .compat.c-lo{color:var(--ash);border:1px solid rgba(237,234,230,0.14);background:rgba(237,234,230,0.04);}
+
+  /* save-to-squad button */
+  .save-btn{width:40px;height:40px;flex:none;border-radius:12px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(237,234,230,0.14);background:rgba(11,10,13,0.6);color:var(--ash);cursor:pointer;transition:transform .16s ease,border-color .16s ease,color .16s ease,background .16s ease;}
+  .save-btn svg{width:18px;height:18px;}
+  .save-btn:hover{border-color:var(--ember);color:var(--ember);transform:scale(1.07);}
+  .save-btn.saved{background:linear-gradient(120deg,var(--ember),#ffce6b);border-color:transparent;color:var(--void);}
+  @keyframes shake{10%,90%{transform:translateX(-1px);}30%,70%{transform:translateX(2px);}50%{transform:translateX(-3px);}}
+  .save-btn.shake{animation:shake .4s;}
+
+  /* squad coverage panel */
+  .squad-cover{padding:18px 20px;margin-bottom:18px;}
+  .squad-cover .sc-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px;}
+  .squad-cover .sc-title{font-family:var(--font-display);text-transform:uppercase;font-size:16px;}
+  .squad-cover .sc-count{font-family:var(--font-mono);font-size:12px;color:var(--ash);}
+  .squad-cover .sc-count b{color:var(--ember);}
+  .role-slots{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  @media(max-width:520px){.role-slots{grid-template-columns:repeat(2,1fr);}}
+  .role-slot{border-radius:12px;padding:12px;text-align:center;border:1px dashed rgba(237,234,230,0.16);background:rgba(11,10,13,0.4);transition:all .2s ease;}
+  .role-slot .rs-role{font-family:var(--font-mono);font-size:12px;letter-spacing:0.04em;text-transform:uppercase;color:var(--steel);}
+  .role-slot .rs-nick{font-size:13px;color:var(--bone);margin-top:5px;min-height:16px;}
+  .role-slot.filled{border-style:solid;border-color:rgba(47,224,168,0.45);background:rgba(47,224,168,0.06);}
+  .role-slot.filled .rs-role{color:var(--intel);}
+  .sc-hint{font-family:var(--font-mono);font-size:12px;color:var(--ember);margin-top:14px;}
+  .sc-hint.full{color:var(--intel);}
+
   /* players search */
   .search-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
   .search-head p{color:var(--ash);font-size:14px;margin:0;}
@@ -132,6 +181,7 @@
   .pc-rank.r-def{background:var(--gunmetal-2);color:var(--bone);box-shadow:none;}
   .pc-online{position:absolute;top:12px;right:12px;z-index:2;font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--bone);background:rgba(11,10,13,0.55);backdrop-filter:blur(4px);border:1px solid rgba(237,234,230,0.14);border-radius:999px;padding:4px 10px;display:inline-flex;align-items:center;gap:6px;}
   .pc-online::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--intel);box-shadow:0 0 7px 1px rgba(47,224,168,0.8);}
+  .pc-online.off::before{background:var(--steel);box-shadow:none;}
   .pc-name{position:absolute;left:16px;bottom:11px;z-index:2;right:14px;}
   .pc-name .n{font-family:var(--font-display);font-size:21px;line-height:1;word-break:break-word;}
   .pc-name .r{font-family:var(--font-mono);font-size:11px;color:var(--ember);text-transform:uppercase;margin-top:5px;}
@@ -310,14 +360,33 @@
         Мэтчи
         <span class="tab-count" id="matchCount" style="display:none">0</span>
       </button>
+      <button class="tab" data-tab="squad" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.4 2.7-5.5 6-5.5s6 2.1 6 5.5"/><path d="M16 4.5a3.2 3.2 0 0 1 0 6.4M18 20c0-3-1.4-4.9-3.5-5.3"/></svg>
+        Отряд
+        <span class="tab-count" id="squadCount" style="display:none">0</span>
+      </button>
     </div>
 
     <section class="tabpanel active" id="tab-profile"></section>
 
     <section class="tabpanel" id="tab-search">
-      <div class="search-head">
-        <p>Игроки, оставившие анкету. Найди того, кто подходит по роли и стилю, лайкни анкету или напиши ему.</p>
+      <div class="search-toolbar">
+        <div class="sb-row">
+          <div class="sb-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            <input id="searchInput" type="text" placeholder="Поиск по нику…" autocomplete="off">
+          </div>
+          <select id="sortSelect" class="sb-select" aria-label="Сортировка"></select>
+        </div>
         <div class="filters" id="filters"></div>
+        <div class="sb-row">
+          <select id="fRank" class="sb-select" aria-label="Ранг"></select>
+          <select id="fDevice" class="sb-select" aria-label="Устройство"></select>
+          <select id="fVoice" class="sb-select" aria-label="Связь"></select>
+          <button id="fOnline" class="sb-toggle" type="button"><span class="dot"></span> Только онлайн</button>
+          <button id="fReset" class="sb-toggle" type="button">Сбросить</button>
+        </div>
+        <div class="sb-count" id="resultCount"></div>
       </div>
       <div class="players" id="players"></div>
     </section>
@@ -327,6 +396,11 @@
         <p>Игроки, которым понравилась твоя анкета. Ответь взаимностью — и пишите друг другу.</p>
       </div>
       <div class="players" id="matches"></div>
+    </section>
+
+    <section class="tabpanel" id="tab-squad">
+      <div class="glass squad-cover" id="squadCover"></div>
+      <div class="players" id="squad"></div>
     </section>
   </div>
 </main>
@@ -339,7 +413,7 @@
 (function(){
   /* ---- tabs ---- */
   const tabs = Array.from(document.querySelectorAll('.tab'));
-  const panels = {profile:document.getElementById('tab-profile'), search:document.getElementById('tab-search'), matches:document.getElementById('tab-matches')};
+  const panels = {profile:document.getElementById('tab-profile'), search:document.getElementById('tab-search'), matches:document.getElementById('tab-matches'), squad:document.getElementById('tab-squad')};
   function selectTab(name){
     tabs.forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
     Object.keys(panels).forEach(k=>panels[k].classList.toggle('active', k===name));
@@ -347,7 +421,7 @@
   }
   tabs.forEach(t=>t.addEventListener('click', ()=>selectTab(t.dataset.tab)));
   const initHash = location.hash.replace('#','');
-  if(initHash==='search'||initHash==='matches') selectTab(initHash);
+  if(['search','matches','squad'].indexOf(initHash)>=0) selectTab(initHash);
 
   /* ---- profile ---- */
   const FIELDS = [
@@ -443,12 +517,12 @@
 
   /* ---- teammate search ---- */
   const MOCK = [
-    {nick:'wizard777', rank:'ACE ★2', role:'IGL', gameId:'5217830194', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер', likedYou:true},
-    {nick:'mrFROSTY', rank:'ACE ★6', role:'Fragger', gameId:'5688201475', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь'},
-    {nick:'MEXICANEC', rank:'ACE ★13', role:'Support', gameId:'5109384726', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро', likedYou:true},
-    {nick:'ShadowReaper', rank:'CONQ ★3', role:'Fragger', gameId:'5473019286', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День'},
-    {nick:'nightstalk', rank:'ACE ★4', role:'Sniper', gameId:'5990172634', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь', likedYou:true},
-    {nick:'AceHunter', rank:'CONQ ★7', role:'Fragger', gameId:'5342087611', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер'}
+    {nick:'wizard777', rank:'ACE ★2', role:'IGL', gameId:'5217830194', kd:'4.2', kdu:'5.6', device:'Телефон', voice:'Discord', tg:'@wizard777', age:'21', online:'Вечер', isOnline:true, likedYou:true},
+    {nick:'mrFROSTY', rank:'ACE ★6', role:'Fragger', gameId:'5688201475', kd:'5.1', kdu:'6.8', device:'Эмулятор', voice:'Parallel', tg:'@frosty_ace', age:'24', online:'Ночь', isOnline:false},
+    {nick:'MEXICANEC', rank:'ACE ★13', role:'Support', gameId:'5109384726', kd:'3.4', kdu:'4.1', device:'Планшет', voice:'Discord', tg:'@mexicanec', age:'19', online:'Утро', isOnline:true, likedYou:true},
+    {nick:'ShadowReaper', rank:'CONQ ★3', role:'Fragger', gameId:'5473019286', kd:'4.8', kdu:'6.2', device:'Телефон', voice:'Parallel', tg:'@shadow_rpr', age:'22', online:'День', isOnline:false},
+    {nick:'nightstalk', rank:'ACE ★4', role:'Sniper', gameId:'5990172634', kd:'3.9', kdu:'4.7', device:'Телефон', voice:'Discord', tg:'@nightstalk', age:'20', online:'Ночь', isOnline:false, likedYou:true},
+    {nick:'AceHunter', rank:'CONQ ★7', role:'Fragger', gameId:'5342087611', kd:'6.0', kdu:'7.5', device:'Эмулятор', voice:'Discord', tg:'@acehunter', age:'23', online:'Вечер', isOnline:true}
   ];
   const ROLES = ['Все','Fragger','IGL','Support','Sniper'];
   let activeRole = 'Все';
@@ -492,6 +566,32 @@
     reader.readAsDataURL(file);
   }
   function photoStyle(url){ return url ? ' style="background-image:url(\''+url+'\')"' : ''; }
+  function bookmarkSvg(){ return '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/></svg>'; }
+  function copySvg(){ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg>'; }
+
+  /* squad (favorites) persistence, max 4 */
+  const SQUAD_MAX = 4;
+  function loadSquad(){ try{ return JSON.parse(localStorage.getItem('sf_squad')) || []; }catch(_){ return []; } }
+  function saveSquad(a){ try{ localStorage.setItem('sf_squad', JSON.stringify(a)); }catch(_){} }
+  function inSquad(nick){ return loadSquad().indexOf(nick) >= 0; }
+  function toggleSquad(nick){ const a=loadSquad(); const i=a.indexOf(nick); if(i>=0){ a.splice(i,1); saveSquad(a); return 'removed'; } if(a.length>=SQUAD_MAX) return 'full'; a.push(nick); saveSquad(a); return 'added'; }
+
+  /* rank tiers + compatibility */
+  function rankTier(rank){ return {'r-conq':'Conqueror','r-ace':'Ace','r-crown':'Crown','r-diam':'Diamond','r-plat':'Platinum','r-gold':'Gold','r-def':'Другой'}[rankClass(rank)] || 'Другой'; }
+  function rankWeight(rank){ return {'r-conq':7,'r-ace':6,'r-crown':5,'r-diam':4,'r-plat':3,'r-gold':2,'r-def':1}[rankClass(rank)] || 0; }
+  function num(x){ const n=parseFloat(String(x==null?'':x).replace(',','.')); return isNaN(n)?null:n; }
+  function compatScore(me, p){
+    if(!me) return null;
+    let s = 0;
+    if(me.voice && p.voice) s += (me.voice===p.voice) ? 25 : 5;
+    if(me.online && p.online) s += (me.online===p.online) ? 20 : 8;
+    if(me.role && p.role) s += (me.role!==p.role) ? 25 : 12;   // разные роли = синергия отряда
+    if(me.device && p.device) s += (me.device===p.device) ? 10 : 4;
+    const a=num(me.kd), b=num(p.kd);
+    s += (a!=null && b!=null) ? Math.round(20*(1-Math.min(1,Math.abs(a-b)/3))) : 8;
+    return Math.max(5, Math.min(100, Math.round(s)));
+  }
+  function compatCls(score){ return score>=75 ? 'c-hi' : (score>=50 ? 'c-mid' : 'c-lo'); }
 
   function tgBtnHTML(tg){
     const link = tgLink(tg);
@@ -499,25 +599,34 @@
       ? '<a class="btn tg-btn" href="'+link+'" target="_blank" rel="noopener" data-stop><svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.9 4.5L18.5 20c-.25 1.1-.92 1.37-1.86.85l-5.14-3.79-2.48 2.39c-.27.27-.5.5-1.03.5l.37-5.23L17.9 6.2c.42-.37-.09-.58-.65-.21L6.14 12.9l-5.06-1.58c-1.1-.34-1.12-1.1.23-1.63L20.5 2.9c.92-.34 1.72.21 1.4 1.6z"/></svg> Написать в Telegram</a>'
       : '<span class="btn tg-btn disabled">Telegram не указан</span>';
   }
+  function compatBadgeHTML(p){
+    const mine = loadProfile();
+    if(p.you || !mine) return '';
+    const sc = compatScore(mine, p);
+    return '<div class="compat '+compatCls(sc)+'"><svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg><span>Совместимость</span> <span class="cnum">'+sc+'%</span></div>';
+  }
   function playerCardHTML(p, mode){
-    const liked = isLiked(p.nick);
+    const liked = isLiked(p.nick), saved = inSquad(p.nick);
     const rankBadge = p.rank ? '<span class="pc-rank '+rankClass(p.rank)+'">'+esc(p.rank)+'</span>' : '';
     const photoLayer = p.photo ? '<span class="pc-photo"'+photoStyle(p.photo)+'></span>' : '<span class="wm">'+initial(p.nick)+'</span>';
     const topRight = p.you
       ? '<span class="you-badge">Это вы</span>'
-      : '<span class="pc-online">'+esc(p.online||'—')+'</span>';
+      : '<span class="pc-online'+(p.isOnline===false?' off':'')+'">'+esc(p.online||'—')+'</span>';
     const heart = p.you ? '' : '<button class="like-heart'+(liked?' liked':'')+'" data-like="'+esc(p.nick)+'" data-stop aria-label="Лайкнуть анкету">'+heartSvg()+'</button>';
-    let matchLine = '', actions = '';
+    const save = p.you ? '' : '<button class="save-btn'+(saved?' saved':'')+'" data-save="'+esc(p.nick)+'" data-stop aria-label="В отряд">'+bookmarkSvg()+'</button>';
+    let bodyTop = '', actions = '';
     if(mode==='match'){
-      if(liked){
-        matchLine = '<div class="match-badge">'+heartSvg()+' Взаимный мэтч</div>';
-        actions = '<div class="pc-acts">'+tgBtnHTML(p.tg)+'</div>';
-      } else {
-        matchLine = '<div class="match-badge pending">'+heartSvg()+' Лайкнул твою анкету</div>';
-        actions = '<button class="btn like-back-btn" data-like="'+esc(p.nick)+'" data-stop>'+heartSvg()+' Лайкнуть в ответ</button><div class="pc-acts">'+tgBtnHTML(p.tg)+'</div>';
-      }
+      bodyTop = liked
+        ? '<div class="match-badge">'+heartSvg()+' Взаимный мэтч</div>'
+        : '<div class="match-badge pending">'+heartSvg()+' Лайкнул твою анкету</div>';
+      const likeBack = liked ? '' : '<button class="btn like-back-btn" data-like="'+esc(p.nick)+'" data-stop>'+heartSvg()+' Лайкнуть в ответ</button>';
+      actions = likeBack+'<div class="pc-acts">'+save+tgBtnHTML(p.tg)+'</div>';
+    } else if(mode==='squad'){
+      bodyTop = compatBadgeHTML(p);
+      actions = '<button class="btn like-back-btn" data-squad-remove="'+esc(p.nick)+'" data-stop>'+closeSvg()+' Убрать из отряда</button><div class="pc-acts">'+tgBtnHTML(p.tg)+'</div>';
     } else {
-      actions = '<div class="pc-acts">'+heart+tgBtnHTML(p.tg)+'</div>';
+      bodyTop = compatBadgeHTML(p);
+      actions = '<div class="pc-acts">'+heart+save+tgBtnHTML(p.tg)+'</div>';
     }
     return '<div class="pcard'+(p.you?' you':'')+(p.photo?' has-photo':'')+'" data-open="'+esc(p.nick)+'">'+
       '<div class="pc-head'+(p.photo?' has-photo':'')+'">'+
@@ -526,7 +635,7 @@
         '<div class="pc-name"><div class="n">'+esc(p.nick||'Игрок')+'</div><div class="r">'+esc(p.role||'—')+'</div></div>'+
       '</div>'+
       '<div class="pc-body">'+
-        matchLine+
+        bodyTop+
         '<div class="pc-hero"><div class="pc-kd"><small>K/D</small>'+esc(p.kd||'—')+'</div><div class="pc-mini"><span>K/D Ult <b>'+esc(p.kdu||'—')+'</b></span><span>Возраст <b>'+esc(p.age||'—')+'</b></span></div></div>'+
         '<div class="pc-tags"><span class="pc-chip">'+esc(p.device||'—')+'</span><span class="pc-chip">'+esc(p.voice||'—')+'</span></div>'+
         actions+
@@ -548,21 +657,34 @@
   const modal = document.getElementById('pmodal');
   const modalCard = document.getElementById('pmodalCard');
   function openModal(p){
-    const liked = isLiked(p.nick);
+    const liked = isLiked(p.nick), saved = inSquad(p.nick);
     const rows = DETAIL.map(function(f){
       const v = p[f[1]];
       return '<div class="drow"><span class="k">'+f[0]+'</span>'+(v?'<span class="v">'+esc(v)+'</span>':'<span class="v empty">не указано</span>')+'</div>';
     }).join('');
+    const compat = compatBadgeHTML(p);
     const likeBtn = p.you ? '' : '<button class="btn '+(liked?'btn-primary':'btn-ghost')+'" id="pmLike">'+heartSvg()+' '+(liked?'Вы лайкнули':'Лайкнуть анкету')+'</button>';
+    const saveBtn = p.you ? '' : '<button class="btn '+(saved?'btn-primary':'btn-ghost')+'" id="pmSave">'+bookmarkSvg()+' '+(saved?'В отряде':'Добавить в отряд')+'</button>';
+    const copyBtn = p.gameId ? '<button class="btn btn-ghost" id="pmCopy">'+copySvg()+' Копировать ID</button>' : '';
     modalCard.innerHTML =
       '<button class="pm-close" id="pmClose" aria-label="Закрыть">'+closeSvg()+'</button>'+
       '<div class="pm-head">'+(p.photo?'<div class="pm-av has-photo"'+photoStyle(p.photo)+'></div>':'<div class="pm-av">'+initial(p.nick)+'</div>')+'<div><div class="pm-nm">'+esc(p.nick||'Игрок')+'</div><span class="pm-rl">Role: '+esc(p.role||'—')+'</span></div></div>'+
+      (compat?'<div style="padding:14px 26px 0">'+compat+'</div>':'')+
       '<div class="grid2">'+rows+'</div>'+
-      '<div class="pm-actions">'+likeBtn+tgBtnHTML(p.tg)+'</div>';
+      '<div class="pm-actions">'+likeBtn+saveBtn+copyBtn+tgBtnHTML(p.tg)+'</div>';
     modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
     document.getElementById('pmClose').addEventListener('click', closeModal);
     const lb = document.getElementById('pmLike');
     if(lb) lb.addEventListener('click', function(){ toggleLike(p.nick); refreshAll(); openModal(findPlayer(p.nick)); });
+    const sb = document.getElementById('pmSave');
+    if(sb) sb.addEventListener('click', function(){ const r=toggleSquad(p.nick); if(r==='full'){ sb.textContent=' Отряд заполнен (макс. '+SQUAD_MAX+')'; return; } refreshAll(); openModal(findPlayer(p.nick)); });
+    const cb = document.getElementById('pmCopy');
+    if(cb) cb.addEventListener('click', function(){ copyText(p.gameId, cb); });
+  }
+  function copyText(text, btn){
+    const done = function(){ if(btn){ const o=btn.innerHTML; btn.innerHTML = copySvg()+' Скопировано!'; setTimeout(function(){ btn.innerHTML=o; },1400); } };
+    if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(String(text)).then(done, done); }
+    else { try{ const t=document.createElement('textarea'); t.value=String(text); document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); }catch(_){ } done(); }
   }
   function closeModal(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
   modal.addEventListener('click', function(e){ if(e.target===modal) closeModal(); });
@@ -583,25 +705,134 @@
         refreshAll();
       });
     });
+    grid.querySelectorAll('[data-save]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        const r = toggleSquad(btn.getAttribute('data-save'));
+        if(r==='full'){ btn.classList.add('shake'); setTimeout(function(){ btn.classList.remove('shake'); },400); flashSquadFull(); return; }
+        refreshAll();
+      });
+    });
+    grid.querySelectorAll('[data-squad-remove]').forEach(function(btn){
+      btn.addEventListener('click', function(e){
+        e.preventDefault(); e.stopPropagation();
+        toggleSquad(btn.getAttribute('data-squad-remove'));
+        refreshAll();
+      });
+    });
+  }
+  function flashSquadFull(){
+    const el = document.getElementById('resultCount');
+    if(!el) return; const o = el.innerHTML;
+    el.innerHTML = '<span style="color:var(--ember)">Отряд заполнен — максимум '+SQUAD_MAX+' игрока.</span>';
+    setTimeout(function(){ el.innerHTML = o; }, 2200);
   }
 
-  const filtersEl = document.getElementById('filters');
-  filtersEl.innerHTML = ROLES.map((r,i)=>'<button class="fchip'+(i===0?' active':'')+'" data-role="'+r+'" type="button">'+r+'</button>').join('');
-  filtersEl.querySelectorAll('.fchip').forEach(c=>c.addEventListener('click',()=>{
-    activeRole=c.dataset.role;
-    filtersEl.querySelectorAll('.fchip').forEach(x=>x.classList.toggle('active',x===c));
-    renderPlayers();
-  }));
+  /* ---- filters state (persisted) ---- */
+  const filterState = (function(){
+    let s = {}; try{ s = JSON.parse(localStorage.getItem('sf_search')) || {}; }catch(_){ s = {}; }
+    return Object.assign({ q:'', role:'Все', rank:'Все', device:'Все', voice:'Все', online:false, sort:'' }, s);
+  })();
+  function saveFilterState(){ try{ localStorage.setItem('sf_search', JSON.stringify(filterState)); }catch(_){} }
+  const uniq = arr => arr.filter((v,i)=>arr.indexOf(v)===i);
 
-  function renderPlayers(){
+  const searchInput = document.getElementById('searchInput');
+  const sortSelect = document.getElementById('sortSelect');
+  const fRank = document.getElementById('fRank'), fDevice = document.getElementById('fDevice'), fVoice = document.getElementById('fVoice');
+  const fOnline = document.getElementById('fOnline'), fReset = document.getElementById('fReset');
+  const filtersEl = document.getElementById('filters');
+
+  function optionsHTML(all, values, current){
+    return [all].concat(values).map(v=>'<option value="'+esc(v)+'"'+(v===current?' selected':'')+'>'+esc(v===all?all:v)+'</option>').join('');
+  }
+  function populateControls(){
+    filtersEl.innerHTML = ROLES.map(r=>'<button class="fchip'+(r===filterState.role?' active':'')+'" data-role="'+r+'" type="button">'+r+'</button>').join('');
+    fRank.innerHTML   = optionsHTML('Все', uniq(MOCK.map(p=>rankTier(p.rank))), filterState.rank).replace('>Все<','>Ранг: все<');
+    fDevice.innerHTML = optionsHTML('Все', uniq(MOCK.map(p=>p.device)), filterState.device).replace('>Все<','>Устройство: все<');
+    fVoice.innerHTML  = optionsHTML('Все', uniq(MOCK.map(p=>p.voice)), filterState.voice).replace('>Все<','>Связь: все<');
+    const hasProfile = !!loadProfile();
+    const sorts = [['relevance','По умолчанию']].concat(hasProfile?[['compat','По совместимости']]:[]).concat([['kd_desc','K/D: сначала высокий'],['kd_asc','K/D: сначала низкий'],['rank','По рангу'],['age_asc','По возрасту']]);
+    if(!filterState.sort) filterState.sort = hasProfile ? 'compat' : 'relevance';
+    sortSelect.innerHTML = sorts.map(s=>'<option value="'+s[0]+'"'+(s[0]===filterState.sort?' selected':'')+'>'+s[1]+'</option>').join('');
+    fOnline.classList.toggle('active', !!filterState.online);
+    searchInput.value = filterState.q || '';
+  }
+
+  function applyFilters(){
     const mine = loadProfile();
     let list = MOCK.slice();
-    if(mine){ list.unshift(Object.assign({you:true, online:'Сейчас'}, mine)); }
-    if(activeRole!=='Все') list = list.filter(p=>p.role===activeRole);
+    if(mine) list.unshift(Object.assign({you:true, online:'Сейчас', isOnline:true}, mine));
+    const q = (filterState.q||'').trim().toLowerCase();
+    if(q) list = list.filter(p=>String(p.nick||'').toLowerCase().indexOf(q)>=0);
+    if(filterState.role!=='Все') list = list.filter(p=>p.role===filterState.role);
+    if(filterState.rank!=='Все') list = list.filter(p=>rankTier(p.rank)===filterState.rank);
+    if(filterState.device!=='Все') list = list.filter(p=>p.device===filterState.device);
+    if(filterState.voice!=='Все') list = list.filter(p=>p.voice===filterState.voice);
+    if(filterState.online) list = list.filter(p=>p.you || p.isOnline);
+
+    const s = filterState.sort;
+    list.sort((a,b)=>{
+      if(a.you) return -1; if(b.you) return 1;   // your card always first
+      if(s==='compat'){ return (compatScore(mine,b)||0)-(compatScore(mine,a)||0); }
+      if(s==='kd_desc'){ return (num(b.kd)||0)-(num(a.kd)||0); }
+      if(s==='kd_asc'){ return (num(a.kd)||0)-(num(b.kd)||0); }
+      if(s==='rank'){ return rankWeight(b.rank)-rankWeight(a.rank); }
+      if(s==='age_asc'){ return (num(a.age)||0)-(num(b.age)||0); }
+      return 0;
+    });
+
     const grid = document.getElementById('players');
-    if(!list.length){ grid.innerHTML = '<p style="color:var(--ash)">Никого с такой ролью пока нет.</p>'; return; }
+    const countEl = document.getElementById('resultCount');
+    const shown = list.filter(p=>!p.you).length;
+    if(countEl) countEl.innerHTML = 'Найдено <b>'+shown+'</b> '+plural(shown,'игрок','игрока','игроков');
+    if(!list.length){ grid.innerHTML = '<p style="color:var(--ash)">Никого не нашлось. Ослабь фильтры или сбрось их.</p>'; return; }
     grid.innerHTML = list.map(p=>playerCardHTML(p,'search')).join('');
     bindGrid(grid);
+  }
+  function plural(n,one,few,many){ const m=n%100, d=n%10; if(m>=11&&m<=14)return many; if(d===1)return one; if(d>=2&&d<=4)return few; return many; }
+  function renderPlayers(){ populateControls(); applyFilters(); }
+
+  filtersEl.addEventListener('click', function(e){
+    const b = e.target.closest('.fchip'); if(!b) return;
+    filterState.role = b.dataset.role; saveFilterState();
+    filtersEl.querySelectorAll('.fchip').forEach(x=>x.classList.toggle('active', x===b));
+    applyFilters();
+  });
+  searchInput.addEventListener('input', function(){ filterState.q=searchInput.value; saveFilterState(); applyFilters(); });
+  sortSelect.addEventListener('change', function(){ filterState.sort=sortSelect.value; saveFilterState(); applyFilters(); });
+  fRank.addEventListener('change', function(){ filterState.rank=fRank.value; saveFilterState(); applyFilters(); });
+  fDevice.addEventListener('change', function(){ filterState.device=fDevice.value; saveFilterState(); applyFilters(); });
+  fVoice.addEventListener('change', function(){ filterState.voice=fVoice.value; saveFilterState(); applyFilters(); });
+  fOnline.addEventListener('click', function(){ filterState.online=!filterState.online; fOnline.classList.toggle('active',filterState.online); saveFilterState(); applyFilters(); });
+  fReset.addEventListener('click', function(){ Object.assign(filterState,{q:'',role:'Все',rank:'Все',device:'Все',voice:'Все',online:false}); saveFilterState(); populateControls(); applyFilters(); });
+
+  /* ---- squad (favorites) ---- */
+  function squadMembers(){ const set = loadSquad(); return set.map(findPlayer).filter(Boolean); }
+  function renderSquad(){
+    const cover = document.getElementById('squadCover');
+    const grid = document.getElementById('squad');
+    const members = squadMembers();
+    const rolesNeeded = ['IGL','Fragger','Support','Sniper'];
+    const covered = {}; members.forEach(m=>{ if(m.role) covered[m.role]=m.nick; });
+    const slots = rolesNeeded.map(r=>'<div class="role-slot'+(covered[r]?' filled':'')+'"><div class="rs-role">'+r+'</div><div class="rs-nick">'+(covered[r]?esc(covered[r]):'—')+'</div></div>').join('');
+    const missing = rolesNeeded.filter(r=>!covered[r]);
+    const hint = members.length>=SQUAD_MAX
+      ? '<div class="sc-hint full">Отряд собран — 4 из 4. Готовы к дропу!</div>'
+      : (missing.length ? '<div class="sc-hint">Не хватает ролей: '+missing.join(', ')+'</div>' : '');
+    cover.innerHTML =
+      '<div class="sc-top"><div class="sc-title">Мой отряд</div><div class="sc-count"><b>'+members.length+'</b> / '+SQUAD_MAX+'</div></div>'+
+      '<div class="role-slots">'+slots+'</div>'+ hint;
+    if(!members.length){
+      grid.innerHTML = '<div class="glass empty-state" style="grid-column:1/-1"><div class="es-ico">'+bookmarkSvg()+'</div><h3>Отряд пуст</h3><p>Добавляй игроков кнопкой «В отряд» на карточке или в анкете. Максимум '+SQUAD_MAX+'.</p></div>';
+      return;
+    }
+    grid.innerHTML = members.map(p=>playerCardHTML(p,'squad')).join('');
+    bindGrid(grid);
+  }
+  function updateSquadCount(){
+    const el = document.getElementById('squadCount');
+    const n = loadSquad().length;
+    if(n>0){ el.textContent = n; el.style.display=''; } else { el.style.display='none'; }
   }
 
   function incomingLikes(){ return loadProfile() ? MOCK.filter(p=>p.likedYou) : []; }
@@ -626,7 +857,7 @@
     if(n>0){ el.textContent = n; el.style.display=''; } else { el.style.display='none'; }
   }
 
-  function refreshAll(){ renderPlayers(); renderMatches(); updateMatchCount(); }
+  function refreshAll(){ renderPlayers(); renderMatches(); renderSquad(); updateMatchCount(); updateSquadCount(); }
   refreshAll();
 })();
 
