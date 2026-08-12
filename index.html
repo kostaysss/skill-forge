@@ -8,6 +8,8 @@
 <meta http-equiv="Expires" content="0">
 <title>Skill Forge — найди тиммейта по скилу</title>
 <meta name="description" content="Skill Forge — комьюнити игроков PUBG Mobile для подбора тиммейтов по рейтингу и стилю игры.">
+<script>/* enable scroll-reveal hidden state before first paint (skip if reduced motion) */
+if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('reveal-on');}</script>
 <style>
   :root{
     --void:#0b0a0d;
@@ -1402,6 +1404,26 @@
   }
   .dm-tg:hover{transform:translateY(-2px);filter:brightness(1.08);}
   .dm-tg svg{width:18px;height:18px;}
+
+  /* ===== scroll reveal ===== */
+  .reveal-on .search-copy:not(.sr-off),
+  .reveal-on .profile-card:not(.sr-off),
+  .reveal-on .howto-title:not(.sr-off),
+  .reveal-on .hcell:not(.sr-off),
+  .reveal-on .guides-title:not(.sr-off),
+  .reveal-on .guides-sub:not(.sr-off),
+  .reveal-on .gtabs:not(.sr-off),
+  .reveal-on .gcard:not(.sr-off),
+  .reveal-on .gpro:not(.sr-off),
+  .reveal-on .subs-title:not(.sr-off),
+  .reveal-on .vidcard:not(.sr-off),
+  .reveal-on .section-head:not(.sr-off),
+  .reveal-on .tile:not(.sr-off),
+  .reveal-on .cta-inner:not(.sr-off){
+    opacity:0;transform:translateY(28px);
+    transition:opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1);
+  }
+  .reveal-on .sr-in{opacity:1 !important;transform:none !important;}
 </style>
 </head>
 <body>
@@ -2306,6 +2328,43 @@
       }
     });
   }
+})();
+
+/* ===== scroll reveal: fade + rise sections/cards as they enter view ===== */
+(function(){
+  var root = document.documentElement;
+  if(!root.classList.contains('reveal-on')) return;
+  var SEL = '.search-copy, .profile-card, .howto-title, .hcell, .guides-title, .guides-sub, .gtabs, .gcard, .gpro, .subs-title, .vidcard, .section-head, .tile, .cta-inner';
+  var targets = Array.prototype.slice.call(document.querySelectorAll(SEL));
+  if(!targets.length) return;
+
+  function settle(el){ el.classList.remove('sr-in'); el.classList.add('sr-off'); el.style.transitionDelay=''; }
+
+  if(!('IntersectionObserver' in window)){ targets.forEach(settle); return; }
+
+  /* small cascade for grid children */
+  ['.howto-grid','.guide-grid','.vid-grid','.feature-grid'].forEach(function(sel){
+    var grid = document.querySelector(sel); if(!grid) return;
+    Array.prototype.forEach.call(grid.children, function(ch, i){
+      if(ch.matches && ch.matches(SEL)) ch.style.transitionDelay = (Math.min(i,6) * 0.07) + 's';
+    });
+  });
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target; io.unobserve(el);
+      el.classList.add('sr-in');
+      var done = false;
+      el.addEventListener('transitionend', function h(ev){
+        if(ev.propertyName !== 'opacity' || done) return;
+        done = true; settle(el); el.removeEventListener('transitionend', h);
+      });
+      setTimeout(function(){ if(!done){ done = true; settle(el); } }, 1400);
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+
+  targets.forEach(function(el){ io.observe(el); });
 })();
 </script>
 </body>
