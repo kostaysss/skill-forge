@@ -449,15 +449,20 @@
     z-index:1;
     mix-blend-mode:screen;
   }
+  /* slanted header banner (variant C) */
   .profile-head{
-    position:relative;z-index:1;
+    position:relative;z-index:2;
     display:flex;align-items:center;gap:10px;
     font-family:var(--font-display);
-    font-size:16px;letter-spacing:0.08em;text-transform:uppercase;
-    color:var(--bone);
-    margin-bottom:22px;
+    font-size:17px;letter-spacing:0.08em;text-transform:uppercase;
+    color:var(--void);
+    margin:-26px -26px 20px;
+    padding:22px 26px 32px;
+    background:linear-gradient(115deg, var(--signal), var(--ember));
+    clip-path:polygon(0 0, 100% 0, 100% 70%, 0 100%);
+    box-shadow:0 10px 26px -14px rgba(255,94,26,0.6);
   }
-  .profile-head svg{width:20px;height:20px;color:var(--signal);}
+  .profile-head svg{width:21px;height:21px;color:var(--void);}
   .profile-form{position:relative;z-index:1;display:flex;flex-direction:column;gap:14px;}
   .profile-form[hidden]{display:none !important;}
   .pfield{display:flex;flex-direction:column;gap:6px;}
@@ -1301,6 +1306,7 @@
     .gpanel,.subs-panel{padding:20px 15px;border-radius:16px;}
     .subs-panel:not(.tips-panel)::after{border-radius:14px;}
     .profile-card{padding:20px 16px 24px;}
+    .profile-head{margin:-20px -16px 18px;padding:20px 18px 30px;}
     .vidcard{height:250px;}
     .support-box{padding:20px 18px;flex-direction:column;align-items:flex-start;text-align:left;}
     .support-box .tg-support{width:100%;justify-content:center;}
