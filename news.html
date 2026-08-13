@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Skill Forge — Новости PUBG Mobile</title>
+<style>
+  :root{
+    --void:#0b0a0d; --gunmetal:#17151a; --gunmetal-2:#211d24; --steel:#4a454e;
+    --bone:#edeae6; --ash:#a89fa8; --signal:#ff5e1a; --ember:#ffb020; --intel:#2fe0a8;
+    --font-display: "Arial Black","Haettenschweiler","Franklin Gothic Bold","Segoe UI",sans-serif;
+    --font-body: -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --font-mono: "SF Mono","Cascadia Code","Consolas","Roboto Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:radial-gradient(150% 120% at 50% 38%, #100c13 42%, #08070b 100%), var(--void);background-attachment:fixed;color:var(--bone);font-family:var(--font-body);line-height:1.55;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  ::selection{background:var(--signal);color:var(--void);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:2px;}
+
+  .bg-topo{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:0.22;}
+  .bg-topo svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .ember-global{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none;}
+
+  .wrap{max-width:1080px;margin:0 auto;padding:0 clamp(20px,4vw,40px);}
+
+  .btn{font-family:var(--font-mono);font-size:12.5px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;padding:12px 22px;border-radius:999px;transition:transform .15s ease, filter .15s ease, border-color .15s ease, background .15s ease;}
+  .btn:hover{transform:translateY(-2px);}
+  .btn-ghost{background:var(--gunmetal-2);color:var(--bone);border:1px solid var(--steel);}
+  .btn-ghost:hover{border-color:var(--signal);color:var(--bone);}
+
+  .nav{position:sticky;top:0;z-index:200;background:rgba(11,10,13,0.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(237,234,230,0.08);}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1180px;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand svg{width:32px;height:32px;}
+  .brand-word{font-family:var(--font-display);font-size:18px;color:var(--bone);display:flex;align-items:center;gap:6px;}
+  .brand-word .tag{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--signal);border:1px solid var(--signal);border-radius:999px;padding:3px 8px;}
+
+  main{padding:38px 0 90px;position:relative;z-index:1;}
+  .page-head{margin:0 0 30px;}
+  .page-title{font-family:var(--font-display);font-size:clamp(26px,4vw,42px);text-transform:uppercase;margin:0 0 10px;}
+  .page-title .accent{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .page-sub{color:var(--ash);font-size:15px;max-width:640px;margin:0;}
+
+  /* news grid */
+  .news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media(max-width:720px){.news-grid{grid-template-columns:1fr;}}
+
+  .news-card{position:relative;display:flex;flex-direction:column;gap:12px;padding:22px 22px 24px;border-radius:18px;overflow:hidden;
+    background:linear-gradient(160deg, rgba(38,33,45,0.5), rgba(13,11,16,0.72));border:1px solid rgba(237,234,230,0.08);
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;}
+  .news-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--signal),var(--ember),transparent);opacity:.9;}
+  .news-card:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.45);box-shadow:0 24px 44px -18px rgba(0,0,0,0.85), 0 0 22px rgba(255,94,26,0.1);}
+  .news-card.feat{grid-column:1 / -1;}
+  .news-card.feat .nc-title{font-size:clamp(20px,2.6vw,28px);}
+  .news-card.feat .nc-text{font-size:14.5px;}
+
+  .nc-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .nc-tag{font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--void);background:linear-gradient(120deg,var(--signal),var(--ember));border-radius:999px;padding:4px 11px;}
+  .nc-tag.season{background:linear-gradient(120deg,#ffb020,#ffd77a);}
+  .nc-tag.event{background:linear-gradient(120deg,#17b98a,var(--intel));}
+  .nc-tag.esports{background:linear-gradient(120deg,#2aabee,#7cd4ff);}
+  .nc-tag.balance{background:var(--gunmetal-2);color:var(--bone);border:1px solid var(--steel);}
+  .nc-tag.security{background:linear-gradient(120deg,#ff3b3b,#ffb020);color:#1a0606;}
+  .nc-date{font-family:var(--font-mono);font-size:11.5px;color:var(--steel);letter-spacing:0.03em;}
+  .nc-new{margin-left:auto;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--intel);border:1px solid rgba(47,224,168,0.45);background:rgba(47,224,168,0.08);border-radius:999px;padding:3px 9px;}
+
+  .nc-title{font-family:var(--font-display);font-size:19px;line-height:1.15;text-transform:uppercase;margin:2px 0 0;}
+  .nc-text{color:var(--ash);font-size:13.5px;margin:0;}
+  .nc-more{margin-top:auto;align-self:flex-start;font-family:var(--font-mono);font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--signal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap .15s ease,color .15s ease;}
+  .nc-more:hover{gap:10px;color:var(--ember);}
+  .nc-more svg{width:14px;height:14px;}
+
+  .news-empty{grid-column:1 / -1;text-align:center;color:var(--ash);padding:50px 20px;border:1px dashed rgba(237,234,230,0.14);border-radius:18px;}
+
+  footer{border-top:1px solid rgba(237,234,230,0.08);padding:26px 0;color:var(--steel);font-size:12.5px;position:relative;z-index:1;}
+  footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+  footer a{color:var(--ash);text-decoration:none;}
+  footer a:hover{color:var(--bone);}
+
+  /* scroll reveal */
+  .reveal-on .news-card:not(.sr-off){opacity:0;transform:translateY(26px);transition:opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1);}
+  .reveal-on .sr-in{opacity:1 !important;transform:none !important;}
+
+  @media(max-width:640px){
+    .nav .wrap{height:60px;}
+    .brand-word{font-size:16px;}
+    .nav .btn{font-size:11px;padding:9px 14px;}
+    main{padding:26px 0 64px;}
+  }
+</style>
+<script>/* enable scroll-reveal before first paint (skip if reduced motion) */
+if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)){document.documentElement.classList.add('reveal-on');}</script>
+</head>
+<body>
+<canvas class="ember-global" data-embers aria-hidden="true"></canvas>
+<div class="bg-topo" data-topo aria-hidden="true"></div>
+
+<script>
+/* ---- procedural topographic contour lines (marching squares over value-noise) ---- */
+(function(){
+  const host = document.querySelector('[data-topo]');
+  if(!host) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas=document.createElement('canvas');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;';
+  host.replaceChildren(canvas);
+  const ctx=canvas.getContext('2d');
+  const DPR=Math.min(window.devicePixelRatio||1,1.5);
+  const cell=11, scale=0.0125;
+  const levels=[]; for(let t=0.13;t<=0.87;t+=0.062) levels.push(t);
+  function makeNoise(seed){
+    function rand(x,y){ let n=(x|0)*374761393+(y|0)*668265263+seed*1274126177; n=(n^(n>>13))>>>0; n=(n*1274126177)>>>0; n=(n^(n>>16))>>>0; return n/4294967295; }
+    const sm=t=>t*t*(3-2*t), lp=(a,b,t)=>a+(b-a)*t;
+    function vn(x,y){ const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=sm(xf),v=sm(yf); return lp(lp(rand(xi,yi),rand(xi+1,yi),u),lp(rand(xi,yi+1),rand(xi+1,yi+1),u),v); }
+    return function(x,y){ let a=1,f=1,s=0,nm=0; for(let o=0;o<2;o++){s+=a*vn(x*f,y*f);nm+=a;a*=0.45;f*=2;} return s/nm; };
+  }
+  const noise=makeNoise(9);
+  let W=0,H=0,cols=0,rows=0,field=null,raf=null,ox=0,oy=0,last=0;
+  function resize(){
+    W=window.innerWidth; H=window.innerHeight; if(!W||!H) return;
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    cols=Math.ceil(W/cell)+2; rows=Math.ceil(H/cell)+2;
+    field=new Float32Array(cols*rows);
+  }
+  function render(){
+    if(!field) return;
+    for(let j=0;j<rows;j++){ const sy=(j*cell+oy)*scale; for(let i=0;i<cols;i++){ field[j*cols+i]=noise((i*cell+ox)*scale,sy); } }
+    const at=(i,j)=>field[j*cols+i];
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#ffb267'; ctx.lineWidth=1.15; ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath();
+    for(const lv of levels){
+      for(let j=0;j<rows-1;j++){
+        const y=j*cell;
+        for(let i=0;i<cols-1;i++){
+          const tl=at(i,j),tr=at(i+1,j),bl=at(i,j+1),br=at(i+1,j+1);
+          let c=0; if(tl>lv)c|=8; if(tr>lv)c|=4; if(br>lv)c|=2; if(bl>lv)c|=1;
+          if(c===0||c===15) continue;
+          const x=i*cell;
+          const top=[x+cell*((lv-tl)/(tr-tl)),y];
+          const right=[x+cell,y+cell*((lv-tr)/(br-tr))];
+          const bottom=[x+cell*((lv-bl)/(br-bl)),y+cell];
+          const left=[x,y+cell*((lv-tl)/(bl-tl))];
+          const seg=(a,b)=>{ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);};
+          switch(c){
+            case 1: case 14: seg(left,bottom); break;
+            case 2: case 13: seg(bottom,right); break;
+            case 3: case 12: seg(left,right); break;
+            case 4: case 11: seg(top,right); break;
+            case 6: case 9: seg(top,bottom); break;
+            case 7: case 8: seg(left,top); break;
+            case 5: seg(left,top); seg(bottom,right); break;
+            case 10: seg(left,bottom); seg(top,right); break;
+          }
+        }
+      }
+    }
+    ctx.stroke();
+  }
+  function loop(ts){ if(!last)last=ts; const dt=Math.min(50,ts-last); last=ts; ox+=dt*0.011; oy+=dt*0.005; render(); raf=requestAnimationFrame(loop); }
+  resize(); render();
+  if(!reduce){ last=0; raf=requestAnimationFrame(loop); }
+  let rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); render(); },200); });
+  document.addEventListener('visibilitychange', function(){ if(document.hidden){ if(raf){cancelAnimationFrame(raf);raf=null;} } else if(!reduce&&!raf){ last=0; raf=requestAnimationFrame(loop); } });
+})();
+</script>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="15" stroke="#ff5e1a" stroke-width="2"/><path d="M17 4V30 M4 17H30" stroke="#ffb020" stroke-width="1.4" opacity="0.6"/><circle cx="17" cy="17" r="4.5" fill="#ff5e1a"/></svg>
+      <span class="brand-word">SKILL <span class="tag">FORGE</span></span>
+    </a>
+    <a class="btn btn-ghost" href="index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> На главную</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <div class="page-head">
+      <h1 class="page-title">Новости <span class="accent">PUBG Mobile</span></h1>
+      <p class="page-sub">Свежие анонсы, обновления, сезоны и ивенты PUBG Mobile — коротко и по делу. Загляни перед игровой сессией, чтобы ничего не пропустить.</p>
+    </div>
+
+    <div class="news-grid" id="newsGrid">
+
+      <!-- ==== ШАБЛОН НОВОСТИ (скопируй блок ниже, чтобы добавить анонс) ====
+      <article class="news-card">
+        <div class="nc-meta">
+          <span class="nc-tag">Категория</span>
+          <span class="nc-date">Дата</span>
+        </div>
+        <h3 class="nc-title">Заголовок новости</h3>
+        <p class="nc-text">Короткое описание анонса.</p>
+      </article>
+      Классы тегов для цвета: nc-tag (оранж), .season, .event, .esports, .balance, .security.
+      Добавь .nc-new (<span class="nc-new">Новое</span>) в .nc-meta для метки «Новое».
+      Сделай карточку большой: class="news-card feat".
+      ============================================================= -->
+
+      <article class="news-card feat">
+        <div class="nc-meta">
+          <span class="nc-tag">Патч</span>
+          <span class="nc-date">12 августа 2026</span>
+          <span class="nc-new">Новое</span>
+        </div>
+        <h3 class="nc-title">Обновление 3.7 — новая тактическая карта «Раскалённые пески»</h3>
+        <p class="nc-text">Новая карта 8×8, переработанный транспорт, свежие точки лута и режим быстрых ротаций. Подробный разбор карты и лучшие места высадки — уже готовим в гайдах.</p>
+        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-meta">
+          <span class="nc-tag season">Сезон</span>
+          <span class="nc-date">8 августа 2026</span>
+        </div>
+        <h3 class="nc-title">Royale Pass C8S22: новый сезон и награды</h3>
+        <p class="nc-text">Стартовал новый Royale Pass: свежие скины оружия, наряды и миссии сезона. Успей забрать топовые награды до конца ротации.</p>
+        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-meta">
+          <span class="nc-tag event">Ивент</span>
+          <span class="nc-date">5 августа 2026</span>
+        </div>
+        <h3 class="nc-title">Ивент «Огненный дроп»: лимитированные скины</h3>
+        <p class="nc-text">Временный режим и коллаборация с эксклюзивными наградами. Выполняй задания ивента и открывай уникальные предметы, которых больше не будет.</p>
+        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-meta">
+          <span class="nc-tag balance">Баланс</span>
+          <span class="nc-date">1 августа 2026</span>
+        </div>
+        <h3 class="nc-title">Баланс оружия: правки Beryl M762 и DBS</h3>
+        <p class="nc-text">Скорректирована отдача Beryl и урон DBS на средней дистанции. Разбор, как это меняет мету и какие сетапы теперь сильнее — в гайде по отдаче.</p>
+        <a class="nc-more" href="guide.html?id=recoil">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-meta">
+          <span class="nc-tag esports">Киберспорт</span>
+          <span class="nc-date">28 июля 2026</span>
+        </div>
+        <h3 class="nc-title">Анонс PMGC 2026: расписание и призовой фонд</h3>
+        <p class="nc-text">Объявлены даты мирового чемпионата, участники и призовой фонд. Следи за лучшими командами и забирай приёмы прямо с про-сцены.</p>
+        <a class="nc-more" href="guide.html?id=pro">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-meta">
+          <span class="nc-tag security">Безопасность</span>
+          <span class="nc-date">22 июля 2026</span>
+        </div>
+        <h3 class="nc-title">Античит: волна банов и новые меры</h3>
+        <p class="nc-text">Массовая волна банов читеров и обновление системы обнаружения. Играй честно — прогресс и ранги нарушителей обнулены.</p>
+        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Skill Forge — комьюнити PUBG Mobile</span>
+    <a href="index.html">На главную →</a>
+  </div>
+</footer>
+
+<script>
+/* embers */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('canvas[data-embers]').forEach(function(canvas){
+    const ctx=canvas.getContext('2d');let w,h,particles=[],raf=null;const DPR=Math.min(window.devicePixelRatio||1,2);
+    function resize(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;canvas.width=w*DPR;canvas.height=h*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);const c=Math.round(Math.min(90,Math.max(36,w*h/16000)));particles=Array.from({length:c},makeP);}
+    function makeP(){return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.4,vy:-(Math.random()*0.5+0.15),vx:(Math.random()-0.5)*0.4,life:Math.random(),flick:Math.random()*0.04+0.01,hue:Math.random()>0.5?28:18};}
+    function tick(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.life+=p.flick;p.vx+=(Math.random()-0.5)*0.02;if(p.y<-6||p.x<-6||p.x>w+6){Object.assign(p,makeP(),{y:h+6,x:Math.random()*w});}const a=0.35+Math.abs(Math.sin(p.life))*0.55;const gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);gr.addColorStop(0,'hsla('+p.hue+',100%,62%,'+a+')');gr.addColorStop(1,'hsla('+p.hue+',100%,50%,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(p.x,p.y,p.r*3.2,0,Math.PI*2);ctx.fill();ctx.fillStyle='hsla('+p.hue+',100%,80%,'+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r*0.7,0,Math.PI*2);ctx.fill();}raf=requestAnimationFrame(tick);}
+    let rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(resize,150);});resize();tick();
+  });
+})();
+
+/* scroll reveal for news cards */
+(function(){
+  if(!document.documentElement.classList.contains('reveal-on')) return;
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.news-card'));
+  if(!cards.length) return;
+  function settle(el){ el.classList.remove('sr-in'); el.classList.add('sr-off'); el.style.transitionDelay=''; }
+  if(!('IntersectionObserver' in window)){ cards.forEach(settle); return; }
+  cards.forEach(function(el,i){ el.style.transitionDelay = (Math.min(i,6)*0.06)+'s'; });
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el=e.target; io.unobserve(el); el.classList.add('sr-in');
+      var done=false;
+      el.addEventListener('transitionend', function h(ev){ if(ev.propertyName!=='opacity'||done) return; done=true; settle(el); el.removeEventListener('transitionend',h); });
+      setTimeout(function(){ if(!done){ done=true; settle(el); } },1400);
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
+  cards.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
