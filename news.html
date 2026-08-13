@@ -32,6 +32,8 @@
   .btn:hover{transform:translateY(-2px);}
   .btn-ghost{background:var(--gunmetal-2);color:var(--bone);border:1px solid var(--steel);}
   .btn-ghost:hover{border-color:var(--signal);color:var(--bone);}
+  .btn-primary{background:linear-gradient(100deg,var(--signal),var(--ember));color:var(--void);}
+  .btn-primary:hover{filter:brightness(1.08);}
 
   .nav{position:sticky;top:0;z-index:200;background:rgba(11,10,13,0.86);backdrop-filter:blur(10px);border-bottom:1px solid rgba(237,234,230,0.08);}
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1180px;}
@@ -44,7 +46,8 @@
   .page-head{margin:0 0 30px;}
   .page-title{font-family:var(--font-display);font-size:clamp(26px,4vw,42px);text-transform:uppercase;margin:0 0 10px;}
   .page-title .accent{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .page-sub{color:var(--ash);font-size:15px;max-width:640px;margin:0;}
+  .page-sub{color:var(--ash);font-size:15px;max-width:660px;margin:0;}
+  .page-sub b{color:var(--bone);}
 
   /* news grid */
   .news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
@@ -71,11 +74,36 @@
 
   .nc-title{font-family:var(--font-display);font-size:19px;line-height:1.15;text-transform:uppercase;margin:2px 0 0;}
   .nc-text{color:var(--ash);font-size:13.5px;margin:0;}
-  .nc-more{margin-top:auto;align-self:flex-start;font-family:var(--font-mono);font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--signal);text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:gap .15s ease,color .15s ease;}
+  .nc-text b{color:var(--bone);}
+  .nc-more{margin-top:auto;align-self:flex-start;font-family:var(--font-mono);font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--signal);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:gap .15s ease,color .15s ease;}
   .nc-more:hover{gap:10px;color:var(--ember);}
   .nc-more svg{width:14px;height:14px;}
 
-  .news-empty{grid-column:1 / -1;text-align:center;color:var(--ash);padding:50px 20px;border:1px dashed rgba(237,234,230,0.14);border-radius:18px;}
+  /* detail modal */
+  .nmodal{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(6,5,9,0.74);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+  .nmodal.open{display:flex;animation:nmfade .25s ease;}
+  @keyframes nmfade{from{opacity:0;}to{opacity:1;}}
+  .nmodal-card{width:min(640px,100%);max-height:88vh;overflow:auto;position:relative;border-radius:20px;
+    background:linear-gradient(160deg, rgba(30,26,36,0.96), rgba(11,10,15,0.98));border:1px solid rgba(255,94,26,0.28);
+    box-shadow:0 30px 70px -25px rgba(0,0,0,0.9);}
+  .nm-close{position:absolute;top:14px;right:14px;width:34px;height:34px;border-radius:10px;border:1px solid rgba(237,234,230,0.14);background:rgba(11,10,13,0.7);color:var(--ash);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;}
+  .nm-close:hover{color:var(--bone);border-color:var(--signal);}
+  .nm-close svg{width:16px;height:16px;}
+  .nm-head{padding:26px 28px 18px;border-bottom:1px solid rgba(237,234,230,0.08);}
+  .nm-head .nc-meta{margin-bottom:12px;}
+  .nm-head h2{font-family:var(--font-display);font-size:clamp(19px,2.6vw,25px);text-transform:uppercase;line-height:1.15;margin:0;padding-right:36px;}
+  .nm-body{padding:20px 28px 8px;color:var(--ash);font-size:14px;line-height:1.6;}
+  .nm-body p{margin:0 0 12px;}
+  .nm-body b{color:var(--bone);}
+  .nm-body ul{margin:0 0 14px;padding-left:20px;}
+  .nm-body li{margin-bottom:7px;}
+  .nm-body .hl{color:var(--ember);font-weight:700;}
+  .nm-body h4{font-family:var(--font-body);font-weight:800;text-transform:uppercase;letter-spacing:0.03em;font-size:13px;color:var(--bone);margin:18px 0 8px;}
+  .nm-note{font-size:12px;color:var(--steel);border-left:2px solid rgba(255,176,32,0.5);padding:2px 0 2px 12px;margin:0 0 14px;}
+  .nm-src{padding:14px 28px 24px;display:flex;flex-wrap:wrap;gap:10px;align-items:center;border-top:1px solid rgba(237,234,230,0.08);}
+  .nm-src .lbl{font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--steel);}
+  .nm-src a{font-family:var(--font-mono);font-size:11.5px;color:var(--signal);text-decoration:none;border:1px solid rgba(255,94,26,0.35);border-radius:999px;padding:6px 12px;transition:all .15s ease;}
+  .nm-src a:hover{background:rgba(255,94,26,0.1);color:var(--ember);}
 
   footer{border-top:1px solid rgba(237,234,230,0.08);padding:26px 0;color:var(--steel);font-size:12.5px;position:relative;z-index:1;}
   footer .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
@@ -91,6 +119,7 @@
     .brand-word{font-size:16px;}
     .nav .btn{font-size:11px;padding:9px 14px;}
     main{padding:26px 0 64px;}
+    .nm-head,.nm-body,.nm-src{padding-left:20px;padding-right:20px;}
   }
 </style>
 <script>/* enable scroll-reveal before first paint (skip if reduced motion) */
@@ -185,84 +214,58 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   <div class="wrap">
     <div class="page-head">
       <h1 class="page-title">Новости <span class="accent">PUBG Mobile</span></h1>
-      <p class="page-sub">Свежие анонсы, обновления, сезоны и ивенты PUBG Mobile — коротко и по делу. Загляни перед игровой сессией, чтобы ничего не пропустить.</p>
+      <p class="page-sub">Свежие анонсы, обновления, баланс оружия, киберспорт и античит. Нажми <b>«Подробнее»</b> на любой новости — откроется окно с деталями и ссылкой на источник.</p>
     </div>
 
     <div class="news-grid" id="newsGrid">
 
-      <!-- ==== ШАБЛОН НОВОСТИ (скопируй блок ниже, чтобы добавить анонс) ====
-      <article class="news-card">
-        <div class="nc-meta">
-          <span class="nc-tag">Категория</span>
-          <span class="nc-date">Дата</span>
-        </div>
-        <h3 class="nc-title">Заголовок новости</h3>
-        <p class="nc-text">Короткое описание анонса.</p>
+      <article class="news-card feat">
+        <div class="nc-meta"><span class="nc-tag">Патч</span><span class="nc-date">Бета до 23 августа 2026</span><span class="nc-new">Скоро</span></div>
+        <h3 class="nc-title">Обновление 4.6: Хэллоуин-тема, режим на Эрангеле и апдейт WOW</h3>
+        <p class="nc-text">Релиз ожидается в конце августа — первой неделе сентября 2026, бета завершается 23 августа. В версии — сезонная «страшная» тема, новый тематический режим на Эрангеле, обновления World of Wonders и Metro Royale.</p>
+        <button class="nc-more" data-news="v46">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
-      Классы тегов для цвета: nc-tag (оранж), .season, .event, .esports, .balance, .security.
-      Добавь .nc-new (<span class="nc-new">Новое</span>) в .nc-meta для метки «Новое».
-      Сделай карточку большой: class="news-card feat".
-      ============================================================= -->
+
+      <article class="news-card">
+        <div class="nc-meta"><span class="nc-tag season">Костюмы</span><span class="nc-date">версия 4.6</span></div>
+        <h3 class="nc-title">Ultimate / мифик-костюмы 4.6: сет Andi и скины PMWC</h3>
+        <p class="nc-text">По данным беты ожидается мифический сет для персонажа Andi, а Lucky Spin к PMWC 2026 приносит два эксклюзивных костюма. Также в дата-майне — коллаб-скины Demon Slayer и One Piece «Buggy».</p>
+        <button class="nc-more" data-news="costumes">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      </article>
+
+      <article class="news-card">
+        <div class="nc-meta"><span class="nc-tag balance">Новые метовые ганы</span><span class="nc-date">патчи 4.2–4.4</span></div>
+        <h3 class="nc-title">Баланс оружия: снайперки и 7.62 в цене, дробовики просели</h3>
+        <p class="nc-text">Снайперкам убрали спад урона по дистанции и усилили пробитие брони; класс 7.62 (AKM, ACE32, M762, Groza) баффнули; <b>SCAR-L</b> — топ 5.56 (меньше вертикальной отдачи). AR ослабили на дистанции, дробовики нерфнули по урону и разбросу.</p>
+        <button class="nc-more" data-news="meta">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      </article>
 
       <article class="news-card feat">
-        <div class="nc-meta">
-          <span class="nc-tag">Патч</span>
-          <span class="nc-date">12 августа 2026</span>
-          <span class="nc-new">Новое</span>
-        </div>
-        <h3 class="nc-title">Обновление 3.7 — новая тактическая карта «Раскалённые пески»</h3>
-        <p class="nc-text">Новая карта 8×8, переработанный транспорт, свежие точки лута и режим быстрых ротаций. Подробный разбор карты и лучшие места высадки — уже готовим в гайдах.</p>
-        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+        <div class="nc-meta"><span class="nc-tag esports">Киберспорт</span><span class="nc-date">6–16 августа 2026 · Париж</span><span class="nc-new">LIVE</span></div>
+        <h3 class="nc-title">PMWC 2026: мировой кубок в Париже, $3 000 000, финалы 14–16 августа</h3>
+        <p class="nc-text">PUBG Mobile World Cup 2026 идёт на Paris Expo Porte de Versailles в рамках Esports World Cup: <b>32 команды</b> и призовой <b>$3 000 000</b>. Гранд-финал — 14–16 августа, 13 августа — выходной день.</p>
+        <button class="nc-more" data-news="pmwc">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
 
       <article class="news-card">
-        <div class="nc-meta">
-          <span class="nc-tag season">Сезон</span>
-          <span class="nc-date">8 августа 2026</span>
-        </div>
-        <h3 class="nc-title">Royale Pass C8S22: новый сезон и награды</h3>
-        <p class="nc-text">Стартовал новый Royale Pass: свежие скины оружия, наряды и миссии сезона. Успей забрать топовые награды до конца ротации.</p>
-        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+        <div class="nc-meta"><span class="nc-tag esports">Составы</span><span class="nc-date">PMWC 2026</span></div>
+        <h3 class="nc-title">Команды PMWC 2026: чемпионы и главные фавориты</h3>
+        <p class="nc-text">Действующий чемпион — Yangon Galacticos (Мьянма). Среди фаворитов: Alpha7 Esports (Бразилия, чемпион PMGC 2025), NS RedForce и Kiwoom DRX (Корея), GodLike и Orangutan (Индия), AG.AL, Tianba и ThunderTalk (Китай).</p>
+        <button class="nc-more" data-news="rosters">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
 
       <article class="news-card">
-        <div class="nc-meta">
-          <span class="nc-tag event">Ивент</span>
-          <span class="nc-date">5 августа 2026</span>
-        </div>
-        <h3 class="nc-title">Ивент «Огненный дроп»: лимитированные скины</h3>
-        <p class="nc-text">Временный режим и коллаборация с эксклюзивными наградами. Выполняй задания ивента и открывай уникальные предметы, которых больше не будет.</p>
-        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+        <div class="nc-meta"><span class="nc-tag esports">Про-сцена</span><span class="nc-date">EWC 2026</span></div>
+        <h3 class="nc-title">LAN и про-сцена: перенос в Париж, Smash Rule и очки на PMGC</h3>
+        <p class="nc-text">Главный LAN года впервые проходит в Париже (перенос из Эр-Рияда) в составе Esports World Cup. В финальный день действует особое правило Smash Rule, а результаты дают очки квалификации на PMGC 2026.</p>
+        <button class="nc-more" data-news="proscene">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
 
       <article class="news-card">
-        <div class="nc-meta">
-          <span class="nc-tag balance">Баланс</span>
-          <span class="nc-date">1 августа 2026</span>
-        </div>
-        <h3 class="nc-title">Баланс оружия: правки Beryl M762 и DBS</h3>
-        <p class="nc-text">Скорректирована отдача Beryl и урон DBS на средней дистанции. Разбор, как это меняет мету и какие сетапы теперь сильнее — в гайде по отдаче.</p>
-        <a class="nc-more" href="guide.html?id=recoil">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
-      </article>
-
-      <article class="news-card">
-        <div class="nc-meta">
-          <span class="nc-tag esports">Киберспорт</span>
-          <span class="nc-date">28 июля 2026</span>
-        </div>
-        <h3 class="nc-title">Анонс PMGC 2026: расписание и призовой фонд</h3>
-        <p class="nc-text">Объявлены даты мирового чемпионата, участники и призовой фонд. Следи за лучшими командами и забирай приёмы прямо с про-сцены.</p>
-        <a class="nc-more" href="guide.html?id=pro">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
-      </article>
-
-      <article class="news-card">
-        <div class="nc-meta">
-          <span class="nc-tag security">Безопасность</span>
-          <span class="nc-date">22 июля 2026</span>
-        </div>
-        <h3 class="nc-title">Античит: волна банов и новые меры</h3>
-        <p class="nc-text">Массовая волна банов читеров и обновление системы обнаружения. Играй честно — прогресс и ранги нарушителей обнулены.</p>
-        <a class="nc-more" href="#">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></a>
+        <div class="nc-meta"><span class="nc-tag security">Античит</span><span class="nc-date">Ban Pan · 27 мар – 5 апр 2026</span></div>
+        <h3 class="nc-title">Античит: 284 986 аккаунтов и 9 204 устройства забанено за неделю</h3>
+        <p class="nc-text">В недельном отчёте Ban Pan перманентно заблокировано 284 986 аккаунтов и 9 204 устройства. Топ читов: авто-аим 16%, модификация зон урона 15%, воллхак 6%. По рангам больше всего Bronze (50%) и Ace (22%).</p>
+        <button class="nc-more" data-news="anticheat">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
 
     </div>
@@ -271,10 +274,14 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
 
 <footer>
   <div class="wrap">
-    <span>© 2026 Skill Forge — комьюнити PUBG Mobile</span>
+    <span>© 2026 Skill Forge — комьюнити PUBG Mobile. Данные из открытых источников; официальная информация — на pubgmobile.com.</span>
     <a href="index.html">На главную →</a>
   </div>
 </footer>
+
+<div class="nmodal" id="newsModal" aria-hidden="true">
+  <div class="nmodal-card" id="newsModalCard"></div>
+</div>
 
 <script>
 /* embers */
@@ -287,6 +294,135 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     function tick(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.life+=p.flick;p.vx+=(Math.random()-0.5)*0.02;if(p.y<-6||p.x<-6||p.x>w+6){Object.assign(p,makeP(),{y:h+6,x:Math.random()*w});}const a=0.35+Math.abs(Math.sin(p.life))*0.55;const gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);gr.addColorStop(0,'hsla('+p.hue+',100%,62%,'+a+')');gr.addColorStop(1,'hsla('+p.hue+',100%,50%,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(p.x,p.y,p.r*3.2,0,Math.PI*2);ctx.fill();ctx.fillStyle='hsla('+p.hue+',100%,80%,'+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r*0.7,0,Math.PI*2);ctx.fill();}raf=requestAnimationFrame(tick);}
     let rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(resize,150);});resize();tick();
   });
+})();
+
+/* ==== news detail data (researched from open sources, Aug 2026) ==== */
+const NEWS = {
+  v46: {
+    tag:'Патч', tagCls:'', date:'Бета до 23 августа 2026',
+    title:'Обновление 4.6: Хэллоуин-тема, режим на Эрангеле и апдейт WOW',
+    body:`<p><b>Ожидаемый релиз:</b> конец августа — первая неделя сентября 2026. Закрытая бета завершается <span class="hl">23 августа 2026</span> (тестирование шло в 4 фазы: стабильность → тематический режим и WOW → Metro Royale → финальная полировка).</p>
+      <h4>Что подтверждено по бете</h4>
+      <ul>
+        <li>Сезонное <b>хэллоуин-направление</b> (по традиции — «страшные» ивенты: лагеря зомби, боссы, режимы заражения).</li>
+        <li>Новый <b>тематический режим на Эрангеле</b> и улучшения классического режима.</li>
+        <li>Обновления <b>World of Wonders (WOW)</b> для пользовательских карт.</li>
+        <li>Улучшения <b>Metro Royale</b>, оптимизация и багфиксы.</li>
+        <li>Фича <b>«Autoflight»</b> — заявлена, но деталей пока нет, ждём официальных разъяснений.</li>
+      </ul>
+      <p class="nm-note">Коллаборации ниже — по данным дата-майна и утечек, официально не подтверждены: <b>Demon Slayer</b> (тематический режим / Prize Path / Lucky Spin, ориентировочно середина сентября), <b>One Piece «Buggy»</b> (найдено в бете 4.6.1), <b>One-Punch Man</b> (только корейский клиент).</p>
+      <p>Финальный состав контента и точная дата будут в официальном патчноуте на pubgmobile.com.</p>`,
+    src:[['topuplist — 4.6','https://topuplist.com/blogs/detail/pubg-mobile-4-6-update'],['sportsdunia — 4.6','https://www.sportsdunia.com/gaming/pubg-mobile-4-6-update-release-date']]
+  },
+  costumes: {
+    tag:'Костюмы', tagCls:'season', date:'версия 4.6',
+    title:'Ultimate / мифик-костюмы 4.6: сет Andi и скины PMWC',
+    body:`<h4>Что ожидать (по бете и утечкам)</h4>
+      <ul>
+        <li><b>Мифический (Mythical) сет</b> для персонажа <span class="hl">Andi</span> — самое заметное высокоуровневое обновление косметики в 4.6.</li>
+        <li><b>Lucky Spin к PMWC 2026</b> — два эксклюзивных костюма, привязанных к мировому кубку.</li>
+        <li>Коллаб-скины из дата-майна (не подтверждены): <b>Demon Slayer</b> и <b>One Piece «Buggy»</b>.</li>
+      </ul>
+      <p class="nm-note">В PUBG Mobile «ультимейт»-скины оружия и мифические сеты обычно приходят через Lucky Spin / Crate. Финальная стоимость, ротация и способ получения станут известны только в официальном патче.</p>`,
+    src:[['topuplist — 4.6','https://topuplist.com/blogs/detail/pubg-mobile-4-6-update'],['u7buy — outfits','https://www.u7buy.com/blog/new-update-pubg-mobile-4-5/']]
+  },
+  meta: {
+    tag:'Новые метовые ганы', tagCls:'balance', date:'патчи 4.2–4.4 (2026)',
+    title:'Баланс оружия: что усилили и что пофиксили по урону и разбросу',
+    body:`<h4>Патч 4.4 (апрель 2026)</h4>
+      <ul>
+        <li><b>Снайперские винтовки — бафф:</b> <span class="hl">отключён спад урона по дистанции</span> (дальний бой так же эффективен, как ближний) и увеличено пробитие брони.</li>
+        <li><b>Штурмовые (AR) — нерф:</b> сильнее теряют урон на дистанции — на одном контроле отдачи дальний бой уже не вывезешь.</li>
+        <li><b>Дробовики — нерф:</b> меньше урона по броне, <span class="hl">увеличенный разброс</span>, слабее в помещениях.</li>
+        <li><b>Panzerfaust — микс:</b> больше зона детонации, меньше самоурон, больше урона по транспорту.</li>
+      </ul>
+      <h4>Патч 4.2 (7 января 2026)</h4>
+      <ul>
+        <li><b>Класс 7.62 — бафф:</b> AKM, ACE32, M762, Groza и другие заметно усилены.</li>
+        <li><b>SCAR-L — бафф:</b> меньше вертикальной отдачи и выше порог урона на средней/дальней → <span class="hl">новый топ в 5.56</span>.</li>
+        <li><b>Дробовики (S686, S12K, DBS, NS200) — нерф.</b> Причина правок — рост использования DMR (~+20%) в компетативе.</li>
+      </ul>
+      <p><b>Итог меты:</b> снайперки и 7.62-автоматы в цене, SCAR-L — сильнейший в 5.56, дробовики просели. Точные числовые значения разработчик публично не раскрывал.</p>`,
+    src:[['sportsdunia — 4.4 баланс','https://www.sportsdunia.com/gaming/pubg-mobile-4-4-beta-weapon-balance-changes'],['bittopup — 4.2 баланс','https://bittopup.com/article/PUBG-Mobile-42-Update-DMR-70-Buff-AR-Nerfs-Guide']]
+  },
+  pmwc: {
+    tag:'Киберспорт', tagCls:'esports', date:'6–16 августа 2026 · Париж',
+    title:'PMWC 2026: мировой кубок в Париже, $3 000 000, финалы 14–16 августа',
+    body:`<p><b>Даты и место:</b> 6–16 августа 2026, Paris Expo Porte de Versailles, в составе <span class="hl">Esports World Cup 2026</span> (турнир перенесён из Эр-Рияда в Париж).</p>
+      <p><b>Масштаб:</b> <span class="hl">32 команды</span> (было 24) и призовой фонд <span class="hl">$3 000 000</span>.</p>
+      <h4>Формат — три стадии</h4>
+      <ul>
+        <li><b>Групповой этап</b> (6–9 авг): две группы; топ-5 из группы → Гранд-финал; 6–13 места → Survival; нижние 3 вылетают.</li>
+        <li><b>Survival Stage</b> (11–12 авг): 16 команд борются за оставшиеся слоты, топ-6 проходят дальше.</li>
+        <li><b>Гранд-финал</b> (14–16 авг): 16 команд, до 18 матчей; в финальный день — правило <b>Smash Rule</b>.</li>
+      </ul>
+      <p>Выходные дни — 10 и 13 августа. Результаты дают очки квалификации на <b>PMGC 2026</b>.</p>`,
+    src:[['talkesport — PMWC 2026','https://www.talkesport.com/pmwc-2026/']]
+  },
+  rosters: {
+    tag:'Составы', tagCls:'esports', date:'PMWC 2026',
+    title:'Команды PMWC 2026: чемпионы и главные фавориты',
+    body:`<ul>
+        <li><b>Yangon Galacticos</b> (Мьянма) — действующий чемпион PMWC 2025, прямой инвайт.</li>
+        <li><b>Alpha7 Esports</b> (Бразилия) — чемпион PMWC 2024 и действующий чемпион PMGC 2025.</li>
+        <li><b>Корея:</b> NS RedForce, Kiwoom DRX.</li>
+        <li><b>Индия:</b> GodLike Esports, Orangutan.</li>
+        <li><b>Китай:</b> AG.AL International, Tianba, ThunderTalk Gaming.</li>
+      </ul>
+      <p class="nm-note">Всего в турнире 32 команды со всех регионов. Полные игровые составы (роосты) команды объявляют перед стартом стадий; следи за обновлениями на официальных ресурсах турнира.</p>`,
+    src:[['talkesport — PMWC 2026','https://www.talkesport.com/pmwc-2026/'],['Liquipedia — PMWC 2026','https://liquipedia.net/pubgmobile/PUBG_Mobile_World_Cup/2026']]
+  },
+  proscene: {
+    tag:'Про-сцена', tagCls:'esports', date:'EWC 2026',
+    title:'LAN и про-сцена: перенос в Париж, Smash Rule и очки на PMGC',
+    body:`<ul>
+        <li>PMWC 2026 — крупнейший <b>LAN-турнир</b> года по PUBG Mobile; впервые проходит в <span class="hl">Париже</span> в рамках Esports World Cup (перенос из Эр-Рияда).</li>
+        <li>В финальный день Гранд-финала действует особое правило <b>Smash Rule</b>.</li>
+        <li>Очки турнира идут в квалификацию <b>PMGC 2026</b> (плюс зачёт Club Championship в экосистеме EWC).</li>
+      </ul>
+      <p>Формат из 32 команд и призовой $3 000 000 задают тон всему сезону: топ-регионы (Мьянма, Бразилия, Корея, Индия, Китай) съезжаются за титул и рейтинговые очки.</p>`,
+    src:[['talkesport — PMWC 2026','https://www.talkesport.com/pmwc-2026/']]
+  },
+  anticheat: {
+    tag:'Античит', tagCls:'security', date:'Ban Pan · 27 мар – 5 апр 2026',
+    title:'Античит: 284 986 аккаунтов и 9 204 устройства забанено за неделю',
+    body:`<p>В недельном отчёте <b>#BanPan</b> (27 марта – 5 апреля 2026) перманентно заблокировано <span class="hl">284 986 аккаунтов</span> и <span class="hl">9 204 устройства</span>.</p>
+      <h4>Топ типов читов</h4>
+      <ul>
+        <li>Авто-аим (AIM) — <b>16%</b></li>
+        <li>Модификация зон урона — <b>15%</b></li>
+        <li>Воллхак / X-ray — <b>6%</b></li>
+        <li>Спидхак — <b>4%</b></li>
+        <li>Прочее ПО — <b>59%</b></li>
+      </ul>
+      <h4>По рангам</h4>
+      <ul><li>Bronze — <b>50%</b>, Ace — <b>22%</b>, остальное — прочие тиры.</li></ul>
+      <p>Дополнительно за неделю удалено <b>777 реклам читов</b> (охват ~2,9 млн) и вручную проверено <b>16 919 матчей</b>. Подход: ИИ-анализ поведения + продвинутые алгоритмы + ручные проверки. <b>Бан устройства</b> жёстче бана аккаунта — не даёт создать новый профиль на том же железе.</p>
+      <p class="nm-note">Масштаб: ~2,2 млн аккаунтов забанено за одну неделю (авг 2025); ~7,81 млн всего к ноябрю 2025. Роадмап 2026: ИИ-видеоанализ, усиленные блокировки повторного входа, улучшенный пересмотр ложных банов.</p>`,
+    src:[['vpesports — Ban Pan отчёт','https://vpesports.com/games/pubg/pubg-mobile-banpan-report-284986-accounts-banned'],['vpesports — 2.2M банов','https://vpesports.com/games/pubg/pubg-banned-over-32000-cheaters-in-one-week']]
+  }
+};
+
+(function(){
+  const modal = document.getElementById('newsModal');
+  const card = document.getElementById('newsModalCard');
+  function open(id){
+    const n = NEWS[id]; if(!n) return;
+    const srcs = (n.src||[]).map(function(s){ return '<a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+' ↗</a>'; }).join('');
+    card.innerHTML =
+      '<button class="nm-close" id="nmClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>'+
+      '<div class="nm-head"><div class="nc-meta"><span class="nc-tag '+(n.tagCls||'')+'">'+n.tag+'</span><span class="nc-date">'+n.date+'</span></div><h2>'+n.title+'</h2></div>'+
+      '<div class="nm-body">'+n.body+'</div>'+
+      (srcs?'<div class="nm-src"><span class="lbl">Источники:</span>'+srcs+'</div>':'');
+    modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+    document.getElementById('nmClose').addEventListener('click', close);
+  }
+  function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+  document.querySelectorAll('.nc-more[data-news]').forEach(function(b){
+    b.addEventListener('click', function(){ open(b.getAttribute('data-news')); });
+  });
+  modal.addEventListener('click', function(e){ if(e.target===modal) close(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
 })();
 
 /* scroll reveal for news cards */
