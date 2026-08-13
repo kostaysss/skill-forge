@@ -264,6 +264,13 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
         <button class="nc-more" data-news="proscene">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
 
+      <article class="news-card" style="--c:#5b7cfa">
+        <div class="nc-meta"><span class="nc-tag esports">PMGC</span><span class="nc-date">24 ноя – 14 дек 2026 · Турция</span></div>
+        <h3 class="nc-title">PMGC 2026: мировой финал сезона, $3 000 000 и составы топ-команд</h3>
+        <p class="nc-text">Global Championship — финальная точка года: <b>24 ноября – 14 декабря 2026</b> в Турции, призовой <b>$3 000 000</b>. Участники отбираются по очкам PMWC и региональных лиг. Внутри — даты и полные ростеры топ-команд.</p>
+        <button class="nc-more" data-news="pmgc">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+      </article>
+
       <article class="news-card" style="--c:#ff3b3b">
         <div class="nc-meta"><span class="nc-tag security">Античит</span><span class="nc-date">Ban Pan · 27 мар – 5 апр 2026</span></div>
         <h3 class="nc-title">Античит: 284 986 аккаунтов и 9 204 устройства забанено за неделю</h3>
@@ -427,6 +434,22 @@ const NEWS = {
       </ul>
       <p>Дальше по сезону — PMGC (Global Championship) как финальная точка года, куда ведут очки с региональных лиг (PMPL/PMSL) и мировых стадий.</p>`,
     src:[['talkesport — PMWC 2026','https://www.talkesport.com/pmwc-2026/'],['sportskeeda — призовой/очки','https://www.sportskeeda.com/esports/news-pmwc-2026-prize-pool-distribution-revealed']]
+  },
+  pmgc: {
+    tag:'PMGC', tagCls:'esports', date:'24 ноя – 14 дек 2026 · Турция',
+    title:'PMGC 2026: мировой финал сезона в Турции, $3 000 000',
+    body:`<p><b>Даты и место:</b> <span class="hl">24 ноября – 14 декабря 2026</span>, Турция. Общий призовой фонд — <span class="hl">$3 000 000</span>. PMGC (PUBG Mobile Global Championship) — финальная точка киберспортивного сезона.</p>
+      <h4>Квалификация</h4>
+      <p>Участники отбираются по очкам с <b>PMWC 2026</b> и региональных лиг (PMPL / PMSL). Полный список команд, посев и формат объявят ближе к ноябрю 2026.</p>
+      <h4>Составы топ-команд (актуальные ростеры по PMWC 2026)</h4>
+      <ul>
+        <li><b>Yangon Galacticos</b> (Мьянма): Smile (капитан), Marnett, Romeo, SAYCLOUD.</li>
+        <li><b>GodLike Esports</b> (Индия): Manya (капитан), Spower, Saumay, ADMINO.</li>
+        <li><b>Orangutan</b> (Индия): AKop, WizzGOD, Aaru, Attanki.</li>
+        <li><b>Alpha7 Esports</b> (Бразилия): полностью бразильский состав, вице-чемпион PMWC 2026 (полный ростер уточняется).</li>
+      </ul>
+      <p class="nm-note">Составы именно PMGC 2026 финализируются ближе к турниру; ростеры выше — текущие по PMWC 2026 и могут измениться (трансферы/замены). Каждая команда играет составом из 4 игроков. Актуальные списки — на официальных ресурсах турнира и на Liquipedia.</p>`,
+    src:[['escharts — PMGC 2026','https://escharts.com/tournaments/pubg-mobile/pubg-mobile-global-championship-2026'],['talkesport — Orangutan квалификация','https://www.talkesport.com/news/indias-orangutan-qualify-for-pmwc-2026-grand-finals-check-overall-standings/']]
   },
   anticheat: {
     tag:'Античит', tagCls:'security', date:'Ban Pan · 27 мар – 5 апр 2026',
