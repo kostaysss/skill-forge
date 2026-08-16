@@ -1176,27 +1176,36 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   }
   @media (max-width:860px){.feature-grid{grid-template-columns:1fr;}}
 
+  /* spotlight-icon tiles (variant B) */
   .tile{
-    position:relative;
-    background:var(--gunmetal);
-    border:1px solid rgba(237,234,230,0.07);
+    position:relative;overflow:hidden;
+    background:linear-gradient(160deg, #1a1620, #0e0c12);
+    border:1px solid rgba(237,234,230,0.08);
+    border-radius:16px;
     padding:30px 26px;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;
   }
-  .tile::before,.tile::after{
-    content:"";position:absolute;width:16px;height:16px;
-    border:2px solid var(--signal);opacity:0.7;
+  .tile::before{
+    content:"";position:absolute;top:-40px;left:-30px;width:180px;height:180px;z-index:0;pointer-events:none;
+    background:radial-gradient(circle, rgba(255,94,26,0.22), transparent 66%);
+    animation:pulseSpot 3.6s ease-in-out infinite;
   }
-  .tile::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
-  .tile::after{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+  @keyframes pulseSpot{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:1;transform:scale(1.12);}}
+  .tile:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.4);box-shadow:0 24px 44px -18px rgba(0,0,0,0.85);}
+  .tile > *{position:relative;z-index:2;}
   .tile-icon{
-    width:44px;height:44px;
+    width:46px;height:46px;
     display:flex;align-items:center;justify-content:center;
-    border-radius:10px;
-    background:linear-gradient(135deg, rgba(255,94,26,0.18), rgba(255,176,32,0.1));
-    color:var(--ember);
+    border-radius:12px;
+    background:linear-gradient(135deg, var(--signal), var(--ember));
+    color:var(--void);
+    box-shadow:0 8px 22px -6px rgba(255,94,26,0.7);
     margin-bottom:18px;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1);
   }
-  .tile-icon svg{width:22px;height:22px;}
+  .tile:hover .tile-icon{transform:scale(1.06);}
+  .tile-icon svg{width:23px;height:23px;}
+  @media (prefers-reduced-motion: reduce){.tile::before{animation:none;}}
   .tile h3{
     font-family:var(--font-body);
     font-size:17px;
