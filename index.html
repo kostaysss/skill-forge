@@ -678,9 +678,6 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     background:linear-gradient(90deg, transparent, var(--ember), var(--signal), transparent);
     animation:hsweep 2.6s linear infinite;
   }
-  .hcell:nth-child(2) .hsweep::after{animation-delay:.65s;}
-  .hcell:nth-child(3) .hsweep::after{animation-delay:1.3s;}
-  .hcell:nth-child(4) .hsweep::after{animation-delay:1.95s;}
   @keyframes hsweep{0%{left:-40%;}100%{left:100%;}}
   /* corner ticks */
   .htick{position:absolute;width:9px;height:9px;border-color:var(--signal);pointer-events:none;z-index:3;transition:width .28s ease, height .28s ease, box-shadow .28s ease;}
