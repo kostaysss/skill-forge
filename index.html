@@ -418,17 +418,22 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     text-wrap:balance;
   }
   .search-copy h2 em{color:var(--signal);font-style:normal;}
+  /* timeline presentation (variant D) */
+  .search-timeline{position:relative;padding-left:40px;max-width:46ch;}
+  .search-timeline::before{content:"";position:absolute;left:17px;top:16px;bottom:16px;width:2px;background:linear-gradient(180deg,var(--signal),var(--ember));}
+  @media (max-width:1080px){.search-timeline{margin-inline:auto;}}
   .search-point{
-    display:flex;gap:12px;margin-bottom:22px;max-width:44ch;
-    text-align:left;
+    position:relative;margin-bottom:24px;text-align:left;
   }
-  @media (max-width:1080px){.search-point{text-align:left;margin-inline:auto;}}
+  .search-point:last-child{margin-bottom:0;}
   .search-point .pico{
-    flex:none;width:22px;height:22px;color:var(--signal);margin-top:1px;
+    position:absolute;left:-40px;top:0;width:36px;height:36px;flex:none;
+    padding:8px;border-radius:50%;color:var(--ember);
+    background:var(--void);border:2px solid var(--ember);
+    box-shadow:0 0 12px rgba(255,176,32,0.5);
   }
   .search-point p{
-    margin:0;color:var(--ash);font-size:13.5px;line-height:1.55;
-    text-transform:uppercase;letter-spacing:0.02em;
+    margin:0;color:var(--ash);font-size:14px;line-height:1.6;
   }
   .search-point p b{color:var(--bone);font-weight:700;}
 
@@ -1607,6 +1612,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   <div class="wrap">
     <div class="search-copy">
       <h2><em>Умный</em> поиск тиммейтов</h2>
+      <div class="search-timeline">
       <div class="search-point">
         <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
         <p>Забудь о случайных напарниках и бесконечном поиске в чатах. Наша система анализирует твою <b>игровую статистику, стиль игры и уровень навыков</b>, после чего автоматически подбирает игроков, похожих на тебя.</p>
@@ -1618,6 +1624,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
       <div class="search-point">
         <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
         <p>Собирай постоянную команду, улучшай взаимодействие и играй с теми, кто <b>действительно подходит тебе</b> по стилю и скиллу.</p>
+      </div>
       </div>
     </div>
 
