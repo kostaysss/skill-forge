@@ -109,6 +109,31 @@
   .bp-verdict.warn{color:var(--ember);background:rgba(255,176,32,0.08);border:1px solid rgba(255,176,32,0.3);}
   .bp-row .v small{color:var(--steel);font-weight:400;font-family:var(--font-mono);}
 
+  /* damage calculator */
+  .dmg-res{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:520px){.dmg-res{grid-template-columns:1fr;}}
+  .dmg-card{padding:18px;border-radius:14px;background:rgba(20,18,24,0.6);border:1px solid rgba(237,234,230,0.08);text-align:center;}
+  .dmg-card.head{border-color:rgba(255,94,26,0.35);}
+  .dmg-card .dl{font-family:var(--font-mono);font-size:11px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ash);}
+  .dmg-card .dbig{font-family:var(--font-display);font-size:34px;line-height:1;margin:8px 0 6px;background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .dmg-card .dbig span{font-family:var(--font-body);font-size:13px;color:var(--ash);-webkit-text-fill-color:var(--ash);}
+  .dmg-card .dsub{font-family:var(--font-mono);font-size:11.5px;color:var(--steel);}
+  .dmg-meta{font-family:var(--font-mono);font-size:12px;color:var(--ash);margin:14px 0 0;text-align:center;}
+  .dmg-meta b{color:var(--bone);}
+
+  /* zone timer */
+  .zone-box{padding:26px;text-align:center;}
+  .zone-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px;text-align:left;}
+  .zphase{font-family:var(--font-display);text-transform:uppercase;font-size:18px;}
+  .zstate{font-family:var(--font-mono);font-size:12px;color:var(--ash);margin-top:3px;}
+  .zdps{flex:none;font-family:var(--font-mono);font-size:12px;color:var(--ember);border:1px solid rgba(255,176,32,0.4);border-radius:999px;padding:5px 12px;}
+  .ztime{font-family:var(--font-display);font-size:clamp(52px,13vw,84px);line-height:1;background:linear-gradient(180deg,var(--ember),var(--signal));-webkit-background-clip:text;background-clip:text;color:transparent;margin:8px 0;font-variant-numeric:tabular-nums;}
+  .zbar{height:10px;border-radius:999px;background:rgba(237,234,230,0.1);overflow:hidden;margin:8px 0 10px;}
+  .zbar span{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--signal),var(--ember));transition:width .4s linear;}
+  .zbar.shrink span{background:linear-gradient(90deg,#ff3b3b,var(--signal));}
+  .znext{font-family:var(--font-mono);font-size:12.5px;color:var(--ash);margin-bottom:18px;}
+  .zctrl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+
   /* ---- progress tracker ---- */
   .trk-add{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;padding:22px 26px;}
   @media(max-width:620px){.trk-add{grid-template-columns:1fr 1fr;}}
@@ -216,6 +241,14 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"/></svg>
         Трекер прогресса
       </button>
+      <button class="tab" data-tab="dmg" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4"/></svg>
+        Калькулятор урона
+      </button>
+      <button class="tab" data-tab="zone" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Таймер зоны
+      </button>
     </div>
 
     <section class="tabpanel active" id="tab-calc">
@@ -258,6 +291,39 @@
 
       <div class="mlist" id="mList"></div>
     </section>
+
+    <section class="tabpanel" id="tab-dmg">
+      <div class="glass">
+        <div class="calc-grid">
+          <div>
+            <h3 class="card-h">Цель и оружие</h3>
+            <p class="card-sub">Сколько пуль до килла с учётом брони и шлема цели.</p>
+            <div class="field"><label>Оружие</label><select id="dw"></select></div>
+            <div class="field"><label>Бронежилет цели</label><select id="dv"><option value="0">Нет</option><option value="1">Ур. 1</option><option value="2">Ур. 2</option><option value="3" selected>Ур. 3</option></select></div>
+            <div class="field"><label>Шлем цели</label><select id="dh"><option value="0">Нет</option><option value="1">Ур. 1</option><option value="2">Ур. 2</option><option value="3" selected>Ур. 3</option></select></div>
+          </div>
+          <div class="bp-out" id="dmgOut"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="tabpanel" id="tab-zone">
+      <div class="glass zone-box">
+        <div class="zone-top">
+          <div><div class="zphase" id="zPhase">Фаза 1 из 8</div><div class="zstate" id="zState">Нажми «Старт» в начале матча</div></div>
+          <div class="zdps" id="zDps">Урон зоны: —</div>
+        </div>
+        <div class="ztime" id="zTime">05:00</div>
+        <div class="zbar" id="zBarWrap"><span id="zBar"></span></div>
+        <div class="znext" id="zNext">Таймер повторяет тайминги классической зоны 8×8</div>
+        <div class="zctrl">
+          <button class="btn btn-primary" id="zStart" type="button">Старт матча</button>
+          <button class="btn btn-ghost" id="zPause" type="button" hidden>Пауза</button>
+          <button class="btn btn-ghost" id="zReset" type="button" hidden>Сброс</button>
+        </div>
+        <p class="bp-note">Ориентировочные тайминги классического режима 8×8 (Erangel / Miramar): фаза 1 — ~5 мин ожидания и 2 мин сжатия, дальше зоны сжимаются быстрее, урон растёт (5-я фаза 3/с, 7-я 7/с, финал 11/с). Точные значения немного меняются от патча — используй как ориентир для ротаций.</p>
+      </div>
+    </section>
   </div>
 </main>
 
@@ -272,10 +338,10 @@
 /* ---- tabs ---- */
 (function(){
   var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
-  var panels = {calc:document.getElementById('tab-calc'), track:document.getElementById('tab-track')};
+  var panels = {calc:document.getElementById('tab-calc'), track:document.getElementById('tab-track'), dmg:document.getElementById('tab-dmg'), zone:document.getElementById('tab-zone')};
   function sel(name){ tabs.forEach(function(t){ t.classList.toggle('active', t.dataset.tab===name); }); Object.keys(panels).forEach(function(k){ panels[k].classList.toggle('active', k===name); }); if(location.hash.replace('#','')!==name) history.replaceState(null,'','#'+name); }
   tabs.forEach(function(t){ t.addEventListener('click', function(){ sel(t.dataset.tab); }); });
-  var h = location.hash.replace('#',''); if(h==='track'||h==='calc') sel(h);
+  var h = location.hash.replace('#',''); if(panels[h]) sel(h);
 })();
 
 /* ================= H. BACKPACK CALCULATOR (weight-based) ================= */
@@ -470,6 +536,93 @@
   }
   window.addEventListener('resize', function(){ render(); });
   render();
+})();
+
+/* ================= A. DAMAGE CALCULATOR ================= */
+(function(){
+  var HEAD = 2.35; /* approx headshot multiplier */
+  var VEST = {0:0, 1:0.30, 2:0.40, 3:0.55};
+  var HELM = {0:0, 1:0.30, 2:0.40, 3:0.55};
+  /* [name, base body damage, fire interval sec/shot] — datamined, approximate */
+  var GUNS = [
+    ['М416 (AR 5.56)',41,0.085], ['SCAR-L (AR 5.56)',41,0.096], ['AUG (AR 5.56)',43,0.0857],
+    ['QBZ (AR 5.56)',43,0.092], ['G36C (AR 5.56)',43,0.0857], ['M16A4 (AR 5.56)',43,0.075],
+    ['AKM (AR 7.62)',48,0.1], ['Beryl M762 (AR 7.62)',47,0.08], ['ACE32 (AR 7.62)',44,0.09],
+    ['Mk47 Mutant (AR 7.62)',49,0.1], ['Groza (AR 7.62)',48,0.08],
+    ['Mini14 (DMR 5.56)',46,0.13], ['QBU (DMR 5.56)',48,0.11], ['SKS (DMR 7.62)',53,0.09],
+    ['SLR (DMR 7.62)',58,0.1], ['Mk14 (DMR 7.62)',61,0.09], ['VSS (DMR 9)',41,0.086],
+    ['UMP45 (SMG .45)',39,0.092], ['Vector (SMG .45)',31,0.055], ['Tommy Gun (SMG .45)',40,0.086],
+    ['UZI (SMG 9)',26,0.048], ['MP5K (SMG 9)',33,0.066], ['PP-19 Bizon (SMG 9)',35,0.09], ['P90 (SMG)',35,0.06],
+    ['Win94 (7.62)',66,0.6], ['Kar98k (снайп 7.62)',79,1.9], ['Mosin (снайп 7.62)',79,1.9],
+    ['M24 (снайп 7.62)',88,1.8], ['AWM (снайп .300)',105,1.85]
+  ];
+  var dw=document.getElementById('dw'), dv=document.getElementById('dv'), dh=document.getElementById('dh'), out=document.getElementById('dmgOut');
+  GUNS.forEach(function(g,i){ var o=document.createElement('option'); o.value=i; o.textContent=g[0]; dw.appendChild(o); });
+  dw.value='0';
+  function plu(n){ var m=n%100,d=n%10; if(m>=11&&m<=14)return 'выстрелов'; if(d===1)return 'выстрел'; if(d>=2&&d<=4)return 'выстрела'; return 'выстрелов'; }
+  function ttk(t){ return t<=0 ? '1 выстрел' : (t<1? Math.round(t*1000)+' мс' : t.toFixed(2)+' с'); }
+  function render(){
+    var g=GUNS[+dw.value], base=g[1], intr=g[2];
+    var vr=VEST[+dv.value], hr=HELM[+dh.value];
+    var bodyD=base*(1-vr), headD=base*HEAD*(1-hr);
+    var bodyN=Math.ceil(100/bodyD), headN=Math.ceil(100/headD);
+    out.innerHTML =
+      '<div class="dmg-res">'+
+        '<div class="dmg-card"><div class="dl">В тело</div><div class="dbig">'+bodyN+' <span>'+plu(bodyN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(bodyD)+' · TTK '+ttk((bodyN-1)*intr)+'</div></div>'+
+        '<div class="dmg-card head"><div class="dl">В голову</div><div class="dbig">'+headN+' <span>'+plu(headN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(headD)+' · TTK '+ttk((headN-1)*intr)+'</div></div>'+
+      '</div>'+
+      '<p class="dmg-meta">Базовый урон <b>'+base+'</b> · множитель головы <b>×'+HEAD+'</b> · броня −'+Math.round(vr*100)+'% · шлем −'+Math.round(hr*100)+'%</p>'+
+      '<p class="bp-note">Урон на близкой дистанции, при полной прочности брони (по мере разрушения защита слабеет). Без учёта спада по дистанции. Значения — датамайн, могут отличаться от патча. Дробовики считаются по пеллетам и здесь не приведены.</p>';
+  }
+  [dw,dv,dh].forEach(function(el){ el.addEventListener('change', render); });
+  render();
+})();
+
+/* ================= C. ZONE TIMER ================= */
+(function(){
+  var PHASES=[
+    {wait:270,shrink:120,dps:0.6},
+    {wait:180,shrink:90,dps:0.8},
+    {wait:120,shrink:70,dps:1},
+    {wait:120,shrink:55,dps:2},
+    {wait:100,shrink:45,dps:3},
+    {wait:90,shrink:35,dps:5},
+    {wait:80,shrink:30,dps:7},
+    {wait:170,shrink:15,dps:11}
+  ];
+  var zPhase=document.getElementById('zPhase'), zState=document.getElementById('zState'), zDps=document.getElementById('zDps'),
+      zTime=document.getElementById('zTime'), zBarWrap=document.getElementById('zBarWrap'), zBar=document.getElementById('zBar'),
+      zNext=document.getElementById('zNext'), zStart=document.getElementById('zStart'), zPause=document.getElementById('zPause'), zReset=document.getElementById('zReset');
+  var idx=0, stage='wait', rem=0, total=0, tick=null, running=false;
+  function fmt(s){ s=Math.max(0,Math.round(s)); var m=Math.floor(s/60), ss=s%60; return (m<10?'0':'')+m+':'+(ss<10?'0':'')+ss; }
+  function show(){
+    var ph=PHASES[idx];
+    zPhase.textContent='Фаза '+(idx+1)+' из '+PHASES.length;
+    zState.textContent = stage==='wait' ? 'Ожидание сжатия' : 'Зона сжимается';
+    zDps.textContent='Урон зоны: '+ph.dps+'/с';
+    zTime.textContent=fmt(rem);
+    zBar.style.width=(total? (rem/total*100):0)+'%';
+    zBarWrap.classList.toggle('shrink', stage==='shrink');
+    zNext.textContent = stage==='wait' ? 'До начала сжатия зоны' : ((idx+1<PHASES.length) ? 'Идёт сжатие → далее фаза '+(idx+2) : 'Финальное сжатие');
+  }
+  function enter(i, st){ idx=i; stage=st; var ph=PHASES[idx]; rem = (st==='wait')?ph.wait:ph.shrink; total=rem; show(); }
+  function step(){
+    rem--;
+    if(rem<=0){
+      if(stage==='wait'){ enter(idx,'shrink'); return; }
+      if(idx+1<PHASES.length){ enter(idx+1,'wait'); return; }
+      stop(); zState.textContent='Матч завершён — зона схлопнулась'; zTime.textContent='00:00'; zBar.style.width='0%'; return;
+    }
+    show();
+  }
+  function start(){ if(running) return; running=true; tick=setInterval(step,1000); zStart.hidden=true; zPause.hidden=false; zReset.hidden=false; zPause.textContent='Пауза'; }
+  function pause(){ if(!running){ running=true; tick=setInterval(step,1000); zPause.textContent='Пауза'; return; } running=false; clearInterval(tick); zPause.textContent='Продолжить'; }
+  function stop(){ running=false; if(tick) clearInterval(tick); }
+  function reset(){ stop(); enter(0,'wait'); zStart.hidden=false; zPause.hidden=true; zReset.hidden=true; zState.textContent='Нажми «Старт» в начале матча'; }
+  zStart.addEventListener('click', function(){ enter(0,'wait'); start(); });
+  zPause.addEventListener('click', pause);
+  zReset.addEventListener('click', reset);
+  enter(0,'wait');
 })();
 
 /* embers */
