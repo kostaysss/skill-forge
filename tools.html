@@ -120,6 +120,10 @@
   .dmg-card .dsub{font-family:var(--font-mono);font-size:11.5px;color:var(--steel);}
   .dmg-meta{font-family:var(--font-mono);font-size:12px;color:var(--ash);margin:14px 0 0;text-align:center;}
   .dmg-meta b{color:var(--bone);}
+  .field input[type=range]{width:100%;accent-color:var(--signal);cursor:pointer;height:22px;}
+  .dmg-range{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-family:var(--font-mono);font-size:12.5px;margin:12px 0 0;padding:10px 12px;border-radius:10px;background:rgba(20,18,24,0.6);border:1px solid rgba(237,234,230,0.08);}
+  .dmg-range .rv{font-weight:700;color:var(--ember);}
+  .dmg-range .rv.full{color:var(--intel);}
 
   /* zone timer */
   .zone-box{padding:26px;text-align:center;}
@@ -301,6 +305,7 @@
             <div class="field"><label>Оружие</label><select id="dw"></select></div>
             <div class="field"><label>Бронежилет цели</label><select id="dv"><option value="0">Нет</option><option value="1">Ур. 1</option><option value="2">Ур. 2</option><option value="3" selected>Ур. 3</option></select></div>
             <div class="field"><label>Шлем цели</label><select id="dh"><option value="0">Нет</option><option value="1">Ур. 1</option><option value="2">Ур. 2</option><option value="3" selected>Ур. 3</option></select></div>
+            <div class="field"><label>Дистанция: <span id="ddV">50</span> м</label><input id="dd" type="range" min="0" max="300" step="10" value="50"></div>
           </div>
           <div class="bp-out" id="dmgOut"></div>
         </div>
@@ -556,25 +561,40 @@
     ['Win94 (7.62)',66,0.6], ['Kar98k (снайп 7.62)',79,1.9], ['Mosin (снайп 7.62)',79,1.9],
     ['M24 (снайп 7.62)',88,1.8], ['AWM (снайп .300)',105,1.85], ['Lynx AMR (снайп .50)',118,1.9]
   ];
-  var dw=document.getElementById('dw'), dv=document.getElementById('dv'), dh=document.getElementById('dh'), out=document.getElementById('dmgOut');
+  var dw=document.getElementById('dw'), dv=document.getElementById('dv'), dh=document.getElementById('dh'), dd=document.getElementById('dd'), ddV=document.getElementById('ddV'), out=document.getElementById('dmgOut');
   GUNS.forEach(function(g,i){ var o=document.createElement('option'); o.value=i; o.textContent=g[0]; dw.appendChild(o); });
   dw.value='0';
   function plu(n){ var m=n%100,d=n%10; if(m>=11&&m<=14)return 'выстрелов'; if(d===1)return 'выстрел'; if(d>=2&&d<=4)return 'выстрела'; return 'выстрелов'; }
   function ttk(t){ return t<=0 ? '1 выстрел' : (t<1? Math.round(t*1000)+' мс' : t.toFixed(2)+' с'); }
+  function gclass(name){ if(/снайп/.test(name))return 'sniper'; if(/DMR/.test(name))return 'dmr'; if(/SMG/.test(name))return 'smg'; return 'ar'; }
+  /* approximate class-based distance falloff (grounded in patch facts) */
+  function rangeMult(cls, dist){
+    if(cls==='sniper') return 1;                                   // снайперки — без спада (правка 4.4)
+    if(cls==='dmr') return dist<=150 ? 1 : Math.max(0.92, 1-(dist-150)*0.0006);
+    if(cls==='ar')  return dist<=100 ? 1 : Math.max(0.85, 1-(dist-100)*0.0015); // −15% к ~200м
+    if(cls==='smg') return dist<=50  ? 1 : Math.max(0.6,  1-(dist-50)*0.0027);  // сильный спад дальше 50м
+    return 1;
+  }
+  function rangeLabel(cls){ return cls==='smg'?'0–50 м':(cls==='ar'?'до 100 м':(cls==='dmr'?'до 150 м':'любая')); }
   function render(){
-    var g=GUNS[+dw.value], base=g[1], intr=g[2];
+    var g=GUNS[+dw.value], base=g[1], intr=g[2], cls=gclass(g[0]);
+    var dist=+dd.value; ddV.textContent=dist;
+    var rm=rangeMult(cls,dist), eff=base*rm;
     var vr=VEST[+dv.value], hr=HELM[+dh.value];
-    var bodyD=base*(1-vr), headD=base*HEAD*(1-hr);
+    var bodyD=eff*(1-vr), headD=eff*HEAD*(1-hr);
     var bodyN=Math.ceil(100/bodyD), headN=Math.ceil(100/headD);
+    var rmPct=Math.round(rm*100);
     out.innerHTML =
       '<div class="dmg-res">'+
         '<div class="dmg-card"><div class="dl">В тело</div><div class="dbig">'+bodyN+' <span>'+plu(bodyN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(bodyD)+' · TTK '+ttk((bodyN-1)*intr)+'</div></div>'+
         '<div class="dmg-card head"><div class="dl">В голову</div><div class="dbig">'+headN+' <span>'+plu(headN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(headD)+' · TTK '+ttk((headN-1)*intr)+'</div></div>'+
       '</div>'+
+      '<div class="dmg-range"><span>На '+dist+' м · полный урон '+rangeLabel(cls)+'</span><span class="rv'+(rmPct>=100?' full':'')+'">'+rmPct+'% урона · '+Math.round(eff)+' ед.</span></div>'+
       '<p class="dmg-meta">Базовый урон <b>'+base+'</b> · множитель головы <b>×'+HEAD+'</b> · броня −'+Math.round(vr*100)+'% · шлем −'+Math.round(hr*100)+'%</p>'+
-      '<p class="bp-note">Урон на близкой дистанции, при полной прочности брони (по мере разрушения защита слабеет). Без учёта спада по дистанции. Значения — датамайн, могут отличаться от патча. Дробовики считаются по пеллетам и здесь не приведены.</p>';
+      '<p class="bp-note">Спад по дистанции — приближённая классовая модель (снайперки без спада; AR −до 15% дальше 100 м; SMG сильно теряют дальше 50 м; DMR — почти без спада). Точных по-метровых кривых для PUBG Mobile в открытых источниках нет. При полной прочности брони. Дробовики (по пеллетам) не приведены.</p>';
   }
   [dw,dv,dh].forEach(function(el){ el.addEventListener('change', render); });
+  dd.addEventListener('input', render);
   render();
 })();
 
