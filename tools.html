@@ -96,6 +96,18 @@
   .bp-row .v{font-family:var(--font-mono);font-weight:700;color:var(--bone);}
   .bp-row .v.big{color:var(--ember);font-size:15px;}
   .bp-note{font-size:12px;color:var(--steel);border-left:2px solid rgba(255,176,32,0.5);padding-left:12px;margin-top:14px;}
+  .cap-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:2px;}
+  .cap-head .ct{font-family:var(--font-display);text-transform:uppercase;font-size:14px;}
+  .cap-head .cn{font-family:var(--font-mono);font-size:12px;color:var(--ash);}
+  .cap-bar{height:10px;border-radius:999px;background:rgba(237,234,230,0.1);overflow:hidden;margin:8px 0 6px;}
+  .cap-bar span{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--signal),var(--ember));transition:width .3s ease;}
+  .cap-bar span.full{background:linear-gradient(90deg,#ff3b3b,var(--signal));}
+  .cap-line{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:11.5px;color:var(--ash);margin-bottom:8px;}
+  .cap-line b{color:var(--bone);}
+  .bp-verdict{font-family:var(--font-mono);font-size:12.5px;font-weight:700;margin:0 0 16px;padding:8px 12px;border-radius:9px;}
+  .bp-verdict.ok{color:var(--intel);background:rgba(47,224,168,0.08);border:1px solid rgba(47,224,168,0.3);}
+  .bp-verdict.warn{color:var(--ember);background:rgba(255,176,32,0.08);border:1px solid rgba(255,176,32,0.3);}
+  .bp-row .v small{color:var(--steel);font-weight:400;font-family:var(--font-mono);}
 
   /* ---- progress tracker ---- */
   .trk-add{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;padding:22px 26px;}
@@ -211,7 +223,8 @@
         <div class="calc-grid">
           <div>
             <h3 class="card-h">Твой сетап</h3>
-            <p class="card-sub">Выбери два ствола — посчитаем оптимальный подбор.</p>
+            <p class="card-sub">Выбери рюкзак и два ствола — распределим лут по вместимости.</p>
+            <div class="field"><label>Уровень рюкзака</label><select id="bag"><option value="1">Рюкзак ур. 1 — 350 ед.</option><option value="2">Рюкзак ур. 2 — 400 ед.</option><option value="3" selected>Рюкзак ур. 3 — 450 ед.</option></select></div>
             <div class="field"><label>Оружие 1</label><select id="w1"></select></div>
             <div class="field"><label>Оружие 2</label><select id="w2"></select></div>
             <div class="field"><label>Сетап 5.56 + 12 калибр?</label><select id="mix"><option value="no">Нет</option><option value="yes">Да — увеличить 5.56</option></select></div>
@@ -265,8 +278,12 @@
   var h = location.hash.replace('#',''); if(h==='track'||h==='calc') sel(h);
 })();
 
-/* ================= H. BACKPACK CALCULATOR ================= */
+/* ================= H. BACKPACK CALCULATOR (weight-based) ================= */
 (function(){
+  /* per-round ammo weight (PUBG Mobile) */
+  var AMMOW = {'5.56 мм':0.5,'7.62 мм':0.7,'.45':0.4,'9 мм':0.375,'12 калибр':1.25};
+  /* backpack total capacity incl. character (150) + body armor (50) */
+  var CAPS = {1:350, 2:400, 3:450};
   var WEAPONS = [
     {n:'М416', cal:'5.56 мм', ammo:200},
     {n:'AUG', cal:'5.56 мм', ammo:200},
@@ -290,30 +307,92 @@
     {n:'S686 (двустволка)', cal:'12 калибр', ammo:14},
     {n:'DBS', cal:'12 калибр', ammo:14}
   ];
-  var MEDS = [['Малая аптечка','4–5'],['Бинты','20'],['Энергетик','7'],['Шприц с адреналином','1']];
-  var UTIL = [['Осколочная граната','4'],['Дымовая граната','4'],['Коктейль Молотова','1–2']];
+  /* fixed medicine kit (name, weight-per-unit, qty) */
+  var MEDS = [['Бинты',2,20],['Малая аптечка',10,5],['Энергетик',4,7],['Шприц адреналина',20,1]];
+  var MEDS_W = MEDS.reduce(function(s,m){return s+m[1]*m[2];},0); // 138
+  /* full util wishlist */
+  var UTIL_FULL = [['Осколочная граната',18,4],['Дымовая граната',14,4],['Коктейль Молотова',16,2]];
+  var UTIL_W = UTIL_FULL.reduce(function(s,u){return s+u[1]*u[2];},0); // 160
 
-  var w1=document.getElementById('w1'), w2=document.getElementById('w2'), mix=document.getElementById('mix'), out=document.getElementById('bpOut');
+  var bag=document.getElementById('bag'), w1=document.getElementById('w1'), w2=document.getElementById('w2'), mix=document.getElementById('mix'), out=document.getElementById('bpOut');
   WEAPONS.forEach(function(w,i){
     var o1=document.createElement('option'); o1.value=i; o1.textContent=w.n+' · '+w.cal; w1.appendChild(o1);
     var o2=document.createElement('option'); o2.value=i; o2.textContent=w.n+' · '+w.cal; w2.appendChild(o2);
   });
   w1.value='0'; w2.value='17';
-  function ammoFor(w, boost){ var a=w.ammo; if(boost && w.cal.indexOf('5.56')===0) a=240; return a; }
+
+  function recAmmo(w, boost){ return w.ammo + ((boost && w.cal==='5.56 мм') ? 40 : 0); }
+
   function render(){
     var a=WEAPONS[+w1.value], b=WEAPONS[+w2.value], boost=(mix.value==='yes');
-    var html='<div class="bp-block"><h4>Патроны</h4>';
-    html+='<div class="bp-row"><span class="k">'+a.n+' <span style="color:var(--steel)">('+a.cal+')</span></span><span class="v big">'+ammoFor(a,boost)+'</span></div>';
-    html+='<div class="bp-row"><span class="k">'+b.n+' <span style="color:var(--steel)">('+b.cal+')</span></span><span class="v big">'+ammoFor(b,boost)+'</span></div></div>';
-    html+='<div class="bp-block"><h4>Медицина</h4>'+MEDS.map(function(m){return '<div class="bp-row"><span class="k">'+m[0]+'</span><span class="v">'+m[1]+'</span></div>';}).join('')+'</div>';
-    html+='<div class="bp-block"><h4>Утиль</h4>'+UTIL.map(function(u){return '<div class="bp-row"><span class="k">'+u[0]+'</span><span class="v">'+u[1]+'</span></div>';}).join('')+'</div>';
-    var note='Большая аптечка, болеутоляющее, светошумовые и липкие — 0 (экономят место и время). ';
-    if(a.cal===b.cal && a.cal.indexOf('12')!==0) note+='Оба ствола на одном калибре — можно немного поднять запас. ';
-    if(boost) note+='Учтён сетап 5.56 + 12: запас 5.56 увеличен. ';
+    var CAP=CAPS[+bag.value];
+    var wa=AMMOW[a.cal], wb=AMMOW[b.cal];
+    var recA=recAmmo(a,boost), recB=recAmmo(b,boost);
+    var baseA=Math.floor(recA*0.5), baseB=Math.floor(recB*0.5);
+
+    /* greedy allocation by priority: meds -> baseline ammo -> baseline util -> top-up ammo -> extra util */
+    var portions=[
+      {c:'med', n:'Бинты', w:2, q:20},
+      {c:'med', n:'Малая аптечка', w:10, q:5},
+      {c:'med', n:'Энергетик', w:4, q:7},
+      {c:'med', n:'Шприц адреналина', w:20, q:1},
+      {c:'a', n:a.n, w:wa, q:baseA},
+      {c:'b', n:b.n, w:wb, q:baseB},
+      {c:'util', n:'Дымовая граната', w:14, q:2},
+      {c:'util', n:'Осколочная граната', w:18, q:2},
+      {c:'a', n:a.n, w:wa, q:recA-baseA},
+      {c:'b', n:b.n, w:wb, q:recB-baseB},
+      {c:'util', n:'Дымовая граната', w:14, q:2},
+      {c:'util', n:'Осколочная граната', w:18, q:2},
+      {c:'util', n:'Коктейль Молотова', w:16, q:2}
+    ];
+    var space=CAP, got={};
+    portions.forEach(function(p){
+      if(p.q<=0) return;
+      var take=Math.min(p.q, Math.floor(space/p.w));
+      if(take>0){ got[p.n]=(got[p.n]||0)+take; space-=take*p.w; }
+    });
+    var used=Math.round((CAP-space)*10)/10;
+    var free=Math.round(space*10)/10;
+    var pct=Math.min(100, Math.round(used/CAP*100));
+
+    /* full recommended kit weight -> minimum bag level */
+    var fullW = MEDS_W + UTIL_W + recA*wa + recB*wb;
+    var minLevel = fullW<=350?1:(fullW<=400?2:(fullW<=450?3:0));
+
+    function amt(name, rec){ var g=got[name]||0; var ext=(rec!=null && g<rec)?' <small>из '+rec+'</small>':''; return '<span class="v big">'+g+ext+'</span>'; }
+    function amtM(name, rec){ var g=got[name]||0; var ext=(g<rec)?' <small>из '+rec+'</small>':''; return '<span class="v">'+g+ext+'</span>'; }
+
+    var html='';
+    html+='<div class="cap-head"><span class="ct">Рюкзак ур. '+bag.value+'</span><span class="cn">вместимость '+CAP+' ед.</span></div>';
+    html+='<div class="cap-bar"><span class="'+(pct>=100?'full':'')+'" style="width:'+pct+'%"></span></div>';
+    html+='<div class="cap-line"><span>Занято: <b>'+used+'</b> ед.</span><span>Свободно: <b>'+free+'</b> ед.</span></div>';
+    if(fullW<=CAP){
+      html+='<div class="bp-verdict ok">✅ Полный рекомендованный набор помещается</div>';
+    } else if(minLevel){
+      html+='<div class="bp-verdict warn">⚠️ Полный набор не влезает — показан оптимальный под ур. '+bag.value+'. Для полного нужен рюкзак ур. '+minLevel+'.</div>';
+    } else {
+      html+='<div class="bp-verdict warn">⚠️ Полный набор тяжелее максимума (450). Показан оптимальный под ур. '+bag.value+' — часть утиля/патронов урезана.</div>';
+    }
+
+    html+='<div class="bp-block"><h4>Патроны</h4>';
+    html+='<div class="bp-row"><span class="k">'+a.n+' <span style="color:var(--steel)">('+a.cal+')</span></span>'+amt(a.n,recA)+'</div>';
+    html+='<div class="bp-row"><span class="k">'+b.n+' <span style="color:var(--steel)">('+b.cal+')</span></span>'+amt(b.n,recB)+'</div></div>';
+
+    html+='<div class="bp-block"><h4>Медицина</h4>';
+    MEDS.forEach(function(m){ html+='<div class="bp-row"><span class="k">'+m[0]+'</span>'+amtM(m[0],m[2])+'</div>'; });
+    html+='</div>';
+
+    html+='<div class="bp-block"><h4>Утиль</h4>';
+    UTIL_FULL.forEach(function(u){ html+='<div class="bp-row"><span class="k">'+u[0]+'</span>'+amtM(u[0],u[2])+'</div>'; });
+    html+='</div>';
+
+    var note='Вес: патрон '+wa+'/'+wb+' ед., бинт 2, аптечка 10, шприц 20, граната 14–18. Большая аптечка, болеутоляющее, светошум и липкие — 0 (экономят место). Вместимость учитывает персонажа (150) + бронежилет (50). ';
+    if(boost) note+='Сетап 5.56 + 12: запас 5.56 поднят до '+recA+'. ';
     html+='<p class="bp-note">'+note+'Подробнее — в гайде <a href="guide.html?id=pickup" style="color:var(--signal)">«Настройка подбора»</a>.</p>';
     out.innerHTML=html;
   }
-  [w1,w2,mix].forEach(function(el){ el.addEventListener('change', render); });
+  [bag,w1,w2,mix].forEach(function(el){ el.addEventListener('change', render); });
   render();
 })();
 
