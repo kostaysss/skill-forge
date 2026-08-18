@@ -571,15 +571,23 @@
   function plu(n){ var m=n%100,d=n%10; if(m>=11&&m<=14)return 'выстрелов'; if(d===1)return 'выстрел'; if(d>=2&&d<=4)return 'выстрела'; return 'выстрелов'; }
   function ttk(t){ return t<=0 ? '1 выстрел' : (t<1? Math.round(t*1000)+' мс' : t.toFixed(2)+' с'); }
   function gclass(name){ if(/снайп/.test(name))return 'sniper'; if(/DMR/.test(name))return 'dmr'; if(/SMG/.test(name))return 'smg'; return 'ar'; }
-  /* approximate class-based distance falloff (grounded in patch facts) */
+  /* distance falloff — % of base damage by range, from PUBG datamined curves (pubgstatistics, patch 42.3):
+     AR≈AKM, DMR≈SLR, sniper≈Kar98k, SMG≈Vector. Piecewise-linear interpolation between measured points. */
+  var FALL = {
+    ar:    [[0,1],[50,1],[100,0.948],[200,0.819],[300,0.75]],
+    dmr:   [[0,1],[100,1],[200,0.947],[300,0.886]],
+    sniper:[[0,1],[100,1],[200,0.987],[300,0.975]],
+    smg:   [[0,1],[50,0.79],[100,0.658],[200,0.60],[300,0.60]]
+  };
   function rangeMult(cls, dist){
-    if(cls==='sniper') return 1;                                   // снайперки — без спада (правка 4.4)
-    if(cls==='dmr') return dist<=150 ? 1 : Math.max(0.92, 1-(dist-150)*0.0006);
-    if(cls==='ar')  return dist<=100 ? 1 : Math.max(0.85, 1-(dist-100)*0.0015); // −15% к ~200м
-    if(cls==='smg') return dist<=50  ? 1 : Math.max(0.6,  1-(dist-50)*0.0027);  // сильный спад дальше 50м
-    return 1;
+    var pts = FALL[cls] || FALL.ar;
+    if(dist<=pts[0][0]) return pts[0][1];
+    for(var i=1;i<pts.length;i++){
+      if(dist<=pts[i][0]){ var a=pts[i-1], b=pts[i]; return a[1] + (b[1]-a[1])*((dist-a[0])/(b[0]-a[0])); }
+    }
+    return pts[pts.length-1][1];
   }
-  function rangeLabel(cls){ return cls==='smg'?'0–50 м':(cls==='ar'?'до 100 м':(cls==='dmr'?'до 150 м':'любая')); }
+  function rangeLabel(cls){ return cls==='smg'?'падает с 0 м':(cls==='ar'?'до 50 м':'до 100 м'); }
   function render(){
     var g=GUNS[+dw.value], base=g[1], intr=g[2], cls=gclass(g[0]);
     var dist=+dd.value; ddV.textContent=dist;
@@ -595,7 +603,7 @@
       '</div>'+
       '<div class="dmg-range"><span>На '+dist+' м · полный урон '+rangeLabel(cls)+'</span><span class="rv'+(rmPct>=100?' full':'')+'">'+rmPct+'% урона · '+Math.round(eff)+' ед.</span></div>'+
       '<p class="dmg-meta">Базовый урон <b>'+base+'</b> · множитель головы <b>×'+HEAD+'</b> · броня −'+Math.round(vr*100)+'% · шлем −'+Math.round(hr*100)+'%</p>'+
-      '<p class="bp-note">Спад по дистанции — приближённая классовая модель (снайперки без спада; AR −до 15% дальше 100 м; SMG сильно теряют дальше 50 м; DMR — почти без спада). Точных по-метровых кривых для PUBG Mobile в открытых источниках нет. При полной прочности брони. Дробовики (по пеллетам) не приведены.</p>';
+      '<p class="bp-note">Спад по дистанции — по датамайн-кривым PUBG (pubgstatistics, patch 42.3), по представителю класса: AR≈AKM, DMR≈SLR, снайперка≈Kar98k, SMG≈Vector. В PUBG Mobile возможны небольшие отличия. При полной прочности брони, дробовики (по пеллетам) не приведены.</p>';
     drawFall(cls, dist);
   }
   function drawFall(cls, dist){
