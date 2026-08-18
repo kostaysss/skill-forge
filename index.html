@@ -1477,6 +1477,16 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     transition:opacity .55s ease, transform .55s cubic-bezier(.2,.8,.2,1);
   }
   .reveal-on .sr-in{opacity:1 !important;transform:none !important;}
+
+  /* install-app button */
+  .pwa-install{position:fixed;left:20px;bottom:22px;z-index:300;display:inline-flex;align-items:center;gap:9px;
+    font-family:var(--font-mono);font-size:12.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;
+    color:var(--void);background:linear-gradient(100deg,var(--signal),var(--ember));border:none;cursor:pointer;
+    padding:12px 18px;border-radius:999px;box-shadow:0 14px 30px -10px rgba(255,94,26,0.6);animation:pwaPop .3s ease;}
+  .pwa-install svg{width:17px;height:17px;}
+  .pwa-install:hover{filter:brightness(1.07);transform:translateY(-2px);}
+  @keyframes pwaPop{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:none;}}
+  @media (max-width:640px){.pwa-install{left:12px;bottom:14px;font-size:11px;padding:10px 14px;}}
 </style>
 </head>
 <body>
@@ -2029,6 +2039,11 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   Донат
 </button>
 
+<button class="pwa-install" id="pwaInstall" type="button" hidden aria-label="Установить приложение">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v11M7 9.5l5 5 5-5M5 21h14"/></svg>
+  Установить приложение
+</button>
+
 <div class="donate-overlay" id="donateOverlay" role="dialog" aria-modal="true" aria-labelledby="donateTitle" aria-hidden="true">
   <div class="donate-modal">
     <button class="dm-close" id="donateClose" type="button" aria-label="Закрыть">
@@ -2422,6 +2437,23 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   }, {threshold:0.12, rootMargin:'0px 0px -6% 0px'});
 
   targets.forEach(function(el){ io.observe(el); });
+})();
+
+/* install-app button (PWA) */
+(function(){
+  var btn = document.getElementById('pwaInstall'); if(!btn) return;
+  var standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if(standalone) return; // already installed — hide
+  var deferred = null;
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); deferred = e; btn.hidden = false; });
+  window.addEventListener('appinstalled', function(){ btn.hidden = true; deferred = null; });
+  btn.addEventListener('click', function(){
+    if(deferred){ deferred.prompt(); deferred.userChoice.then(function(){ deferred = null; btn.hidden = true; }); return; }
+    if(isIOS){ alert('Установка на iPhone/iPad:\n1. Нажми кнопку «Поделиться» в Safari.\n2. Выбери «На экран «Домой»».'); return; }
+    alert('Установка приложения:\nОткрой меню браузера (⋮) и выбери «Установить приложение» / «Add to Home screen».\nЕсли пункта нет — обнови страницу и попробуй снова (или используй Chrome).');
+  });
+  if(isIOS){ btn.hidden = false; } // iOS has no beforeinstallprompt — show button with instructions
 })();
 </script>
 </body>
