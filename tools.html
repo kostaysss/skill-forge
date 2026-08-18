@@ -125,18 +125,15 @@
   .dmg-range .rv{font-weight:700;color:var(--ember);}
   .dmg-range .rv.full{color:var(--intel);}
 
-  /* zone timer */
-  .zone-box{padding:26px;text-align:center;}
-  .zone-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px;text-align:left;}
-  .zphase{font-family:var(--font-display);text-transform:uppercase;font-size:18px;}
-  .zstate{font-family:var(--font-mono);font-size:12px;color:var(--ash);margin-top:3px;}
-  .zdps{flex:none;font-family:var(--font-mono);font-size:12px;color:var(--ember);border:1px solid rgba(255,176,32,0.4);border-radius:999px;padding:5px 12px;}
-  .ztime{font-family:var(--font-display);font-size:clamp(52px,13vw,84px);line-height:1;background:linear-gradient(180deg,var(--ember),var(--signal));-webkit-background-clip:text;background-clip:text;color:transparent;margin:8px 0;font-variant-numeric:tabular-nums;}
-  .zbar{height:10px;border-radius:999px;background:rgba(237,234,230,0.1);overflow:hidden;margin:8px 0 10px;}
-  .zbar span{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--signal),var(--ember));transition:width .4s linear;}
-  .zbar.shrink span{background:linear-gradient(90deg,#ff3b3b,var(--signal));}
-  .znext{font-family:var(--font-mono);font-size:12.5px;color:var(--ash);margin-bottom:18px;}
-  .zctrl{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
+  /* zone timings table */
+  .ztable{display:grid;grid-template-columns:auto 1fr 1fr auto;gap:1px;background:rgba(237,234,230,0.07);border-radius:12px;overflow:hidden;min-width:420px;}
+  .zt-h,.zt-c{background:rgba(10,9,13,0.62);padding:11px 14px;font-size:13.5px;}
+  .zt-h{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.05em;text-transform:uppercase;color:var(--steel);background:rgba(22,20,26,0.75);}
+  .zt-c{color:var(--bone);}
+  .zt-c.z{font-family:var(--font-display);color:var(--ember);}
+  .zt-c.dps{font-family:var(--font-mono);color:var(--signal);text-align:right;}
+  .zt-h.right,.zt-c.right{text-align:right;}
+  .ztable .final .zt-c, .ztable div.zt-c.final{background:rgba(255,94,26,0.08);}
 
   /* ---- progress tracker ---- */
   .trk-add{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;padding:22px 26px;}
@@ -250,8 +247,8 @@
         Калькулятор урона
       </button>
       <button class="tab" data-tab="zone" type="button">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-        Таймер зоны
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/></svg>
+        Тайминги зоны
       </button>
     </div>
 
@@ -317,20 +314,12 @@
     </section>
 
     <section class="tabpanel" id="tab-zone">
-      <div class="glass zone-box">
-        <div class="zone-top">
-          <div><div class="zphase" id="zPhase">Фаза 1 из 8</div><div class="zstate" id="zState">Нажми «Старт» в начале матча</div></div>
-          <div class="zdps" id="zDps">Урон зоны: —</div>
-        </div>
-        <div class="ztime" id="zTime">05:00</div>
-        <div class="zbar" id="zBarWrap"><span id="zBar"></span></div>
-        <div class="znext" id="zNext">Таймер повторяет тайминги классической зоны 8×8</div>
-        <div class="zctrl">
-          <button class="btn btn-primary" id="zStart" type="button">Старт матча</button>
-          <button class="btn btn-ghost" id="zPause" type="button" hidden>Пауза</button>
-          <button class="btn btn-ghost" id="zReset" type="button" hidden>Сброс</button>
-        </div>
-        <p class="bp-note">Ориентировочные тайминги классического режима 8×8 (Erangel / Miramar): фаза 1 — ~5 мин ожидания и 2 мин сжатия, дальше зоны сжимаются быстрее, урон растёт (5-я фаза 3/с, 7-я 7/с, финал 11/с). Точные значения немного меняются от патча — используй как ориентир для ротаций.</p>
+      <div class="glass" style="padding:24px 26px">
+        <h3 class="card-h">Как сходится зона</h3>
+        <p class="card-sub">Паблик / рейтинг / классика · карта 8×8 (Erangel, Miramar). «Ожидание» — сколько стоит белый круг перед сжатием, «сжатие» — сколько синий круг сходится к белому.</p>
+        <div style="overflow-x:auto"><div class="ztable" id="zTable"></div></div>
+        <p class="dmg-meta" id="zTotal"></p>
+        <p class="bp-note"><b>Турниры (PMPL / PMGC).</b> В киберспорте зоны обычно <b>быстрее и агрессивнее</b>: короче ожидание, быстрее сжатие и выше урон — чтобы форсировать ротации и файты. Точные значения задаются <b>кастомными настройками комнаты</b> под каждый турнир и в открытых рулбуках публикуются редко, поэтому отдельную турнирную таблицу привести достоверно нельзя. Значения выше — классический режим, урон/с и «поздние зоны сходятся быстрее» подтверждены источниками; точные секунды могут немного меняться от патча и карты.</p>
       </div>
     </section>
   </div>
@@ -645,51 +634,34 @@
   render();
 })();
 
-/* ================= C. ZONE TIMER ================= */
+/* ================= C. ZONE TIMINGS TABLE ================= */
 (function(){
+  /* classic 8x8 (Erangel/Miramar): wait before shrink, shrink duration, zone DPS */
   var PHASES=[
-    {wait:270,shrink:120,dps:0.6},
-    {wait:180,shrink:90,dps:0.8},
-    {wait:120,shrink:70,dps:1},
-    {wait:120,shrink:55,dps:2},
-    {wait:100,shrink:45,dps:3},
-    {wait:90,shrink:35,dps:5},
-    {wait:80,shrink:30,dps:7},
-    {wait:170,shrink:15,dps:11}
+    {wait:270,shrink:120,dps:0.4},
+    {wait:180,shrink:90, dps:0.6},
+    {wait:120,shrink:70, dps:0.8},
+    {wait:120,shrink:60, dps:1},
+    {wait:100,shrink:45, dps:3},
+    {wait:90, shrink:35, dps:5},
+    {wait:80, shrink:30, dps:7},
+    {wait:170,shrink:15, dps:11}
   ];
-  var zPhase=document.getElementById('zPhase'), zState=document.getElementById('zState'), zDps=document.getElementById('zDps'),
-      zTime=document.getElementById('zTime'), zBarWrap=document.getElementById('zBarWrap'), zBar=document.getElementById('zBar'),
-      zNext=document.getElementById('zNext'), zStart=document.getElementById('zStart'), zPause=document.getElementById('zPause'), zReset=document.getElementById('zReset');
-  var idx=0, stage='wait', rem=0, total=0, tick=null, running=false;
-  function fmt(s){ s=Math.max(0,Math.round(s)); var m=Math.floor(s/60), ss=s%60; return (m<10?'0':'')+m+':'+(ss<10?'0':'')+ss; }
-  function show(){
-    var ph=PHASES[idx];
-    zPhase.textContent='Фаза '+(idx+1)+' из '+PHASES.length;
-    zState.textContent = stage==='wait' ? 'Ожидание сжатия' : 'Зона сжимается';
-    zDps.textContent='Урон зоны: '+ph.dps+'/с';
-    zTime.textContent=fmt(rem);
-    zBar.style.width=(total? (rem/total*100):0)+'%';
-    zBarWrap.classList.toggle('shrink', stage==='shrink');
-    zNext.textContent = stage==='wait' ? 'До начала сжатия зоны' : ((idx+1<PHASES.length) ? 'Идёт сжатие → далее фаза '+(idx+2) : 'Финальное сжатие');
-  }
-  function enter(i, st){ idx=i; stage=st; var ph=PHASES[idx]; rem = (st==='wait')?ph.wait:ph.shrink; total=rem; show(); }
-  function step(){
-    rem--;
-    if(rem<=0){
-      if(stage==='wait'){ enter(idx,'shrink'); return; }
-      if(idx+1<PHASES.length){ enter(idx+1,'wait'); return; }
-      stop(); zState.textContent='Матч завершён — зона схлопнулась'; zTime.textContent='00:00'; zBar.style.width='0%'; return;
-    }
-    show();
-  }
-  function start(){ if(running) return; running=true; tick=setInterval(step,1000); zStart.hidden=true; zPause.hidden=false; zReset.hidden=false; zPause.textContent='Пауза'; }
-  function pause(){ if(!running){ running=true; tick=setInterval(step,1000); zPause.textContent='Пауза'; return; } running=false; clearInterval(tick); zPause.textContent='Продолжить'; }
-  function stop(){ running=false; if(tick) clearInterval(tick); }
-  function reset(){ stop(); enter(0,'wait'); zStart.hidden=false; zPause.hidden=true; zReset.hidden=true; zState.textContent='Нажми «Старт» в начале матча'; }
-  zStart.addEventListener('click', function(){ enter(0,'wait'); start(); });
-  zPause.addEventListener('click', pause);
-  zReset.addEventListener('click', reset);
-  enter(0,'wait');
+  var t=document.getElementById('zTable'); if(!t) return;
+  function fmt(s){ var m=Math.floor(s/60), ss=s%60; return m>0 ? (m+' мин '+(ss?ss+' с':'')).trim() : (ss+' с'); }
+  var html='<div class="zt-h">Зона</div><div class="zt-h">Ожидание</div><div class="zt-h">Сжатие</div><div class="zt-h right">Урон/с</div>';
+  var totalW=0, totalS=0;
+  PHASES.forEach(function(p,i){
+    var last=(i===PHASES.length-1);
+    html+='<div class="zt-c z'+(last?' final':'')+'">'+(i+1)+'</div>'+
+          '<div class="zt-c'+(last?' final':'')+'">'+fmt(p.wait)+'</div>'+
+          '<div class="zt-c'+(last?' final':'')+'">'+fmt(p.shrink)+'</div>'+
+          '<div class="zt-c dps'+(last?' final':'')+'">'+p.dps+'</div>';
+    totalW+=p.wait; totalS+=p.shrink;
+  });
+  t.innerHTML=html;
+  var tot=document.getElementById('zTotal');
+  if(tot){ var totalSec=totalW+totalS; var mm=Math.floor(totalSec/60); tot.innerHTML='Полный цикл всех зон ≈ <b>'+mm+' мин</b> (от 1-й до финального сжатия). Урон зоны растёт с <b>0.4/с</b> до <b>11/с</b> в финале — на поздних фазах вне зоны выжить почти нельзя.'; }
 })();
 
 /* embers */
