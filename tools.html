@@ -545,16 +545,16 @@
   var HELM = {0:0, 1:0.30, 2:0.40, 3:0.55};
   /* [name, base body damage, fire interval sec/shot] — datamined, approximate */
   var GUNS = [
-    ['М416 (AR 5.56)',41,0.085], ['SCAR-L (AR 5.56)',41,0.096], ['AUG (AR 5.56)',43,0.0857],
-    ['QBZ (AR 5.56)',43,0.092], ['G36C (AR 5.56)',43,0.0857], ['M16A4 (AR 5.56)',43,0.075],
-    ['AKM (AR 7.62)',48,0.1], ['Beryl M762 (AR 7.62)',47,0.08], ['ACE32 (AR 7.62)',44,0.09],
-    ['Mk47 Mutant (AR 7.62)',49,0.1], ['Groza (AR 7.62)',48,0.08],
-    ['Mini14 (DMR 5.56)',46,0.13], ['QBU (DMR 5.56)',48,0.11], ['SKS (DMR 7.62)',53,0.09],
-    ['SLR (DMR 7.62)',58,0.1], ['Mk14 (DMR 7.62)',61,0.09], ['VSS (DMR 9)',41,0.086],
-    ['UMP45 (SMG .45)',39,0.092], ['Vector (SMG .45)',31,0.055], ['Tommy Gun (SMG .45)',40,0.086],
-    ['UZI (SMG 9)',26,0.048], ['MP5K (SMG 9)',33,0.066], ['PP-19 Bizon (SMG 9)',35,0.09], ['P90 (SMG)',35,0.06],
+    ['М416 (AR 5.56)',40,0.085], ['SCAR-L (AR 5.56)',42,0.096], ['AUG (AR 5.56)',41,0.0857],
+    ['QBZ (AR 5.56)',42,0.092], ['G36C (AR 5.56)',42,0.0857], ['M16A4 (AR 5.56)',43,0.075],
+    ['AKM (AR 7.62)',47,0.1], ['Beryl M762 (AR 7.62)',44,0.08], ['ACE32 (AR 7.62)',44,0.09],
+    ['Mk47 Mutant (AR 7.62)',49,0.1], ['Groza (AR 7.62)',47,0.08],
+    ['Mini14 (DMR 5.56)',48,0.13], ['QBU (DMR 5.56)',48,0.11], ['Mk12 (DMR 5.56)',50,0.1],
+    ['SKS (DMR 7.62)',53,0.09], ['SLR (DMR 7.62)',56,0.1], ['Mk14 (DMR 7.62)',61,0.09], ['VSS (DMR 9)',41,0.086],
+    ['UMP45 (SMG .45)',41,0.092], ['Vector (SMG .45)',31,0.055], ['Tommy Gun (SMG .45)',40,0.086],
+    ['UZI (SMG 9)',26,0.048], ['MP5K (SMG 9)',33,0.066], ['PP-19 Bizon (SMG 9)',36,0.09], ['P90 (SMG)',35,0.06],
     ['Win94 (7.62)',66,0.6], ['Kar98k (снайп 7.62)',79,1.9], ['Mosin (снайп 7.62)',79,1.9],
-    ['M24 (снайп 7.62)',88,1.8], ['AWM (снайп .300)',105,1.85]
+    ['M24 (снайп 7.62)',88,1.8], ['AWM (снайп .300)',105,1.85], ['Lynx AMR (снайп .50)',118,1.9]
   ];
   var dw=document.getElementById('dw'), dv=document.getElementById('dv'), dh=document.getElementById('dh'), out=document.getElementById('dmgOut');
   GUNS.forEach(function(g,i){ var o=document.createElement('option'); o.value=i; o.textContent=g[0]; dw.appendChild(o); });
