@@ -570,28 +570,38 @@
   dw.value='0';
   function plu(n){ var m=n%100,d=n%10; if(m>=11&&m<=14)return 'выстрелов'; if(d===1)return 'выстрел'; if(d>=2&&d<=4)return 'выстрела'; return 'выстрелов'; }
   function ttk(t){ return t<=0 ? '1 выстрел' : (t<1? Math.round(t*1000)+' мс' : t.toFixed(2)+' с'); }
-  function gclass(name){ if(/снайп/.test(name))return 'sniper'; if(/DMR/.test(name))return 'dmr'; if(/SMG/.test(name))return 'smg'; return 'ar'; }
-  /* distance falloff — % of base damage by range, from PUBG datamined curves (pubgstatistics, patch 42.3):
-     AR≈AKM, DMR≈SLR, sniper≈Kar98k, SMG≈Vector. Piecewise-linear interpolation between measured points. */
+  /* per-weapon distance falloff — % of base damage retained by range.
+     Datamined from PUBG (pubgstatistics, patch 42.3), assigned by weapon type + caliber:
+     5.56 AR≈M416, 7.62 AR≈AKM, 5.56 DMR≈Mini14, 7.62 DMR≈SLR, 9 SMG≈MP5K, .45 SMG≈Vector, снайперки≈Kar98k. */
   var FALL = {
-    ar:    [[0,1],[50,1],[100,0.948],[200,0.819],[300,0.75]],
-    dmr:   [[0,1],[100,1],[200,0.947],[300,0.886]],
-    sniper:[[0,1],[100,1],[200,0.987],[300,0.975]],
-    smg:   [[0,1],[50,0.79],[100,0.658],[200,0.60],[300,0.60]]
+    ar556: [[0,1],[50,1],[100,0.975],[200,0.895],[300,0.8125]],
+    ar762: [[0,1],[50,1],[100,0.948],[200,0.819],[300,0.75]],
+    dmr556:[[0,1],[100,0.993],[200,0.926],[300,0.857]],
+    dmr762:[[0,1],[100,1],[200,0.947],[300,0.886]],
+    dmr9:  [[0,1],[50,0.922],[100,0.778],[200,0.60],[300,0.60]],
+    smg45: [[0,1],[50,0.79],[100,0.658],[200,0.60],[300,0.60]],
+    smg9:  [[0,1],[50,0.922],[100,0.778],[200,0.60],[300,0.60]],
+    sniper:[[0,1],[100,1],[200,0.987],[300,0.975]]
   };
-  function rangeMult(cls, dist){
-    var pts = FALL[cls] || FALL.ar;
+  function fallKey(name){
+    if(/снайп/.test(name) || /Win94/.test(name)) return 'sniper';
+    if(/DMR/.test(name)){ if(/5\.56/.test(name))return 'dmr556'; if(/DMR 9/.test(name))return 'dmr9'; return 'dmr762'; }
+    if(/SMG/.test(name) || /P90/.test(name)){ return /\.45/.test(name)?'smg45':'smg9'; }
+    return /5\.56/.test(name) ? 'ar556' : 'ar762';
+  }
+  function rangeMult(key, dist){
+    var pts = FALL[key] || FALL.ar556;
     if(dist<=pts[0][0]) return pts[0][1];
     for(var i=1;i<pts.length;i++){
       if(dist<=pts[i][0]){ var a=pts[i-1], b=pts[i]; return a[1] + (b[1]-a[1])*((dist-a[0])/(b[0]-a[0])); }
     }
     return pts[pts.length-1][1];
   }
-  function rangeLabel(cls){ return cls==='smg'?'падает с 0 м':(cls==='ar'?'до 50 м':'до 100 м'); }
+  function rangeLabel(key){ if(key.indexOf('ar')===0) return 'до 50 м'; if(key==='smg9'||key==='smg45'||key==='dmr9') return 'падает рано'; return 'до 100 м'; }
   function render(){
-    var g=GUNS[+dw.value], base=g[1], intr=g[2], cls=gclass(g[0]);
+    var g=GUNS[+dw.value], base=g[1], intr=g[2], key=fallKey(g[0]);
     var dist=+dd.value; ddV.textContent=dist;
-    var rm=rangeMult(cls,dist), eff=base*rm;
+    var rm=rangeMult(key,dist), eff=base*rm;
     var vr=VEST[+dv.value], hr=HELM[+dh.value];
     var bodyD=eff*(1-vr), headD=eff*HEAD*(1-hr);
     var bodyN=Math.ceil(100/bodyD), headN=Math.ceil(100/headD);
@@ -601,10 +611,10 @@
         '<div class="dmg-card"><div class="dl">В тело</div><div class="dbig">'+bodyN+' <span>'+plu(bodyN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(bodyD)+' · TTK '+ttk((bodyN-1)*intr)+'</div></div>'+
         '<div class="dmg-card head"><div class="dl">В голову</div><div class="dbig">'+headN+' <span>'+plu(headN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(headD)+' · TTK '+ttk((headN-1)*intr)+'</div></div>'+
       '</div>'+
-      '<div class="dmg-range"><span>На '+dist+' м · полный урон '+rangeLabel(cls)+'</span><span class="rv'+(rmPct>=100?' full':'')+'">'+rmPct+'% урона · '+Math.round(eff)+' ед.</span></div>'+
+      '<div class="dmg-range"><span>На '+dist+' м · полный урон '+rangeLabel(key)+'</span><span class="rv'+(rmPct>=100?' full':'')+'">'+rmPct+'% урона · '+Math.round(eff)+' ед.</span></div>'+
       '<p class="dmg-meta">Базовый урон <b>'+base+'</b> · множитель головы <b>×'+HEAD+'</b> · броня −'+Math.round(vr*100)+'% · шлем −'+Math.round(hr*100)+'%</p>'+
-      '<p class="bp-note">Спад по дистанции — по датамайн-кривым PUBG (pubgstatistics, patch 42.3), по представителю класса: AR≈AKM, DMR≈SLR, снайперка≈Kar98k, SMG≈Vector. В PUBG Mobile возможны небольшие отличия. При полной прочности брони, дробовики (по пеллетам) не приведены.</p>';
-    drawFall(cls, dist);
+      '<p class="bp-note">Спад по дистанции — датамайн-кривые PUBG (pubgstatistics, patch 42.3), у каждого оружия своя по типу и калибру: 5.56 AR (≈M416) держит урон дольше, чем 7.62 AR (≈AKM); DMR — почти без спада; снайперки — практически ровно; SMG теряют урон рано. В PUBG Mobile возможны небольшие отличия. При полной прочности брони, дробовики (по пеллетам) не приведены.</p>';
+    drawFall(key, dist);
   }
   function drawFall(cls, dist){
     var c=document.getElementById('dmgChart'); if(!c) return;
