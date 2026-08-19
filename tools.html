@@ -316,10 +316,15 @@
     <section class="tabpanel" id="tab-zone">
       <div class="glass" style="padding:24px 26px">
         <h3 class="card-h">Как сходится зона</h3>
-        <p class="card-sub">Паблик / рейтинг / классика · карта 8×8 (Erangel, Miramar). «Ожидание» — сколько стоит белый круг перед сжатием, «сжатие» — сколько синий круг сходится к белому.</p>
-        <div style="overflow-x:auto"><div class="ztable" id="zTable"></div></div>
+        <p class="card-sub">На праках и Big Play зона обычно быстрее и злее, чем в паблике. Выбери режим комнаты — таблица пересчитается. «Ожидание» — сколько стоит белый круг, «сжатие» — сколько синий сходится к белому.</p>
+        <div class="field" style="max-width:420px"><label>Режим / настройки комнаты</label><select id="zPreset">
+          <option value="1|1">Классика — паблик / рейтинг</option>
+          <option value="1.1|1.5">Прак / скрим (Big Play), типичный — сжатие ×1.1, урон ×1.5</option>
+          <option value="1.2|2">Прак — жёсткий: сжатие ×1.2, урон ×2</option>
+        </select></div>
+        <div style="overflow-x:auto;margin-top:16px"><div class="ztable" id="zTable"></div></div>
         <p class="dmg-meta" id="zTotal"></p>
-        <p class="bp-note"><b>Турниры (PMPL / PMGC).</b> В киберспорте зоны обычно <b>быстрее и агрессивнее</b>: короче ожидание, быстрее сжатие и выше урон — чтобы форсировать ротации и файты. Точные значения задаются <b>кастомными настройками комнаты</b> под каждый турнир и в открытых рулбуках публикуются редко, поэтому отдельную турнирную таблицу привести достоверно нельзя. Значения выше — классический режим, урон/с и «поздние зоны сходятся быстрее» подтверждены источниками; точные секунды могут немного меняться от патча и карты.</p>
+        <p class="bp-note" id="zNote"></p>
       </div>
     </section>
   </div>
@@ -647,21 +652,33 @@
     {wait:80, shrink:30, dps:7},
     {wait:170,shrink:15, dps:11}
   ];
-  var t=document.getElementById('zTable'); if(!t) return;
-  function fmt(s){ var m=Math.floor(s/60), ss=s%60; return m>0 ? (m+' мин '+(ss?ss+' с':'')).trim() : (ss+' с'); }
-  var html='<div class="zt-h">Зона</div><div class="zt-h">Ожидание</div><div class="zt-h">Сжатие</div><div class="zt-h right">Урон/с</div>';
-  var totalW=0, totalS=0;
-  PHASES.forEach(function(p,i){
-    var last=(i===PHASES.length-1);
-    html+='<div class="zt-c z'+(last?' final':'')+'">'+(i+1)+'</div>'+
-          '<div class="zt-c'+(last?' final':'')+'">'+fmt(p.wait)+'</div>'+
-          '<div class="zt-c'+(last?' final':'')+'">'+fmt(p.shrink)+'</div>'+
-          '<div class="zt-c dps'+(last?' final':'')+'">'+p.dps+'</div>';
-    totalW+=p.wait; totalS+=p.shrink;
-  });
-  t.innerHTML=html;
-  var tot=document.getElementById('zTotal');
-  if(tot){ var totalSec=totalW+totalS; var mm=Math.floor(totalSec/60); tot.innerHTML='Полный цикл всех зон ≈ <b>'+mm+' мин</b> (от 1-й до финального сжатия). Урон зоны растёт с <b>0.4/с</b> до <b>11/с</b> в финале — на поздних фазах вне зоны выжить почти нельзя.'; }
+  var t=document.getElementById('zTable'), sel=document.getElementById('zPreset'), tot=document.getElementById('zTotal'), note=document.getElementById('zNote');
+  if(!t) return;
+  function fmt(s){ s=Math.round(s); var m=Math.floor(s/60), ss=s%60; return m>0 ? (m+' мин '+(ss?ss+' с':'')).trim() : (ss+' с'); }
+  function r1(x){ return Math.round(x*10)/10; }
+  function render(){
+    var parts=(sel && sel.value ? sel.value : '1|1').split('|');
+    var spd=parseFloat(parts[0])||1, dmg=parseFloat(parts[1])||1;
+    var html='<div class="zt-h">Зона</div><div class="zt-h">Ожидание</div><div class="zt-h">Сжатие</div><div class="zt-h right">Урон/с</div>';
+    var totalW=0, totalS=0;
+    PHASES.forEach(function(p,i){
+      var last=(i===PHASES.length-1);
+      var shrink=p.shrink/spd, d=p.dps*dmg;
+      totalW+=p.wait; totalS+=shrink;
+      html+='<div class="zt-c z'+(last?' final':'')+'">'+(i+1)+'</div>'+
+            '<div class="zt-c'+(last?' final':'')+'">'+fmt(p.wait)+'</div>'+
+            '<div class="zt-c'+(last?' final':'')+'">'+fmt(shrink)+'</div>'+
+            '<div class="zt-c dps'+(last?' final':'')+'">'+r1(d)+'</div>';
+    });
+    t.innerHTML=html;
+    if(tot){ var mm=Math.floor((totalW+totalS)/60); tot.innerHTML='Полный цикл ≈ <b>'+mm+' мин</b>. Урон зоны — от <b>'+r1(0.4*dmg)+'/с</b> до <b>'+r1(11*dmg)+'/с</b> в финале.'; }
+    if(note){
+      if(spd===1 && dmg===1) note.innerHTML='Классические тайминги (паблик / рейтинг / классика), карта 8×8. Урон/с и правило «поздние зоны сходятся быстрее» — из открытых источников; точные секунды могут немного меняться от патча и карты.';
+      else note.innerHTML='<b>Прак / скрим (в т.ч. Big Play)</b> используют кастомные настройки комнаты. Здесь применены: <b>скорость сжатия ×'+spd+'</b> и <b>урон зоны ×'+dmg+'</b> к классическим значениям. Организатор обычно ещё и <b>сокращает ожидание</b> (старт зоны настраивается 0–420 с), так что реальный цикл бывает быстрее показанного. Точные множители задаёт админ комнаты — уточняй в правилах конкретного прака.';
+    }
+  }
+  if(sel) sel.addEventListener('change', render);
+  render();
 })();
 
 /* embers */
