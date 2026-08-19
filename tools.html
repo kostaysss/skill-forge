@@ -783,9 +783,9 @@
     var w=cv.width,h=cv.height;
     ctx.clearRect(0,0,w,h);
     if(ready){ ctx.drawImage(img,0,0,w,h); } else { ctx.fillStyle='#0e1519'; ctx.fillRect(0,0,w,h); }
-    ctx.fillStyle='rgba(9,10,14,0.40)'; ctx.fillRect(0,0,w,h);           /* dim so annotations recede */
-    var vg=ctx.createRadialGradient(w/2,h/2,w*0.28,w/2,h/2,w*0.62);
-    vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(5,6,10,0.72)');
+    ctx.fillStyle='rgba(9,10,14,0.14)'; ctx.fillRect(0,0,w,h);           /* light dim — keep map crisp */
+    var vg=ctx.createRadialGradient(w/2,h/2,w*0.34,w/2,h/2,w*0.66);
+    vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(5,6,10,0.45)');
     ctx.fillStyle=vg; ctx.fillRect(0,0,w,h);
   }
   function frame(chain,p,prog){
