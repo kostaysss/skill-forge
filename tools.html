@@ -558,7 +558,9 @@
     ['UMP45 (SMG .45)',41,0.092], ['Vector (SMG .45)',31,0.055], ['Tommy Gun (SMG .45)',40,0.086],
     ['UZI (SMG 9)',26,0.048], ['MP5K (SMG 9)',33,0.066], ['PP-19 Bizon (SMG 9)',36,0.09], ['P90 (SMG)',35,0.06],
     ['Win94 (7.62)',66,0.6], ['Kar98k (снайп 7.62)',79,1.9], ['Mosin (снайп 7.62)',79,1.9],
-    ['M24 (снайп 7.62)',88,1.8], ['AWM (снайп .300)',105,1.85], ['Lynx AMR (снайп .50)',118,1.9]
+    ['M24 (снайп 7.62)',88,1.8], ['AWM (снайп .300)',105,1.85], ['Lynx AMR (снайп .50)',118,1.9],
+    ['Сайга S12K (дробовик 12к)',189,0.25], ['S1897 помпа (дробовик 12к)',207,0.6],
+    ['S686 двустволка (дробовик 12к)',207,0.2], ['DBS (дробовик 12к)',207,0.2], ['NS2000 (дробовик 12к)',207,0.3]
   ];
   var dw=document.getElementById('dw'), dv=document.getElementById('dv'), dh=document.getElementById('dh'), dd=document.getElementById('dd'), ddV=document.getElementById('ddV'), out=document.getElementById('dmgOut');
   GUNS.forEach(function(g,i){ var o=document.createElement('option'); o.value=i; o.textContent=g[0]; dw.appendChild(o); });
@@ -576,9 +578,11 @@
     dmr9:  [[0,1],[50,0.922],[100,0.778],[200,0.60],[300,0.60]],
     smg45: [[0,1],[50,0.79],[100,0.658],[200,0.60],[300,0.60]],
     smg9:  [[0,1],[50,0.922],[100,0.778],[200,0.60],[300,0.60]],
-    sniper:[[0,1],[100,1],[200,0.987],[300,0.975]]
+    sniper:[[0,1],[100,1],[200,0.987],[300,0.975]],
+    shotgun:[[0,1],[10,1],[25,0.75],[50,0.45],[100,0.2],[300,0.08]]
   };
   function fallKey(name){
+    if(/дробовик/.test(name)) return 'shotgun';
     if(/снайп/.test(name) || /Win94/.test(name)) return 'sniper';
     if(/DMR/.test(name)){ if(/5\.56/.test(name))return 'dmr556'; if(/DMR 9/.test(name))return 'dmr9'; return 'dmr762'; }
     if(/SMG/.test(name) || /P90/.test(name)){ return /\.45/.test(name)?'smg45':'smg9'; }
@@ -592,23 +596,30 @@
     }
     return pts[pts.length-1][1];
   }
-  function rangeLabel(key){ if(key.indexOf('ar')===0) return 'до 50 м'; if(key==='smg9'||key==='smg45'||key==='dmr9') return 'падает рано'; return 'до 100 м'; }
+  function rangeLabel(key){ if(key==='shotgun') return 'вплотную'; if(key.indexOf('ar')===0) return 'до 50 м'; if(key==='smg9'||key==='smg45'||key==='dmr9') return 'падает рано'; return 'до 100 м'; }
   function render(){
     var g=GUNS[+dw.value], base=g[1], intr=g[2], key=fallKey(g[0]);
     var dist=+dd.value; ddV.textContent=dist;
     var rm=rangeMult(key,dist), eff=base*rm;
     var vr=VEST[+dv.value], hr=HELM[+dh.value];
-    var bodyD=eff*(1-vr), headD=eff*HEAD*(1-hr);
-    var bodyN=Math.ceil(100/bodyD), headN=Math.ceil(100/headD);
+    var shot = (key==='shotgun');
+    var bodyD=eff*(1-vr), bodyN=Math.ceil(100/bodyD);
+    var headD=eff*HEAD*(1-hr), headN=Math.ceil(100/headD);
     var rmPct=Math.round(rm*100);
+    var bodyCard='<div class="dmg-card"><div class="dl">'+(shot?'В тело (вся дробь)':'В тело')+'</div><div class="dbig">'+bodyN+' <span>'+plu(bodyN)+'</span></div><div class="dsub">урон '+Math.round(bodyD)+(shot?'':' · TTK '+ttk((bodyN-1)*intr))+'</div></div>';
+    var headCard = shot
+      ? '<div class="dmg-card head"><div class="dl">В голову</div><div class="dbig" style="font-size:19px;background:none;-webkit-text-fill-color:var(--ember);color:var(--ember)">дробь</div><div class="dsub">9 дробин, разброс — хедшот не считаем</div></div>'
+      : '<div class="dmg-card head"><div class="dl">В голову</div><div class="dbig">'+headN+' <span>'+plu(headN)+'</span></div><div class="dsub">урон '+Math.round(headD)+' · TTK '+ttk((headN-1)*intr)+'</div></div>';
+    var meta = shot
+      ? '<p class="dmg-meta"><b>9 дробин</b> за выстрел · всего <b>'+base+'</b> урона вплотную · броня −'+Math.round(vr*100)+'%</p>'
+      : '<p class="dmg-meta">Базовый урон <b>'+base+'</b> · множитель головы <b>×'+HEAD+'</b> · броня −'+Math.round(vr*100)+'% · шлем −'+Math.round(hr*100)+'%</p>';
+    var note = shot
+      ? '<p class="bp-note">Дробовик 12 калибра: 9 дробин за выстрел, показан суммарный урон при попадании всей дробью <b>вплотную</b> (значения после нерфа 4.1). С дистанцией дробь расходится и урон резко падает (см. график). Хедшот дробью не моделируем.</p>'
+      : '<p class="bp-note">Спад по дистанции — датамайн-кривые PUBG (pubgstatistics, patch 42.3), у каждого оружия своя по типу и калибру: 5.56 AR (≈M416) держит урон дольше, чем 7.62 AR (≈AKM); DMR — почти без спада; снайперки — практически ровно; SMG теряют урон рано. В PUBG Mobile возможны небольшие отличия. При полной прочности брони.</p>';
     out.innerHTML =
-      '<div class="dmg-res">'+
-        '<div class="dmg-card"><div class="dl">В тело</div><div class="dbig">'+bodyN+' <span>'+plu(bodyN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(bodyD)+' · TTK '+ttk((bodyN-1)*intr)+'</div></div>'+
-        '<div class="dmg-card head"><div class="dl">В голову</div><div class="dbig">'+headN+' <span>'+plu(headN)+'</span></div><div class="dsub">урон/выстрел '+Math.round(headD)+' · TTK '+ttk((headN-1)*intr)+'</div></div>'+
-      '</div>'+
+      '<div class="dmg-res">'+bodyCard+headCard+'</div>'+
       '<div class="dmg-range"><span>На '+dist+' м · полный урон '+rangeLabel(key)+'</span><span class="rv'+(rmPct>=100?' full':'')+'">'+rmPct+'% урона · '+Math.round(eff)+' ед.</span></div>'+
-      '<p class="dmg-meta">Базовый урон <b>'+base+'</b> · множитель головы <b>×'+HEAD+'</b> · броня −'+Math.round(vr*100)+'% · шлем −'+Math.round(hr*100)+'%</p>'+
-      '<p class="bp-note">Спад по дистанции — датамайн-кривые PUBG (pubgstatistics, patch 42.3), у каждого оружия своя по типу и калибру: 5.56 AR (≈M416) держит урон дольше, чем 7.62 AR (≈AKM); DMR — почти без спада; снайперки — практически ровно; SMG теряют урон рано. В PUBG Mobile возможны небольшие отличия. При полной прочности брони, дробовики (по пеллетам) не приведены.</p>';
+      meta + note;
     drawFall(key, dist);
   }
   function drawFall(cls, dist){
