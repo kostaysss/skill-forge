@@ -151,11 +151,15 @@
   .zhp-row{display:flex;align-items:center;gap:14px;max-width:440px;}
   .zhp-row .field{flex:1;margin:0;}
   .zhp-row #zHpVal{font-family:var(--font-display);font-size:22px;color:var(--intel);min-width:52px;text-align:right;}
-  .surv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px;margin-top:18px;}
-  .surv-cell{background:rgba(8,7,11,0.55);border:1px solid rgba(237,234,230,0.08);border-left-width:3px;border-radius:10px;padding:10px 12px;}
+  .surv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;margin-top:18px;}
+  .surv-cell{background:rgba(8,7,11,0.7);border:1px solid rgba(237,234,230,0.06);border-radius:12px;padding:13px 14px;transition:transform .2s ease;}
+  .surv-cell:hover{transform:translateY(-3px);}
   .surv-cell .sc-z{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ash);}
-  .surv-cell .sc-t{font-family:var(--font-display);font-size:20px;margin:3px 0 1px;color:var(--bone);}
+  .surv-cell .sc-t{font-family:var(--font-display);font-size:23px;margin:4px 0 2px;color:var(--bone);}
   .surv-cell .sc-d{font-family:var(--font-mono);font-size:11px;color:var(--steel);}
+  @keyframes survPulse{0%,100%{box-shadow:0 0 14px -2px var(--g),inset 0 0 0 1px var(--g);}50%{box-shadow:0 0 26px 2px var(--g),inset 0 0 0 1px var(--g);}}
+  .surv-cell.danger{animation:survPulse 1.9s ease-in-out infinite;}
+  @media (prefers-reduced-motion: reduce){ .surv-cell.danger{animation:none;box-shadow:0 0 16px -2px var(--g),inset 0 0 0 1px var(--g);} .surv-cell:hover{transform:none;} }
 
   /* ---- progress tracker ---- */
   .trk-add{display:grid;grid-template-columns:1fr 1fr auto;gap:12px;align-items:end;padding:22px 26px;}
@@ -735,9 +739,10 @@
     var out='';
     PHASES.forEach(function(p,i){
       var d=p.dps*dmg, c=heat(d), sec=HP/d, lost=Math.min(HP, d*10);
-      out+='<div class="surv-cell" style="border-left-color:'+c+'">'+
+      var dgr=d>=3?' danger':'';
+      out+='<div class="surv-cell'+dgr+'" style="--g:'+c+'55;border-color:'+c+'44">'+
            '<div class="sc-z">Зона '+(i+1)+'</div>'+
-           '<div class="sc-t" style="color:'+c+'">'+survFmt(sec)+'</div>'+
+           '<div class="sc-t" style="color:'+c+';text-shadow:0 0 12px '+c+'aa">'+survFmt(sec)+'</div>'+
            '<div class="sc-d">−'+r1(lost)+' HP / 10 с</div></div>';
     });
     surv.innerHTML=out;
