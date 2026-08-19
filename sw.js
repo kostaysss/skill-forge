@@ -1,5 +1,5 @@
 /* Skill Forge service worker — offline shell + installability */
-const CACHE = 'sf-cache-v2';
+const CACHE = 'sf-cache-v3';
 const SHELL = [
   './',
   './index.html',
@@ -10,7 +10,8 @@ const SHELL = [
   './tools.html',
   './manifest.json',
   './assets/icon-192.png',
-  './assets/icon-512.png'
+  './assets/icon-512.png',
+  './assets/erangel.jpg'
 ];
 
 self.addEventListener('install', function(e){

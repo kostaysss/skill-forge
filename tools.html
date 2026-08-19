@@ -140,7 +140,7 @@
   .st-tip::before{content:"▸ ";color:var(--ember);font-weight:700;}
   /* D: shrink schematic */
   .zone-viz{margin:18px 0 8px;padding:14px 14px 10px;border-radius:14px;background:rgba(10,9,13,0.5);border:1px solid rgba(237,234,230,0.08);text-align:center;}
-  .zone-viz canvas{width:100%;max-width:640px;height:auto;display:block;margin:0 auto;}
+  .zone-viz canvas{width:100%;max-width:520px;aspect-ratio:1/1;height:auto;display:block;margin:0 auto;border-radius:10px;}
   .zv-cap{font-family:var(--font-mono);font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ash);margin-top:6px;}
   .zv-cap i{color:#5aa0ff;font-style:normal;}
   .zv-cap u{color:var(--bone);text-decoration:none;}
@@ -344,8 +344,8 @@
         <h3 class="card-h">Как сходится зона</h3>
         <p class="card-sub">На праках и Big Play зона обычно быстрее и злее, чем в паблике. Выбери режим комнаты — таблица пересчитается. «Ожидание» — сколько стоит белый круг, «сжатие» — сколько синий сходится к белому.</p>
         <div class="zone-viz">
-          <canvas id="zoneViz" width="640" height="260"></canvas>
-          <div class="zv-cap"><i>Синий круг</i> сходится к <u>белому</u> — фаза за фазой, всё быстрее и злее</div>
+          <canvas id="zoneViz" width="600" height="600"></canvas>
+          <div class="zv-cap"><i>Синий круг</i> сходится к <u>белому</u> на карте Эрангель — каждая фаза, как в игре, со случайным центром</div>
         </div>
         <div class="field" style="max-width:420px"><label>Режим / настройки комнаты</label><select id="zPreset">
           <option value="1|1">Классика — паблик / рейтинг</option>
@@ -755,39 +755,72 @@
   render();
 })();
 
-/* D. ZONE SHRINK SCHEMATIC (animated) */
+/* D. ZONE SHRINK ON ERANGEL MAP (animated) */
 (function(){
   var cv=document.getElementById('zoneViz'); if(!cv) return;
   var ctx=cv.getContext('2d');
   var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var R=[1,0.72,0.52,0.38,0.28,0.20,0.13,0.07,0.028];
-  var off=[[0,0],[.05,-.04],[-.06,.05],[.07,.03],[-.04,-.06],[.05,.06],[-.05,.03],[.03,-.04],[0,0]];
-  function ring(cx,cy,r,style,lw,dash){ ctx.save(); if(dash)ctx.setLineDash(dash); ctx.strokeStyle=style; ctx.lineWidth=lw; ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke(); ctx.restore(); }
-  function frame(p,prog){
-    var w=cv.width,h=cv.height,cx=w/2,cy=h/2,base=Math.min(w,h)*0.44;
-    ctx.clearRect(0,0,w,h);
-    ring(cx,cy,R[0]*base,'rgba(237,234,230,0.10)',2);
-    for(var i=1;i<R.length;i++){ ring(cx+off[i][0]*base,cy+off[i][1]*base,R[i]*base,'rgba(47,224,168,0.06)',1); }
-    var tx=cx+off[p+1][0]*base,ty=cy+off[p+1][1]*base,tr=R[p+1]*base;
-    ring(tx,ty,tr,'rgba(237,234,230,0.78)',2,[5,5]);
-    var sx=cx+off[p][0]*base,sy=cy+off[p][1]*base,sr=R[p]*base;
-    var bx=sx+(tx-sx)*prog,by=sy+(ty-sy)*prog,br=sr+(tr-sr)*prog;
-    var g=ctx.createRadialGradient(bx,by,br*0.55,bx,by,br);
-    g.addColorStop(0,'rgba(60,130,255,0)'); g.addColorStop(0.82,'rgba(60,130,255,0.09)'); g.addColorStop(1,'rgba(80,150,255,0.30)');
-    ctx.fillStyle=g; ctx.beginPath(); ctx.arc(bx,by,br,0,Math.PI*2); ctx.fill();
-    ctx.save(); ctx.shadowColor='rgba(80,150,255,0.85)'; ctx.shadowBlur=12;
-    ring(bx,by,br,'rgba(100,165,255,0.95)',2.5); ctx.restore();
-    ctx.fillStyle='rgba(237,234,230,0.92)'; ctx.font='700 15px Oswald, sans-serif'; ctx.textAlign='left';
-    ctx.fillText('Зона '+(p+1)+(p===7?' · финал':''),14,26);
+  var img=new Image(), ready=false;
+  img.onload=function(){ ready=true; };
+  img.onerror=function(){ ready=false; };
+  img.src='assets/erangel.jpg';
+
+  /* successive shrink radii (fraction of canvas) — first covers most of the island */
+  var RAD=[0.44,0.325,0.24,0.178,0.13,0.093,0.062,0.035,0.016];
+  function rng(seed){ return function(){ seed=(seed*1664525+1013904223)&0x7fffffff; return seed/0x7fffffff; }; }
+  /* each next circle nested inside the current one, random offset — like real zone pull */
+  function makeChain(seed){
+    var r=rng(seed), pts=[{x:0.48+ (r()-0.5)*0.18, y:0.46+(r()-0.5)*0.18, rr:RAD[0]}];
+    for(var i=1;i<RAD.length;i++){
+      var prev=pts[i-1], gap=prev.rr-RAD[i], ang=r()*Math.PI*2, dist=gap*0.72*r();
+      var x=prev.x+Math.cos(ang)*dist, y=prev.y+Math.sin(ang)*dist;
+      x=Math.max(0.17,Math.min(0.83,x)); y=Math.max(0.15,Math.min(0.8,y));
+      pts.push({x:x,y:y,rr:RAD[i]});
+    }
+    return pts;
   }
-  if(reduce){ frame(2,0.35); return; }
-  var p=0,prog=0,hold=0;
+  function drawMap(){
+    var w=cv.width,h=cv.height;
+    ctx.clearRect(0,0,w,h);
+    if(ready){ ctx.drawImage(img,0,0,w,h); } else { ctx.fillStyle='#0e1519'; ctx.fillRect(0,0,w,h); }
+    ctx.fillStyle='rgba(9,10,14,0.40)'; ctx.fillRect(0,0,w,h);           /* dim so annotations recede */
+    var vg=ctx.createRadialGradient(w/2,h/2,w*0.28,w/2,h/2,w*0.62);
+    vg.addColorStop(0,'rgba(0,0,0,0)'); vg.addColorStop(1,'rgba(5,6,10,0.72)');
+    ctx.fillStyle=vg; ctx.fillRect(0,0,w,h);
+  }
+  function frame(chain,p,prog){
+    var w=cv.width,h=cv.height,S=Math.min(w,h);
+    drawMap();
+    var s=chain[p], tgt=chain[p+1];
+    var bx=(s.x+(tgt.x-s.x)*prog)*w, by=(s.y+(tgt.y-s.y)*prog)*h, br=(s.rr+(tgt.rr-s.rr)*prog)*S;
+    /* blue damage tint OUTSIDE the safe circle */
+    ctx.save();
+    ctx.beginPath(); ctx.rect(0,0,w,h); ctx.arc(bx,by,br,0,Math.PI*2,true);
+    ctx.fillStyle='rgba(36,86,205,0.16)'; ctx.fill('evenodd');
+    ctx.restore();
+    /* white next-zone target */
+    ctx.save(); ctx.setLineDash([6,6]); ctx.strokeStyle='rgba(255,255,255,0.9)'; ctx.lineWidth=2;
+    ctx.shadowColor='rgba(0,0,0,0.6)'; ctx.shadowBlur=4;
+    ctx.beginPath(); ctx.arc(tgt.x*w,tgt.y*h,tgt.rr*S,0,Math.PI*2); ctx.stroke(); ctx.restore();
+    /* blue current ring, glowing */
+    ctx.save(); ctx.shadowColor='rgba(80,150,255,0.95)'; ctx.shadowBlur=15;
+    ctx.strokeStyle='rgba(110,175,255,0.98)'; ctx.lineWidth=3;
+    ctx.beginPath(); ctx.arc(bx,by,br,0,Math.PI*2); ctx.stroke(); ctx.restore();
+    /* label */
+    ctx.save(); ctx.shadowColor='rgba(0,0,0,0.85)'; ctx.shadowBlur=6;
+    ctx.fillStyle='rgba(237,234,230,0.96)'; ctx.font='700 17px Oswald, sans-serif'; ctx.textAlign='left';
+    ctx.fillText('Зона '+(p+1)+(p===7?' · финал':''),16,30); ctx.restore();
+  }
+  var seed=Math.floor(Math.random()*99999), chain=makeChain(seed), p=0, prog=0, hold=0, started=false;
   function loop(){
-    if(hold>0){ hold--; } else { prog+=0.010; if(prog>=1){ prog=0; hold=28; p=(p+1)%8; } }
-    frame(p,Math.min(prog,1));
+    if(hold>0){ hold--; }
+    else { prog+=0.009; if(prog>=1){ prog=0; hold=32; p++; if(p>=8){ p=0; seed=(seed+7919)&0x7fffffff; chain=makeChain(seed); } } }
+    frame(chain,p,Math.min(prog,1));
     requestAnimationFrame(loop);
   }
-  requestAnimationFrame(loop);
+  function boot(){ if(started) return; started=true; if(reduce){ frame(chain,2,0.4); } else { requestAnimationFrame(loop); } }
+  if(img.complete && img.naturalWidth){ ready=true; boot(); }
+  else { img.addEventListener('load',function(){ ready=true; boot(); }); img.addEventListener('error',boot); setTimeout(boot,600); }
 })();
 
 /* embers */
