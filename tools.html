@@ -188,15 +188,21 @@
   .chart-wrap .ch-title{font-family:var(--font-mono);font-size:11px;letter-spacing:0.05em;text-transform:uppercase;color:var(--ash);margin:0 0 10px;}
   #trkChart, #dmgChart{width:100%;height:180px;display:block;}
 
-  .mlist{margin-top:20px;display:flex;flex-direction:column;gap:8px;}
-  .mrow{display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;background:rgba(20,18,24,0.6);border:1px solid rgba(237,234,230,0.07);font-size:13.5px;}
-  .mrow .mp{font-family:var(--font-mono);font-weight:700;color:var(--ember);min-width:64px;}
-  .mrow .mk{color:var(--bone);}
+  .mlist{margin-top:20px;display:flex;flex-direction:column;gap:9px;}
+  .mrow{position:relative;display:flex;align-items:center;gap:14px;padding:12px 16px 12px 18px;border-radius:11px;background:rgba(20,18,24,0.6);border:1px solid rgba(237,234,230,0.07);font-size:13.5px;overflow:hidden;transition:transform .18s,border-color .18s;}
+  .mrow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c,var(--ember));}
+  .mrow:hover{transform:translateX(3px);border-color:var(--c,var(--ember));}
+  .mrow .mp{font-family:var(--font-display);font-weight:600;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--c,var(--ember));
+    background:color-mix(in srgb,var(--c,var(--ember)) 14%,transparent);border:1px solid color-mix(in srgb,var(--c,var(--ember)) 40%,transparent);
+    padding:4px 10px;border-radius:6px;min-width:84px;text-align:center;}
+  .mrow .mk{font-family:var(--font-display);font-size:17px;color:var(--bone);}
+  .mrow .mk .ki{width:15px;height:15px;vertical-align:-2px;margin-right:5px;color:var(--ash);}
+  .mrow .mk b{color:var(--c,var(--ember));font-weight:700;}
   .mrow .md{margin-left:auto;color:var(--steel);font-family:var(--font-mono);font-size:11.5px;}
-  .mrow .mx{cursor:pointer;color:var(--steel);border:none;background:none;font-size:16px;line-height:1;padding:2px 4px;}
+  .mrow .mx{cursor:pointer;color:var(--steel);border:none;background:none;font-size:15px;line-height:1;padding:3px 4px;transition:color .15s;}
   .mrow .mx:hover{color:#ff5e5e;}
-  .mrow.win{border-color:rgba(255,176,32,0.4);}
-  .mrow.win .mp{color:var(--ember);}
+  .mrow.win{border-color:rgba(255,207,58,0.45);box-shadow:0 0 20px -6px rgba(255,207,58,0.5);}
+  @media (prefers-reduced-motion: reduce){ .mrow{transition:none;} .mrow:hover{transform:none;} }
 
   .empty{text-align:center;color:var(--ash);padding:40px 20px;}
   .empty svg{width:40px;height:40px;color:var(--steel);margin-bottom:10px;}
@@ -520,6 +526,7 @@
   var statRow=document.getElementById('statRow'), mList=document.getElementById('mList'), chart=document.getElementById('trkChart');
 
   function placeLabel(p){ if(p===1)return '1 место'; if(p<=5)return 'Топ 5'; if(p<=10)return 'Топ 10'; if(p<=25)return 'Топ 25'; return '26+'; }
+  function tierColor(p){ if(p===1)return '#ffcf3a'; if(p<=5)return '#ff5e1a'; if(p<=10)return '#2fe0a8'; if(p<=25)return '#8fa0b5'; return '#4a454e'; }
 
   add.addEventListener('click', function(){
     var k=parseInt(kills.value,10); if(isNaN(k)||k<0){ kills.focus(); return; }
@@ -552,7 +559,11 @@
     if(!m){ mList.innerHTML='<div class="empty"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V5M4 19h16M8 15l3-4 3 2 4-6"/></svg><div>Пока нет матчей. Добавь первый — и появятся статистика и график.</div></div>'; return; }
     var rows=arr.slice().reverse().slice(0,30).map(function(x){
       var idx=arr.indexOf(x);
-      return '<div class="mrow'+(x.p===1?' win':'')+'"><span class="mp">'+placeLabel(x.p)+'</span><span class="mk">'+x.k+' убийств</span><span class="md">'+new Date(x.t).toLocaleDateString('ru-RU')+'</span><button class="mx" data-i="'+idx+'" title="Удалить">✕</button></div>';
+      return '<div class="mrow'+(x.p===1?' win':'')+'" style="--c:'+tierColor(x.p)+'">'+
+        '<span class="mp">'+placeLabel(x.p)+'</span>'+
+        '<span class="mk"><svg class="ki" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="7"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg><b>'+x.k+'</b> убийств</span>'+
+        '<span class="md">'+new Date(x.t).toLocaleDateString('ru-RU')+'</span>'+
+        '<button class="mx" data-i="'+idx+'" title="Удалить">✕</button></div>';
     }).join('');
     mList.innerHTML=rows;
     mList.querySelectorAll('.mx').forEach(function(b){ b.addEventListener('click', function(){ var a=load(); a.splice(+b.dataset.i,1); save(a); render(); }); });
