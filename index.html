@@ -297,6 +297,18 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     width:300px;height:440px;
     perspective:1100px;
   }
+  /* floating feature badges around the deck (variant B) */
+  .deck-fx{position:relative;width:300px;height:440px;max-width:100%;}
+  .deck-fx .fb{position:absolute;z-index:20;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;
+    font-family:var(--font-mono);font-size:11px;font-weight:700;color:var(--bone);
+    background:rgba(16,14,19,.94);border:1px solid rgba(237,234,230,.14);border-radius:20px;padding:7px 12px;
+    box-shadow:0 12px 30px -14px #000;animation:deckFloat 4s ease-in-out infinite;}
+  .deck-fx .fb svg{width:13px;height:13px;color:var(--ember);}
+  .deck-fx .fb.match{color:var(--intel);border-color:rgba(47,224,168,.5);box-shadow:0 0 20px -6px var(--intel);}
+  .deck-fx .fb.match svg{color:var(--intel);}
+  @keyframes deckFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+  @media (prefers-reduced-motion:reduce){.deck-fx .fb{animation:none;}}
+  @media (max-width:980px){.deck-fx .fb{display:none;}}
   .card{
     position:absolute;inset:0;
     border-radius:18px;
@@ -1660,7 +1672,14 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     </div>
 
     <div class="stage" id="deck">
-      <div class="deck" id="cardDeck"></div>
+      <div class="deck-fx">
+        <div class="deck" id="cardDeck"></div>
+        <span class="fb" style="top:44px;left:-52px;animation-delay:0s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Умный подбор</span>
+        <span class="fb" style="top:44px;right:-44px;animation-delay:-1.3s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18h4V8H4zM10 18h4V4h-4zM16 18h4v-7h-4z"/></svg>Фильтр по рангу</span>
+        <span class="fb" style="top:124px;left:-56px;animation-delay:-2s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zM5 11a7 7 0 0 0 14 0M12 18v3"/></svg>Голос-чат</span>
+        <span class="fb match" style="top:134px;right:-52px;animation-delay:-.6s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>92% совместимость</span>
+        <span class="fb" style="top:206px;left:-38px;animation-delay:-2.7s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h7l-1 8 10-12h-7z"/></svg>4 мин отклик</span>
+      </div>
     </div>
   </div>
 </header>
