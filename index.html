@@ -259,6 +259,30 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     font-size:18px;
     font-variant-numeric:tabular-nums;
   }
+  /* (4) forge glow behind title */
+  .hero-forge{position:absolute;left:-4%;top:0;width:56%;height:82%;pointer-events:none;
+    background:radial-gradient(closest-side,rgba(255,94,26,.20),rgba(255,120,20,.06) 46%,transparent 72%);filter:blur(14px);
+    animation:heroBreathe 5.5s ease-in-out infinite;}
+  @keyframes heroBreathe{0%,100%{opacity:.68;transform:scale(1);}50%{opacity:1;transform:scale(1.06);}}
+  /* (1) role flip */
+  .role-flip{display:inline-block;}
+  .role-flip .rw{display:inline-block;background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;animation:roleIn .5s ease;}
+  @keyframes roleIn{0%{opacity:0;transform:translateY(.32em) rotateX(-40deg);}100%{opacity:1;transform:translateY(0) rotateX(0);}}
+  /* (2) ignite on load */
+  .flame-text.ignite{opacity:0;animation:heroIgnite .85s ease .1s forwards;}
+  @keyframes heroIgnite{0%{opacity:0;filter:blur(7px);}60%{opacity:1;filter:blur(0);}100%{opacity:1;filter:blur(0);text-shadow:0 0 22px rgba(255,140,40,.3);}}
+  /* (3) live online panel */
+  .hero-online{display:flex;align-items:center;gap:10px;}
+  .on-dot{width:9px;height:9px;border-radius:50%;background:var(--intel);flex-shrink:0;animation:onPulse 1.8s infinite;}
+  @keyframes onPulse{0%{box-shadow:0 0 0 0 rgba(47,224,168,.5);}70%{box-shadow:0 0 0 8px rgba(47,224,168,0);}100%{box-shadow:0 0 0 0 rgba(47,224,168,0);}}
+  .on-ava{display:flex;}
+  .on-ava i{width:26px;height:26px;border-radius:50%;border:2px solid var(--void);margin-left:-8px;display:block;transition:transform .4s ease;}
+  .on-ava i:first-child{margin-left:0;}
+  @media (prefers-reduced-motion:reduce){
+    .hero-forge,.on-dot{animation:none;}
+    .flame-text.ignite{opacity:1;animation:none;}
+    .role-flip .rw{animation:none;}
+  }
 
   /* ---------- CARD STAGE ---------- */
   .stage{
@@ -1616,15 +1640,20 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
 </nav>
 
 <header class="hero" id="top">
+  <div class="hero-forge" aria-hidden="true"></div>
   <div class="wrap">
     <div class="hero-copy">
       <span class="eyebrow">Найди напарника для совместной игры</span>
-      <h1>Твой идеальный <span class="flame-text">помощник</span> в подборе <span class="flame-text">тиммейта</span></h1>
+      <h1>Твой идеальный <span class="flame-text ignite">помощник</span> в подборе <span class="role-flip"><span class="rw" id="roleFlip">тиммейта</span></span></h1>
       <p>Skill Forge — комьюнити игроков PUBG Mobile. Смахивай анкеты, находи тиммейта под свой рейтинг и стиль игры, собирай отряд и поднимайся в ранге вместе с теми, кто играет на одной волне.</p>
       <div class="hero-cta-row">
         <a class="btn btn-primary" href="#deck">Найти тиммейта →</a>
         <div class="hero-stats">
-          <div><b>12 480+</b>игроков в сети</div>
+          <div class="hero-online">
+            <span class="on-dot"></span>
+            <span class="on-ava" id="heroAva"></span>
+            <span><b id="heroCount">12 480+</b>игроков онлайн</span>
+          </div>
           <div><b>4 мин</b>средний отклик</div>
         </div>
       </div>
@@ -2460,6 +2489,28 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     alert('Установка приложения:\nОткрой меню браузера (⋮) и выбери «Установить приложение» / «Add to Home screen».\nЕсли пункта нет — обнови страницу и попробуй снова (или используй Chrome).');
   });
   if(isIOS){ btn.hidden = false; } // iOS has no beforeinstallprompt — show button with instructions
+})();
+</script>
+<script>
+/* hero effects: (1) role flip, (3) online count-up + avatars */
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* (1) role flip */
+  var flip = document.getElementById('roleFlip');
+  if(flip && !reduce){
+    var roles=['тиммейта','отряда','напарника','дуо','команды'], ri=0;
+    setInterval(function(){ ri=(ri+1)%roles.length; flip.style.animation='none'; flip.offsetHeight; flip.textContent=roles[ri]; flip.style.animation=''; }, 2200);
+  }
+  /* (3) online count-up + rotating avatars */
+  var cnt=document.getElementById('heroCount'), ava=document.getElementById('heroAva');
+  var cols=['#ff5e1a','#ffb020','#2fe0a8','#6aa6ff','#ff3b3b'];
+  if(ava){ for(var i=0;i<4;i++){ var el=document.createElement('i'); el.style.background='linear-gradient(140deg,'+cols[i]+','+cols[(i+2)%5]+')'; ava.appendChild(el); }
+    if(!reduce) setInterval(function(){ ava.querySelectorAll('i').forEach(function(el,k){ el.style.transform='scale(0)'; setTimeout(function(){ el.style.background='linear-gradient(140deg,'+cols[(Math.random()*5)|0]+','+cols[(Math.random()*5)|0]+')'; el.style.transform='scale(1)'; }, k*80); }); }, 2800);
+  }
+  if(cnt){ var T=12480;
+    if(reduce){ cnt.textContent=T.toLocaleString('ru-RU')+'+'; }
+    else { var c=0, iv=setInterval(function(){ c+=Math.ceil(T/60); if(c>=T){ c=T; clearInterval(iv); } cnt.textContent=c.toLocaleString('ru-RU')+'+'; }, 24); }
+  }
 })();
 </script>
 </body>
