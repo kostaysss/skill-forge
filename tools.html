@@ -575,15 +575,13 @@
     // stats
     var m=arr.length, totalK=0, wins=0, top10=0, best=0;
     arr.forEach(function(x){ totalK+=x.k; if(x.p===1)wins++; if(x.p<=10)top10++; if(x.k>best)best=x.k; });
-    var deaths=Math.max(1, m-wins);
-    var kd = m? (totalK/deaths):0;
-    var avg = m? (totalK/m):0;
+    var avg = m? (totalK/m):0;   /* K/D = среднее число убийств за матч (киллы ÷ матчи) */
     var wr = m? (wins/m*100):0;
     var t10 = m? (top10/m*100):0;
     statRow.innerHTML =
       tile(m,'Матчей',{icon:IC.matches,c:'#2fe0a8',f:m/20}) +
-      tile(avg.toFixed(1),'Ср. килов',{icon:IC.avg,c:'#ff5e1a',f:avg/15}) +
-      tile(kd.toFixed(2),'K/D',{icon:IC.kd,c:'#ffb020',f:kd/5}) +
+      tile(totalK,'Всего килов',{icon:IC.avg,c:'#ff5e1a',f:totalK/200}) +
+      tile(avg.toFixed(2),'K/D',{icon:IC.kd,c:'#ffb020',f:avg/15}) +
       tile(wr.toFixed(0)+'%','Винрейт',{icon:IC.wr,c:'#2fe0a8',f:wr/100}) +
       tile(t10.toFixed(0)+'%','Топ-10',{icon:IC.top,c:'#6aa6ff',f:t10/100}) +
       tile(best,'Лучшая катка',{icon:IC.best,c:'#ff5e1a',f:best/20});
