@@ -108,6 +108,22 @@
   .bp-verdict.ok{color:var(--intel);background:rgba(47,224,168,0.08);border:1px solid rgba(47,224,168,0.3);}
   .bp-verdict.warn{color:var(--ember);background:rgba(255,176,32,0.08);border:1px solid rgba(255,176,32,0.3);}
   .bp-row .v small{color:var(--steel);font-weight:400;font-family:var(--font-mono);}
+  /* backpack result — variant C (radial + grouped dots) */
+  .c-top{display:flex;align-items:center;gap:20px;margin-bottom:4px;}
+  .c-ring{flex-shrink:0;}
+  .c-ring canvas{width:120px;height:120px;display:block;}
+  .c-meta .ct{font-family:var(--font-display);text-transform:uppercase;font-size:16px;color:var(--bone);}
+  .c-meta .c-sub{font-family:var(--font-mono);font-size:12px;color:var(--ash);margin-top:3px;}
+  .c-meta .bp-verdict{margin:10px 0 0;}
+  .c-cat{margin-top:14px;}
+  .c-cat .c-cath{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--c);font-weight:700;margin-bottom:4px;}
+  .c-item{display:flex;align-items:center;gap:9px;padding:6px 0;font-size:13.5px;border-bottom:1px dashed rgba(237,234,230,0.07);}
+  .c-item .dot{width:8px;height:8px;border-radius:50%;background:var(--c);flex-shrink:0;box-shadow:0 0 6px var(--c);}
+  .c-item .nm{color:var(--ash);}
+  .c-item .nm small{color:var(--steel);}
+  .c-item .qty{margin-left:auto;font-family:var(--font-mono);font-weight:700;color:var(--bone);}
+  .c-item .qty small{color:var(--steel);font-weight:400;}
+  @media(max-width:520px){.c-top{gap:14px;} .c-ring canvas{width:100px;height:100px;}}
 
   /* damage calculator */
   .dmg-res{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
@@ -482,37 +498,50 @@
     var fullW = MEDS_W + UTIL_W + recA*wa + recB*wb;
     var minLevel = fullW<=350?1:(fullW<=400?2:(fullW<=450?3:0));
 
-    function amt(name, rec){ var g=got[name]||0; var ext=(rec!=null && g<rec)?' <small>из '+rec+'</small>':''; return '<span class="v big">'+g+ext+'</span>'; }
-    function amtM(name, rec){ var g=got[name]||0; var ext=(g<rec)?' <small>из '+rec+'</small>':''; return '<span class="v">'+g+ext+'</span>'; }
+    function qA(name, rec){ var g=got[name]||0; return g+((rec!=null && g<rec)?' <small>из '+rec+'</small>':''); }
+    function qM(name, rec){ var g=got[name]||0; return g+((g<rec)?' <small>из '+rec+'</small>':''); }
+    function citem(nm, q){ return '<div class="c-item"><span class="dot"></span><span class="nm">'+nm+'</span><span class="qty">'+q+'</span></div>'; }
+
+    var verdict;
+    if(fullW<=CAP) verdict='<div class="bp-verdict ok">✅ Полный рекомендованный набор помещается</div>';
+    else if(minLevel) verdict='<div class="bp-verdict warn">⚠️ Полный набор не влезает — показан оптимальный под ур. '+bag.value+'. Для полного нужен рюкзак ур. '+minLevel+'.</div>';
+    else verdict='<div class="bp-verdict warn">⚠️ Полный набор тяжелее максимума (450). Показан оптимальный под ур. '+bag.value+' — часть утиля/патронов урезана.</div>';
 
     var html='';
-    html+='<div class="cap-head"><span class="ct">Рюкзак ур. '+bag.value+'</span><span class="cn">вместимость '+CAP+' ед.</span></div>';
-    html+='<div class="cap-bar"><span class="'+(pct>=100?'full':'')+'" style="width:'+pct+'%"></span></div>';
-    html+='<div class="cap-line"><span>Занято: <b>'+used+'</b> ед.</span><span>Свободно: <b>'+free+'</b> ед.</span></div>';
-    if(fullW<=CAP){
-      html+='<div class="bp-verdict ok">✅ Полный рекомендованный набор помещается</div>';
-    } else if(minLevel){
-      html+='<div class="bp-verdict warn">⚠️ Полный набор не влезает — показан оптимальный под ур. '+bag.value+'. Для полного нужен рюкзак ур. '+minLevel+'.</div>';
-    } else {
-      html+='<div class="bp-verdict warn">⚠️ Полный набор тяжелее максимума (450). Показан оптимальный под ур. '+bag.value+' — часть утиля/патронов урезана.</div>';
-    }
+    html+='<div class="c-top"><div class="c-ring"><canvas id="bpRing" width="240" height="240"></canvas></div>'+
+      '<div class="c-meta"><div class="ct">Рюкзак ур. '+bag.value+'</div>'+
+      '<div class="c-sub">вместимость '+CAP+' ед. · свободно '+free+' ед.</div>'+verdict+'</div></div>';
 
-    html+='<div class="bp-block"><h4>Патроны</h4>';
-    html+='<div class="bp-row"><span class="k">'+a.n+' <span style="color:var(--steel)">('+a.cal+')</span></span>'+amt(a.n,recA)+'</div>';
-    html+='<div class="bp-row"><span class="k">'+b.n+' <span style="color:var(--steel)">('+b.cal+')</span></span>'+amt(b.n,recB)+'</div></div>';
+    html+='<div class="c-cat" style="--c:#ffb020"><div class="c-cath">Патроны</div>'+
+      citem(a.n+' <small>('+a.cal+')</small>', qA(a.n,recA))+
+      citem(b.n+' <small>('+b.cal+')</small>', qA(b.n,recB))+'</div>';
 
-    html+='<div class="bp-block"><h4>Медицина</h4>';
-    MEDS.forEach(function(m){ html+='<div class="bp-row"><span class="k">'+m[0]+'</span>'+amtM(m[0],m[2])+'</div>'; });
+    html+='<div class="c-cat" style="--c:#2fe0a8"><div class="c-cath">Медицина</div>';
+    MEDS.forEach(function(m){ html+=citem(m[0], qM(m[0],m[2])); });
     html+='</div>';
 
-    html+='<div class="bp-block"><h4>Утиль</h4>';
-    UTIL_FULL.forEach(function(u){ html+='<div class="bp-row"><span class="k">'+u[0]+'</span>'+amtM(u[0],u[2])+'</div>'; });
+    html+='<div class="c-cat" style="--c:#ff5e1a"><div class="c-cath">Утиль</div>';
+    UTIL_FULL.forEach(function(u){ html+=citem(u[0], qM(u[0],u[2])); });
     html+='</div>';
 
     var note='Считаются только патроны, медицина и утиль. Вместимость = база персонажа (150) + бронежилет (50) + рюкзак (+150/200/250) = 350/400/450. Оружие, жилет, шлем и прицелы места под лут не занимают. Вес: патрон '+wa+'/'+wb+' ед., бинт 2, аптечка 10, шприц 20, граната 14–18. Большая аптечка, болеутоляющее, светошум и липкие — 0. ';
     if(boost) note+='Сетап 5.56 + 12: запас 5.56 поднят до '+recA+'. ';
     html+='<p class="bp-note">'+note+'Подробнее — в гайде <a href="guide.html?id=pickup" style="color:var(--signal)">«Настройка подбора»</a>.</p>';
     out.innerHTML=html;
+
+    var rc=document.getElementById('bpRing');
+    if(rc){ var rx=rc.getContext('2d'), cx=120, cy=120, r=92, frac=Math.min(1,used/CAP);
+      rx.lineWidth=18; rx.lineCap='round';
+      rx.strokeStyle='rgba(255,255,255,0.07)'; rx.beginPath(); rx.arc(cx,cy,r,0,Math.PI*2); rx.stroke();
+      var grad=rx.createLinearGradient(0,0,240,240);
+      if(pct>=100){ grad.addColorStop(0,'#ff3b3b'); grad.addColorStop(1,'#ff5e1a'); }
+      else { grad.addColorStop(0,'#ff5e1a'); grad.addColorStop(1,'#ffb020'); }
+      rx.strokeStyle=grad; rx.shadowColor='#ff8a3a'; rx.shadowBlur=16;
+      rx.beginPath(); rx.arc(cx,cy,r,-Math.PI/2,-Math.PI/2+frac*Math.PI*2); rx.stroke(); rx.shadowBlur=0;
+      rx.fillStyle='#edeae6'; rx.font='700 44px Oswald, sans-serif'; rx.textAlign='center'; rx.textBaseline='middle';
+      rx.fillText(pct+'%',cx,cy-6);
+      rx.fillStyle='#a89fa8'; rx.font='400 15px "JetBrains Mono", monospace'; rx.fillText(used+' / '+CAP,cx,cy+24);
+    }
   }
   [bag,w1,w2,mix].forEach(function(el){ el.addEventListener('change', render); });
   render();
