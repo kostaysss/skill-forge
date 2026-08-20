@@ -455,7 +455,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   .search .wrap{
     position:relative;
     display:grid;
-    grid-template-columns:1fr 480px 1fr;
+    grid-template-columns:1fr 400px 1fr;
     gap:36px;
     align-items:center;
   }
@@ -497,7 +497,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
 
   .profile-card{
     position:relative;
-    width:100%;max-width:480px;
+    width:100%;max-width:400px;
     border-radius:22px;
     padding:26px 26px 30px;
     background:linear-gradient(160deg, rgba(44,39,50,0.34), rgba(16,14,20,0.5));
@@ -558,9 +558,9 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     border-color:var(--signal);
     box-shadow:0 0 0 3px rgba(255,94,26,0.14);
   }
-  .pf-in{position:relative;}
+  .pf-in{position:relative;width:100%;}
   .pf-in .pf-ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ash);pointer-events:none;transition:color .15s ease;z-index:1;}
-  .pf-in input, .pf-in select{padding-left:38px;}
+  .pf-in input, .pf-in select{width:100%;padding-left:38px;}
   .pf-in:focus-within .pf-ic{color:var(--signal);}
   .pfield select{appearance:none;cursor:pointer;
     background-image:linear-gradient(45deg,transparent 50%,var(--ash) 50%),linear-gradient(135deg,var(--ash) 50%,transparent 50%);
