@@ -476,21 +476,22 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   }
   .search-copy h2 em{color:var(--signal);font-style:normal;}
   /* timeline presentation (variant D) */
-  .search-timeline{position:relative;padding-left:40px;max-width:46ch;}
-  .search-timeline::before{content:"";position:absolute;left:17px;top:16px;bottom:16px;width:2px;background:linear-gradient(180deg,var(--signal),var(--ember));}
+  .search-timeline{position:relative;padding-left:44px;max-width:46ch;}
+  .search-timeline::before{content:"";position:absolute;left:16px;top:16px;bottom:16px;width:2px;background:linear-gradient(180deg,var(--signal),var(--ember) 60%,rgba(74,69,78,.4));}
   @media (max-width:1080px){.search-timeline{margin-inline:auto;}}
   .search-point{
-    position:relative;margin-bottom:24px;text-align:left;
+    position:relative;margin-bottom:22px;text-align:left;
   }
   .search-point:last-child{margin-bottom:0;}
   .search-point .pico{
-    position:absolute;left:-40px;top:0;width:36px;height:36px;flex:none;
-    padding:8px;border-radius:50%;color:var(--ember);
-    background:var(--void);border:2px solid var(--ember);
-    box-shadow:0 0 12px rgba(255,176,32,0.5);
+    position:absolute;left:-44px;top:0;width:34px;height:34px;flex:none;
+    padding:7px;border-radius:50%;color:var(--signal);
+    background:var(--void);border:2px solid var(--signal);
+    box-shadow:0 0 14px rgba(255,94,26,0.55);
   }
+  .search-point .pt-t{display:block;font-family:var(--font-display);font-size:16px;letter-spacing:.01em;color:var(--bone);margin-bottom:4px;}
   .search-point p{
-    margin:0;color:var(--ash);font-size:14px;line-height:1.6;
+    margin:0;color:var(--ash);font-size:13.5px;line-height:1.55;
   }
   .search-point p b{color:var(--bone);font-weight:700;}
 
@@ -557,6 +558,10 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     border-color:var(--signal);
     box-shadow:0 0 0 3px rgba(255,94,26,0.14);
   }
+  .pf-in{position:relative;}
+  .pf-in .pf-ic{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ash);pointer-events:none;transition:color .15s ease;z-index:1;}
+  .pf-in input, .pf-in select{padding-left:38px;}
+  .pf-in:focus-within .pf-ic{color:var(--signal);}
   .pfield select{appearance:none;cursor:pointer;
     background-image:linear-gradient(45deg,transparent 50%,var(--ash) 50%),linear-gradient(135deg,var(--ash) 50%,transparent 50%);
     background-position:calc(100% - 16px) 50%, calc(100% - 11px) 50%;
@@ -608,6 +613,15 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     -webkit-background-clip:text;background-clip:text;color:transparent;
     filter:drop-shadow(0 2px 14px rgba(255,94,26,0.35));
   }
+  .cta-btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-display);font-size:15px;letter-spacing:.03em;text-transform:uppercase;padding:14px 26px;border-radius:12px;cursor:pointer;border:none;text-decoration:none;
+    background:linear-gradient(100deg,var(--signal),#ff8a3a);color:#160a03;box-shadow:0 14px 34px -14px var(--signal);transition:transform .15s ease,box-shadow .2s ease;}
+  .cta-btn:hover{transform:translateY(-2px);box-shadow:0 20px 42px -14px var(--signal);}
+  .cta-proof{display:flex;align-items:center;gap:11px;}
+  .cta-proof .cav{display:flex;}
+  .cta-proof .cav i{width:30px;height:30px;border-radius:50%;border:2px solid var(--void);margin-left:-9px;display:block;}
+  .cta-proof .cav i:first-child{margin-left:0;}
+  .cta-proof span{font-family:var(--font-mono);font-size:12px;color:var(--ash);}
+  .cta-proof b{color:var(--bone);}
   .cta-btn{margin-top:6px;}
   @media (max-width:1080px){
     .search-cta{justify-content:center;}
@@ -1690,16 +1704,19 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
       <h2><em>Умный</em> поиск тиммейтов</h2>
       <div class="search-timeline">
       <div class="search-point">
-        <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
-        <p>Забудь о случайных напарниках и бесконечном поиске в чатах. Наша система анализирует твою <b>игровую статистику, стиль игры и уровень навыков</b>, после чего автоматически подбирает игроков, похожих на тебя.</p>
+        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+        <b class="pt-t">Умный подбор по скиллу</b>
+        <p>Забудь о случайных напарниках и бесконечном поиске в чатах. Система анализирует твою <b>статистику, стиль игры и уровень навыков</b> и подбирает игроков, похожих на тебя.</p>
       </div>
       <div class="search-point">
-        <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
-        <p>Благодаря интеллектуальному подбору ты сможешь быстрее находить <b>надёжных союзников</b>, играть с людьми своего уровня и повышать шансы на победу.</p>
+        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        <b class="pt-t">Надёжные союзники</b>
+        <p>Благодаря интеллектуальному подбору ты быстрее находишь <b>надёжных напарников</b>, играешь с людьми своего уровня и повышаешь шансы на победу.</p>
       </div>
       <div class="search-point">
-        <svg class="pico" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 5.9L20.5 8l-4.6 4 1.4 6.2L12 15.9 6.7 18.2 8.1 12 3.5 8l6.1-.1z"/></svg>
-        <p>Собирай постоянную команду, улучшай взаимодействие и играй с теми, кто <b>действительно подходит тебе</b> по стилю и скиллу.</p>
+        <svg class="pico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3 3-5 6-5s6 2 6 5M16 6a3 3 0 0 1 0 6M22 20c0-2.5-2-4.2-4-4.7"/></svg>
+        <b class="pt-t">Постоянная команда</b>
+        <p>Собирай отряд, улучшай взаимодействие и играй с теми, кто <b>действительно подходит тебе</b> по стилю и скиллу.</p>
       </div>
       </div>
     </div>
@@ -1797,6 +1814,11 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
         <span class="eyebrow">Готов к дропу?</span>
         <p class="cta-lead">Создай аккаунт прямо сейчас и найди <b>команду своей мечты</b>, с которой</p>
         <h2 class="cta-head">захочется <em>побеждать</em></h2>
+        <a class="cta-btn" href="#profileCard">Создать аккаунт →</a>
+        <div class="cta-proof">
+          <span class="cav"><i style="background:linear-gradient(140deg,#ff5e1a,#ffb020)"></i><i style="background:linear-gradient(140deg,#2fe0a8,#6aa6ff)"></i><i style="background:linear-gradient(140deg,#ff3b3b,#ff5e1a)"></i></span>
+          <span><b>12 480</b> игроков уже в игре</span>
+        </div>
       </div>
     </div>
   </div>
@@ -2529,6 +2551,28 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     if(reduce){ cnt.textContent=T.toLocaleString('ru-RU')+'+'; }
     else { var c=0, iv=setInterval(function(){ c+=Math.ceil(T/60); if(c>=T){ c=T; clearInterval(iv); } cnt.textContent=c.toLocaleString('ru-RU')+'+'; }, 24); }
   }
+})();
+/* registration/login fields: left icons (variant C) */
+(function(){
+  var IC={'p-nick':'user','l-nick':'user','p-role':'role','p-id':'id','p-kd':'kd','p-kdu':'kd','p-device':'device','p-voice':'chat','p-tg':'tg','p-age':'age','p-pass':'lock','l-pass':'lock'};
+  var P={
+    user:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-6 8-6s8 2 8 6"/>',
+    role:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/>',
+    id:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 5v5"/>',
+    kd:'<path d="M5 5l6 6M5 11V5h6M19 5l-6 6M19 11V5h-6M7 17l10-10"/>',
+    device:'<rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>',
+    chat:'<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+    tg:'<path d="M22 3L2 11l7 2 2 7 4-5 5 3z"/>',
+    age:'<rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/>',
+    lock:'<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>'
+  };
+  document.querySelectorAll('.profile-card .pfield').forEach(function(f){
+    var ctrl=f.querySelector('input:not([type=file]):not([type=hidden]), select'); if(!ctrl) return;
+    var key=IC[ctrl.id]; if(!key||!P[key]||ctrl.closest('.pf-in')) return;
+    var wrap=document.createElement('div'); wrap.className='pf-in';
+    ctrl.parentNode.insertBefore(wrap, ctrl); wrap.appendChild(ctrl);
+    wrap.insertAdjacentHTML('afterbegin','<svg class="pf-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+P[key]+'</svg>');
+  });
 })();
 </script>
 </body>
