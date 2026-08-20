@@ -71,36 +71,46 @@
   .page-sub{color:var(--ash);font-size:15px;max-width:660px;margin:0;}
   .page-sub b{color:var(--bone);}
 
-  /* news grid */
-  .news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
-  @media(max-width:720px){.news-grid{grid-template-columns:1fr;}}
+  /* news grid — bento journal (variant A) */
+  .news-stage{position:relative;}
+  .news-bg{position:absolute;inset:-30px;z-index:0;pointer-events:none;border-radius:26px;
+    background:radial-gradient(600px 320px at 12% 0%,rgba(255,94,26,.13),transparent 60%),
+      radial-gradient(600px 320px at 90% 25%,rgba(42,171,238,.11),transparent 60%),
+      radial-gradient(520px 300px at 60% 100%,rgba(255,176,32,.09),transparent 60%);}
+  .news-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:16px;grid-auto-flow:dense;}
+  @media(max-width:900px){.news-grid{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.news-grid{grid-template-columns:1fr;grid-auto-rows:auto;}}
 
-  .news-card{--c:var(--signal);position:relative;display:flex;flex-direction:column;gap:12px;padding:22px 22px 24px 28px;border-radius:18px;overflow:hidden;
-    background:linear-gradient(160deg, rgba(38,33,45,0.5), rgba(13,11,16,0.72));border:1px solid rgba(237,234,230,0.08);
-    transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;}
-  .news-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c);z-index:1;}
-  .news-card::after{content:"";position:absolute;left:0;top:0;width:62%;height:100%;pointer-events:none;z-index:0;
-    background:linear-gradient(90deg, color-mix(in srgb, var(--c) 13%, transparent), transparent);}
-  .news-card > *{position:relative;z-index:1;}
-  .news-card:hover{transform:translateY(-5px);border-color:color-mix(in srgb, var(--c) 45%, transparent);box-shadow:0 24px 44px -18px rgba(0,0,0,0.85), -6px 0 26px -14px var(--c);}
-  .news-card.feat{grid-column:1 / -1;}
-  .news-card.feat .nc-title{font-size:clamp(20px,2.6vw,28px);}
-  .news-card.feat .nc-text{font-size:14.5px;}
+  .news-card{--c:var(--signal);position:relative;grid-column:span 2;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:18px 20px;border-radius:16px;overflow:hidden;
+    background:linear-gradient(150deg, color-mix(in srgb,var(--c) 26%, #151318), #111015 72%);border:1px solid color-mix(in srgb,var(--c) 26%,transparent);
+    transition:transform .22s cubic-bezier(.2,.8,.2,1), border-color .22s ease, box-shadow .22s ease;}
+  .news-card:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--c) 55%,transparent);box-shadow:0 22px 40px -20px rgba(0,0,0,.85), 0 0 26px -14px var(--c);}
+  .news-card.feat{grid-column:span 2;grid-row:span 2;}
+  @media(max-width:560px){.news-card,.news-card.feat{grid-column:auto;grid-row:auto;}}
 
-  .nc-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .nc-wm{position:absolute;right:-12px;top:-12px;width:116px;height:116px;color:var(--c);opacity:.08;pointer-events:none;z-index:0;}
+  .news-card.feat .nc-wm{width:158px;height:158px;opacity:.1;}
+  .news-card > *:not(.nc-wm){position:relative;z-index:1;}
+
+  .nc-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:auto;}
   .nc-tag{font-family:var(--font-mono);font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--void);background:linear-gradient(120deg,var(--signal),var(--ember));border-radius:999px;padding:4px 11px;}
   .nc-tag.season{background:linear-gradient(120deg,#ffb020,#ffd77a);}
   .nc-tag.event{background:linear-gradient(120deg,#17b98a,var(--intel));}
   .nc-tag.esports{background:linear-gradient(120deg,#2aabee,#7cd4ff);}
   .nc-tag.balance{background:var(--gunmetal-2);color:var(--bone);border:1px solid var(--steel);}
   .nc-tag.security{background:linear-gradient(120deg,#ff3b3b,#ffb020);color:#1a0606;}
-  .nc-date{font-family:var(--font-mono);font-size:11.5px;color:var(--steel);letter-spacing:0.03em;}
+  .nc-date{font-family:var(--font-mono);font-size:11px;color:var(--ash);letter-spacing:0.03em;}
   .nc-new{margin-left:auto;font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--intel);border:1px solid rgba(47,224,168,0.45);background:rgba(47,224,168,0.08);border-radius:999px;padding:3px 9px;}
 
-  .nc-title{font-family:var(--font-display);font-size:19px;line-height:1.15;text-transform:uppercase;margin:2px 0 0;}
-  .nc-text{color:var(--ash);font-size:13.5px;margin:0;}
+  .nc-title{font-family:var(--font-display);font-size:17px;line-height:1.14;text-transform:uppercase;margin:10px 0 3px;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .news-card.feat .nc-title{font-size:clamp(21px,2.4vw,28px);-webkit-line-clamp:3;}
+  .nc-text{color:var(--ash);font-size:13px;margin:0;line-height:1.45;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .news-card.feat .nc-text{font-size:14.5px;-webkit-line-clamp:3;}
   .nc-text b{color:var(--bone);}
-  .nc-more{margin-top:auto;align-self:flex-start;font-family:var(--font-mono);font-size:11.5px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--c);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:gap .15s ease,filter .15s ease;}
+  @media(max-width:560px){.nc-title,.news-card.feat .nc-title,.nc-text,.news-card.feat .nc-text{-webkit-line-clamp:unset;}}
+  .nc-more{margin-top:8px;align-self:flex-start;font-family:var(--font-mono);font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;color:var(--c);background:none;border:none;cursor:pointer;padding:0;display:inline-flex;align-items:center;gap:6px;transition:gap .15s ease,filter .15s ease;}
   .nc-more:hover{gap:10px;filter:brightness(1.25);}
   .nc-more svg{width:14px;height:14px;}
 
@@ -242,6 +252,8 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
       <p class="page-sub">Свежие анонсы, обновления, баланс оружия, киберспорт и античит. Нажми <b>«Подробнее»</b> на любой новости — откроется окно с деталями и ссылкой на источник.</p>
     </div>
 
+    <div class="news-stage">
+    <div class="news-bg"></div>
     <div class="news-grid" id="newsGrid">
 
       <article class="news-card feat" style="--c:#ff5e1a">
@@ -265,7 +277,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
         <button class="nc-more" data-news="meta">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
 
-      <article class="news-card feat" style="--c:#2aabee">
+      <article class="news-card" style="--c:#2aabee">
         <div class="nc-meta"><span class="nc-tag esports">Киберспорт</span><span class="nc-date">6–16 августа 2026 · Париж</span><span class="nc-new">LIVE</span></div>
         <h3 class="nc-title">PMWC 2026: мировой кубок в Париже, $3 000 000, финалы 14–16 августа</h3>
         <p class="nc-text">PUBG Mobile World Cup 2026 идёт на Paris Expo Porte de Versailles в рамках Esports World Cup: <b>32 команды</b> и призовой <b>$3 000 000</b>. Гранд-финал — 14–16 августа, 13 августа — выходной день.</p>
@@ -300,6 +312,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
         <button class="nc-more" data-news="anticheat">Подробнее <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
       </article>
 
+    </div>
     </div>
   </div>
 </main>
@@ -521,6 +534,20 @@ const NEWS = {
   function close(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
   document.querySelectorAll('.nc-more[data-news]').forEach(function(b){
     b.addEventListener('click', function(){ open(b.getAttribute('data-news')); });
+  });
+  /* category watermark icons on cards */
+  var WM={
+    patch:'<path d="M14 7a4 4 0 0 1-5 5l-6 6 2 2 6-6a4 4 0 0 0 5-5l-2 2-2-2 2-2z"/>',
+    season:'<path d="M8 3l4 3 4-3 4 4-3 3v11H7V10L4 7z"/>',
+    balance:'<path d="M12 3v18M5 21h14M6 7h12M6 7l-3 6h6zM18 7l-3 6h6z"/>',
+    esports:'<path d="M8 21h8M12 17v4M6 4h12v3a6 6 0 0 1-12 0zM6 6H3v1a3 3 0 0 0 3 3M18 6h3v1a3 3 0 0 1-3 3"/>',
+    security:'<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>'
+  };
+  document.querySelectorAll('.news-card').forEach(function(card){
+    var tag=card.querySelector('.nc-tag'); if(!tag) return;
+    var key='patch';
+    ['season','balance','esports','security'].forEach(function(k){ if(tag.classList.contains(k)) key=k; });
+    card.insertAdjacentHTML('afterbegin','<svg class="nc-wm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">'+WM[key]+'</svg>');
   });
   modal.addEventListener('click', function(e){ if(e.target===modal) close(); });
   document.addEventListener('keydown', function(e){ if(e.key==='Escape' && modal.classList.contains('open')) close(); });
