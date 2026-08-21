@@ -726,17 +726,18 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   @media (max-width:560px){.howto-grid{grid-template-columns:1fr;}}
   .hcell{position:relative;}
   .hstep{
+    --c:var(--signal);
     position:relative;height:100%;
-    background:
-      radial-gradient(120% 80% at 15% 0%, rgba(255,94,26,0.08), transparent 55%),
-      linear-gradient(160deg, rgba(40,35,45,0.85), rgba(15,13,17,0.94));
-    border:1px solid rgba(237,234,230,0.09);
+    background:rgba(22,20,27,0.5);
+    backdrop-filter:blur(12px) saturate(1.1);-webkit-backdrop-filter:blur(12px) saturate(1.1);
+    border:1px solid rgba(237,234,230,0.1);
     border-radius:16px;
-    padding:26px 24px 28px;
+    padding:24px 22px 26px;
     overflow:hidden;
-    box-shadow:inset 0 1px 0 rgba(255,255,255,0.05), 0 16px 34px -18px rgba(0,0,0,0.75);
+    box-shadow:0 16px 34px -18px rgba(0,0,0,0.75);
     transition:transform .28s cubic-bezier(.2,.8,.2,1), border-color .28s ease, box-shadow .28s ease;
   }
+  .hsweep,.htick,.harrow{display:none !important;}
   /* animated scan-line sweep across the top */
   .hsweep{
     position:absolute;top:0;left:16px;right:16px;height:3px;
@@ -756,54 +757,47 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   .htick.ht2{bottom:12px;right:12px;border-bottom:2px solid;border-right:2px solid;border-radius:0 0 4px 0;}
   .hcell:hover .hstep{
     transform:translateY(-6px);
-    border-color:rgba(255,94,26,0.45);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,0.06), 0 26px 44px -18px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,94,26,0.12);
+    border-color:color-mix(in srgb, var(--c) 45%, transparent);
+    box-shadow:0 26px 44px -18px rgba(0,0,0,0.8), 0 0 26px -14px var(--c);
   }
-  .hcell:hover .hsweep{left:0;right:0;background:rgba(255,94,26,0.25);}
-  .hcell:hover .htick{width:14px;height:14px;box-shadow:0 0 12px rgba(255,94,26,0.45);}
   .hstep .hhead{
-    display:flex;align-items:center;justify-content:space-between;
-    margin-bottom:18px;
+    display:block;
+    margin-bottom:16px;
   }
   .hstep .hnum{
-    font-family:var(--font-display);
-    font-size:52px;line-height:1;
-    background:linear-gradient(180deg, var(--ember), var(--signal));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-    font-variant-numeric:tabular-nums;
-    text-shadow:0 6px 20px rgba(255,94,26,0.18);
+    position:absolute;top:16px;right:16px;z-index:2;
+    font-family:var(--font-mono);
+    font-size:12px;font-weight:700;line-height:1;
+    background:none;-webkit-background-clip:border-box;background-clip:border-box;
+    color:var(--c);-webkit-text-fill-color:var(--c);
+    border:1px solid color-mix(in srgb, var(--c) 40%, transparent);border-radius:20px;padding:3px 9px;
+    font-variant-numeric:tabular-nums;text-shadow:none;
   }
   /* lively icon badge */
   .hicon-badge{
     position:relative;
-    width:48px;height:48px;flex:none;
+    width:60px;height:60px;flex:none;
     display:flex;align-items:center;justify-content:center;
-    border-radius:13px;
-    color:var(--ember);
-    background:linear-gradient(135deg, rgba(255,94,26,0.22), rgba(255,176,32,0.08));
-    border:1px solid rgba(255,94,26,0.35);
-    box-shadow:0 0 0 rgba(255,94,26,0.4);
-    animation:iconPulse 3.2s ease-in-out infinite;
-    transition:transform .28s cubic-bezier(.2,.8,.2,1), color .28s ease;
+    border-radius:50%;
+    color:var(--c);background:none;border:none;box-shadow:none;
+    transition:transform .28s cubic-bezier(.2,.8,.2,1);
   }
-  .hcell:nth-child(2) .hicon-badge{animation-delay:.4s;}
-  .hcell:nth-child(3) .hicon-badge{animation-delay:.8s;}
-  .hcell:nth-child(4) .hicon-badge{animation-delay:1.2s;}
-  .hicon-badge svg{width:24px;height:24px;}
-  @keyframes iconPulse{
-    0%,100%{box-shadow:0 0 0 0 rgba(255,94,26,0.35);}
-    50%{box-shadow:0 0 16px 2px rgba(255,94,26,0.28);}
+  .hicon-badge::before{
+    content:"";position:absolute;inset:-2px;border-radius:50%;
+    background:conic-gradient(from 0deg, var(--c), color-mix(in srgb, var(--c) 40%, #fff), var(--c));
+    animation:hembSpin 5s linear infinite;
   }
-  .hcell:hover .hicon-badge{
-    transform:translateY(-2px) rotate(-6deg) scale(1.08);
-    color:#fff;
-  }
+  .hicon-badge::after{content:"";position:absolute;inset:2px;border-radius:50%;background:#141019;}
+  .hicon-badge svg{width:26px;height:26px;position:relative;z-index:1;}
+  @keyframes hembSpin{to{transform:rotate(360deg);}}
+  .hcell:hover .hicon-badge{transform:translateY(-2px) scale(1.06);}
+  @media (prefers-reduced-motion: reduce){.hicon-badge::before{animation:none;}}
   .hstep h4{
     font-family:var(--font-body);
     font-size:16px;font-weight:800;text-transform:uppercase;letter-spacing:0.02em;
     margin:0 0 10px;
   }
-  .hstep h4 em{color:var(--signal);font-style:normal;}
+  .hstep h4 em{color:var(--c);font-style:normal;}
   .hstep p{color:var(--ash);font-size:13.5px;margin:0;text-transform:uppercase;letter-spacing:0.02em;line-height:1.5;}
   /* connector node sitting cleanly in the gap (not clipped) */
   .harrow{
@@ -2600,6 +2594,11 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     var rb=c.querySelector('.vid-ribbon'); var lvl=rb?rb.textContent.trim().toLowerCase():'';
     if(map[lvl]) c.style.setProperty('--c', map[lvl]);
   });
+})();
+/* how-it-works steps: accent color per step (variant C) */
+(function(){
+  var cols=['#ff5e1a','#ffb020','#2fe0a8','#6aa6ff'];
+  document.querySelectorAll('.howto-grid .hcell .hstep').forEach(function(s,i){ s.style.setProperty('--c', cols[i%cols.length]); });
 })();
 </script>
 </body>
