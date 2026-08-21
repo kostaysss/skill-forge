@@ -55,16 +55,16 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   html{scroll-behavior:smooth;}
   .profile-card{scroll-margin-top:96px;}
   body{
-    background:
-      radial-gradient(150% 120% at 50% 38%, #100c13 42%, #08070b 100%),
-      var(--void);
-    background-attachment:fixed;
+    background:var(--void);
     color:var(--bone);
     font-family:var(--font-body);
     line-height:1.5;
     overflow-x:hidden;
     -webkit-font-smoothing:antialiased;
   }
+  /* viewport-fixed base glow as its own layer (cheap: composited once, no scroll repaint) */
+  body::before{content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;
+    background:radial-gradient(150% 120% at 50% 38%, #100c13 42%, #08070b 100%);}
 
   /* ---------- SITE BACKGROUND: topographic pattern behind embers ---------- */
   .bg-topo{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:0.22;}
@@ -129,18 +129,16 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   .btn:active{transform:translateY(0);}
   /* glass buttons — transparent */
   .btn-primary{
-    background:rgba(255,255,255,0.05);
+    background:rgba(28,24,32,0.72);
     color:var(--bone);
     border:1px solid rgba(255,255,255,0.34);
-    backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.5), inset 0 0 22px rgba(255,255,255,0.05), 0 8px 24px -12px rgba(255,94,26,0.35);
   }
   .btn-primary:hover{background:rgba(255,94,26,0.16);border-color:rgba(255,255,255,0.55);}
   .btn-ghost{
-    background:rgba(255,255,255,0.04);
+    background:rgba(24,22,28,0.6);
     color:var(--bone);
     border:1px solid rgba(255,255,255,0.22);
-    backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);
   }
   .btn-ghost:hover{border-color:rgba(255,94,26,0.6);background:rgba(255,255,255,0.09);}
@@ -148,8 +146,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   /* ---------- NAV ---------- */
   .nav{
     position:sticky;top:0;z-index:200;
-    background:rgba(11,10,13,0.86);
-    backdrop-filter:blur(10px);
+    background:rgba(11,10,13,0.94);
     border-bottom:1px solid rgba(237,234,230,0.08);
   }
   .nav .wrap{
@@ -502,8 +499,8 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     border-radius:22px;
     padding:26px 26px 30px;
     background:linear-gradient(160deg, rgba(44,39,50,0.34), rgba(16,14,20,0.5));
-    backdrop-filter:blur(12px) saturate(1.15);
-    -webkit-backdrop-filter:blur(12px) saturate(1.15);
+    backdrop-filter:blur(6px) saturate(1.1);
+    -webkit-backdrop-filter:blur(6px) saturate(1.1);
     border:1px solid rgba(255,255,255,0.16);
     box-shadow:
       0 30px 70px -25px rgba(0,0,0,0.85),
@@ -730,7 +727,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     --c:var(--signal);
     position:relative;height:100%;
     background:rgba(22,20,27,0.5);
-    backdrop-filter:blur(12px) saturate(1.1);-webkit-backdrop-filter:blur(12px) saturate(1.1);
+    backdrop-filter:blur(6px) saturate(1.1);-webkit-backdrop-filter:blur(6px) saturate(1.1);
     border:1px solid rgba(237,234,230,0.1);
     border-radius:16px;
     padding:24px 22px 26px;
@@ -1005,9 +1002,8 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     display:block;width:100%;
     font-family:var(--font-mono);font-size:12.5px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
     color:var(--bone);cursor:pointer;
-    background:rgba(255,255,255,0.06);
+    background:rgba(30,26,34,0.72);
     border:1px solid rgba(255,255,255,0.38);
-    backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);
     box-shadow:inset 0 1px 0 rgba(255,255,255,0.52), inset 0 0 22px rgba(255,255,255,0.05), 0 12px 26px -12px rgba(255,176,32,0.35);
     border-radius:999px;padding:14px;
     transition:background .15s ease,border-color .15s ease,transform .15s ease;
@@ -2346,11 +2342,16 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   const spy = navLinks
     .map(a => { const href = a.getAttribute('href'); const sec = href && href.charAt(0) === '#' ? document.querySelector(href) : null; return sec ? {link:a, sec} : null; })
     .filter(Boolean);
+  let spyTick=false;
   function onScroll(){
-    const mark = window.scrollY + window.innerHeight * 0.35;
-    let cur = spy[0];
-    spy.forEach(p=>{ if(p.sec.offsetTop <= mark) cur = p; });
-    if(cur) setActive(cur.link);
+    if(spyTick) return; spyTick=true;
+    requestAnimationFrame(function(){
+      spyTick=false;
+      const mark = window.scrollY + window.innerHeight * 0.35;
+      let cur = spy[0];
+      spy.forEach(p=>{ if(p.sec.offsetTop <= mark) cur = p; });
+      if(cur) setActive(cur.link);
+    });
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
