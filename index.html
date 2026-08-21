@@ -1068,23 +1068,24 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   .vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
   @media(max-width:860px){.vid-grid{grid-template-columns:1fr;}}
   .vidcard{
+    --c:var(--signal);
     display:block;text-decoration:none;color:inherit;
     position:relative;height:300px;border-radius:15px;overflow:hidden;
-    border:1px solid rgba(237,234,230,0.09);
+    border:1px solid color-mix(in srgb, var(--c) 30%, transparent);
     cursor:pointer;isolation:isolate;
     transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s ease, box-shadow .3s ease;
   }
-  .vidcard:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.5);box-shadow:0 22px 40px -18px rgba(0,0,0,0.85), 0 0 24px rgba(255,94,26,0.12);}
+  .vidcard:hover{transform:translateY(-5px);border-color:color-mix(in srgb, var(--c) 60%, transparent);box-shadow:0 22px 42px -20px rgba(0,0,0,0.85), 0 0 28px -14px var(--c);}
   .vidcard img{
     position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
-    filter:contrast(1.1) saturate(1.14) brightness(1.03);
+    filter:contrast(1.05) saturate(0.98) brightness(0.66);
     transform-origin:60% 40%;
     animation:kenBurns 22s ease-in-out infinite alternate;
     transition:filter .3s ease;
   }
   .vidcard:nth-child(2) img{transform-origin:42% 58%;animation-duration:26s;animation-direction:alternate-reverse;}
   .vidcard:nth-child(3) img{transform-origin:52% 30%;animation-duration:24s;animation-delay:-5s;}
-  .vidcard:hover img{filter:contrast(1.14) saturate(1.2) brightness(1.08);}
+  .vidcard:hover img{filter:contrast(1.1) saturate(1.05) brightness(0.82);}
   @keyframes kenBurns{from{transform:scale(1.04);}to{transform:scale(1.15);}}
   /* stylish diagonal sheen sweeping on hover */
   .vidcard::before{
@@ -1162,6 +1163,23 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     font-family:var(--font-mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
     color:var(--bone);background:rgba(255,94,26,0.85);padding:3px 9px;border-radius:999px;
   }
+  /* video cards — locked premium (variant D) */
+  .vid-ribbon{position:absolute;top:16px;right:-34px;z-index:4;transform:rotate(38deg);background:var(--c);color:#160a03;
+    font-family:var(--font-mono);font-size:10px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 40px;box-shadow:0 6px 16px -8px rgba(0,0,0,.6);}
+  .vid-center{position:absolute;top:41%;left:50%;transform:translate(-50%,-50%);z-index:3;text-align:center;}
+  .vid-center .vc-lock{width:54px;height:54px;border-radius:50%;background:rgba(11,10,13,.78);border:1px solid color-mix(in srgb,var(--c) 55%,transparent);
+    display:flex;align-items:center;justify-content:center;color:var(--c);margin:0 auto 8px;transition:transform .28s ease,box-shadow .28s ease;}
+  .vid-center .vc-lock svg{width:22px;height:22px;}
+  .vidcard:hover .vid-center .vc-lock{transform:scale(1.08);box-shadow:0 0 0 10px color-mix(in srgb,var(--c) 14%,transparent);}
+  .vid-center small{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:var(--ash);}
+  .vid-meter{display:flex;gap:4px;margin:8px 0 11px;}
+  .vid-meter i{width:22px;height:4px;border-radius:2px;background:rgba(255,255,255,.14);}
+  .vid-meter i.on{background:var(--c);box-shadow:0 0 6px color-mix(in srgb,var(--c) 70%,transparent);}
+  .vid-unlock{display:inline-flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;
+    color:#160a03;background:var(--c);border-radius:999px;padding:7px 14px;transition:filter .2s ease;}
+  .vidcard:hover .vid-unlock{filter:brightness(1.1);}
+  .vid-unlock svg{width:12px;height:12px;}
+  .vid-dur svg{width:12px;height:12px;vertical-align:-2px;margin-right:4px;}
 
   /* tips panel */
   /* gold PRO framing (variant D) */
@@ -1923,32 +1941,35 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
       <div class="vid-grid">
         <a class="vidcard" href="guides.html" aria-label="Открыть гайды: Тренировка аима">
           <img src="assets/vid-1.jpg" alt="" style="object-position:60% 35%;">
-          <div class="vid-meta"><span class="vid-dur">5 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
-          <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
-          <span class="vid-level">Новички</span>
+          <div class="vid-meta"><span class="vid-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>5 мин</span></div>
+          <span class="vid-ribbon">Новички</span>
+          <span class="vid-center"><span class="vc-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><small>по подписке</small></span>
           <div class="vid-body">
             <h3>Тренировка аима</h3>
-            <p>Эффективные упражнения и wow-карты для прокачки стрельбы — заметно поднимут твой аим.</p>
+            <div class="vid-meter"><i class="on"></i><i></i><i></i></div>
+            <span class="vid-unlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Разблокировать</span>
           </div>
         </a>
         <a class="vidcard" href="guides.html" aria-label="Открыть гайды: Контроль отдачи">
           <img src="assets/vid-2.jpg" alt="" style="object-position:center 40%;">
-          <div class="vid-meta"><span class="vid-dur">7 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
-          <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
-          <span class="vid-level">Средний</span>
+          <div class="vid-meta"><span class="vid-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>7 мин</span></div>
+          <span class="vid-ribbon">Средний</span>
+          <span class="vid-center"><span class="vc-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><small>по подписке</small></span>
           <div class="vid-body">
             <h3>Контроль отдачи</h3>
-            <p>Продвинутые настройки на мейновые ганы и подбор оптимальной сенсы.</p>
+            <div class="vid-meter"><i class="on"></i><i class="on"></i><i></i></div>
+            <span class="vid-unlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Разблокировать</span>
           </div>
         </a>
         <a class="vidcard" href="guides.html" aria-label="Открыть гайды: Механика гранат">
           <img src="assets/vid-3.jpg" alt="" style="object-position:center 28%;">
-          <div class="vid-meta"><span class="vid-dur">6 мин</span><span class="vid-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span></div>
-          <span class="vid-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 5l12 7-12 7z"/></svg></span>
-          <span class="vid-level">Про</span>
+          <div class="vid-meta"><span class="vid-dur"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg>6 мин</span></div>
+          <span class="vid-ribbon">Про</span>
+          <span class="vid-center"><span class="vc-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><small>по подписке</small></span>
           <div class="vid-body">
             <h3>Механика гранат</h3>
-            <p>Тактическое применение гранат: правильная раскидка и тайминги.</p>
+            <div class="vid-meter"><i class="on"></i><i class="on"></i><i class="on"></i></div>
+            <span class="vid-unlock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Разблокировать</span>
           </div>
         </a>
       </div>
@@ -2571,6 +2592,14 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
 (function(){
   var cols=['#ff5e1a','#ffb020','#2fe0a8','#6aa6ff','#ff3b6b','#b57cff'];
   document.querySelectorAll('.gpanel:not(.gpro) .guide-grid .gcard').forEach(function(c,i){ c.style.setProperty('--c', cols[i%cols.length]); });
+})();
+/* video cards: accent color by difficulty level (variant D) */
+(function(){
+  var map={'новички':'#2fe0a8','средний':'#ff5e1a','про':'#ff3b3b'};
+  document.querySelectorAll('.vidcard').forEach(function(c){
+    var rb=c.querySelector('.vid-ribbon'); var lvl=rb?rb.textContent.trim().toLowerCase():'';
+    if(map[lvl]) c.style.setProperty('--c', map[lvl]);
+  });
 })();
 </script>
 </body>
