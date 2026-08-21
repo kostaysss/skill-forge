@@ -1,0 +1,40 @@
+/* Skill Forge — shared UI details (scrollbar, selection, progress, back-to-top, ticker) */
+
+/* 2. custom scrollbar */
+html{scrollbar-width:thin;scrollbar-color:#ff7a2a #14121a;}
+::-webkit-scrollbar{width:11px;height:11px;}
+::-webkit-scrollbar-track{background:#111015;}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#ff5e1a,#ffb020);border-radius:20px;border:3px solid #111015;}
+::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#ff7a2a,#ffc84a);}
+
+/* 3. selection */
+::selection{background:rgba(255,94,26,.32);color:#fff;}
+::-moz-selection{background:rgba(255,94,26,.32);color:#fff;}
+
+/* 1. scroll progress bar */
+#scrollProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:400;pointer-events:none;
+  background:linear-gradient(90deg,#ff5e1a,#ffb020);box-shadow:0 0 10px rgba(255,94,26,.7);}
+
+/* 8. back-to-top */
+#backTop{position:fixed;right:24px;bottom:24px;z-index:180;width:46px;height:46px;border-radius:50%;
+  border:1px solid rgba(255,94,26,.5);background:rgba(16,14,19,.92);color:#ff5e1a;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(12px);pointer-events:none;
+  box-shadow:0 10px 24px -10px #000;transition:opacity .25s ease,transform .25s ease,background .2s ease,border-color .2s ease;}
+#backTop.on{opacity:1;transform:none;pointer-events:auto;}
+#backTop:hover{background:rgba(255,94,26,.16);border-color:rgba(255,94,26,.8);}
+#backTop svg{width:20px;height:20px;}
+@media (max-width:640px){#backTop{right:14px;bottom:70px;width:42px;height:42px;}}
+
+/* 6. status ticker (under nav) */
+.site-ticker{position:relative;z-index:5;overflow:hidden;background:rgba(12,11,16,.55);
+  border-bottom:1px solid rgba(237,234,230,.06);padding:9px 0;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);}
+.site-ticker .tk{display:inline-flex;white-space:nowrap;animation:tkscroll 34s linear infinite;
+  font-family:var(--font-mono,'JetBrains Mono',monospace);font-size:12.5px;color:#a89fa8;}
+.site-ticker .tk > span{padding:0 20px;}
+.site-ticker b{color:#edeae6;}
+.site-ticker .lv{color:#2fe0a8;}
+.site-ticker:hover .tk{animation-play-state:paused;}
+@keyframes tkscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+@media (prefers-reduced-motion:reduce){.site-ticker .tk{animation:none;}}

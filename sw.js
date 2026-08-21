@@ -1,5 +1,5 @@
 /* Skill Forge service worker — offline shell + installability */
-const CACHE = 'sf-cache-v8';
+const CACHE = 'sf-cache-v9';
 const SHELL = [
   './',
   './index.html',
@@ -10,6 +10,8 @@ const SHELL = [
   './tools.html',
   './manifest.json',
   './assets/favicon.svg',
+  './assets/site.css',
+  './assets/site.js',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/erangel-map-v2.jpg'
