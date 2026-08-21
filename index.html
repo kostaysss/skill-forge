@@ -1265,34 +1265,28 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
 
   /* spotlight-icon tiles (variant B) */
   .tile{
+    --c:var(--signal);
     position:relative;overflow:hidden;
-    background:linear-gradient(160deg, #1a1620, #0e0c12);
-    border:1px solid rgba(237,234,230,0.08);
+    background:linear-gradient(160deg, color-mix(in srgb, var(--c) 12%, #141019), #0e0c12 70%);
+    border:1px solid color-mix(in srgb, var(--c) 30%, transparent);
     border-radius:16px;
     padding:30px 26px;
     transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;
   }
-  .tile::before{
-    content:"";position:absolute;top:-40px;left:-30px;width:180px;height:180px;z-index:0;pointer-events:none;
-    background:radial-gradient(circle, rgba(255,94,26,0.22), transparent 66%);
-    animation:pulseSpot 3.6s ease-in-out infinite;
-  }
-  @keyframes pulseSpot{0%,100%{opacity:.55;transform:scale(1);}50%{opacity:1;transform:scale(1.12);}}
-  .tile:hover{transform:translateY(-5px);border-color:rgba(255,94,26,0.4);box-shadow:0 24px 44px -18px rgba(0,0,0,0.85);}
+  .tile:hover{transform:translateY(-5px);border-color:color-mix(in srgb, var(--c) 50%, transparent);box-shadow:0 24px 44px -20px rgba(0,0,0,0.85), 0 0 30px -14px var(--c);}
   .tile > *{position:relative;z-index:2;}
   .tile-icon{
-    width:46px;height:46px;
+    width:50px;height:50px;
     display:flex;align-items:center;justify-content:center;
-    border-radius:12px;
-    background:linear-gradient(135deg, var(--signal), var(--ember));
-    color:var(--void);
-    box-shadow:0 8px 22px -6px rgba(255,94,26,0.7);
+    border-radius:13px;
+    background:linear-gradient(135deg, var(--c), color-mix(in srgb, var(--c) 55%, #fff));
+    color:#160a03;
+    box-shadow:0 8px 22px -6px var(--c);
     margin-bottom:18px;
     transition:transform .25s cubic-bezier(.2,.8,.2,1);
   }
   .tile:hover .tile-icon{transform:scale(1.06);}
-  .tile-icon svg{width:23px;height:23px;}
-  @media (prefers-reduced-motion: reduce){.tile::before{animation:none;}}
+  .tile-icon svg{width:24px;height:24px;}
   .tile h3{
     font-family:var(--font-body);
     font-size:17px;
@@ -1301,7 +1295,7 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
     letter-spacing:0.02em;
     margin:0 0 10px;
   }
-  .tile h3 em{color:var(--signal);font-style:normal;}
+  .tile h3 em{color:var(--c);font-style:normal;}
   .tile p{color:var(--ash);font-size:14.5px;margin:0;}
 
   /* ---------- PROCESS ---------- */
@@ -2599,6 +2593,11 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
 (function(){
   var cols=['#ff5e1a','#ffb020','#2fe0a8','#6aa6ff'];
   document.querySelectorAll('.howto-grid .hcell .hstep').forEach(function(s,i){ s.style.setProperty('--c', cols[i%cols.length]); });
+})();
+/* why-us feature tiles: accent color per theme (variant A) */
+(function(){
+  var cols=['#ff5e1a','#2fe0a8','#ffb020'];
+  document.querySelectorAll('.feature-grid .tile').forEach(function(t,i){ t.style.setProperty('--c', cols[i%cols.length]); });
 })();
 </script>
 </body>
