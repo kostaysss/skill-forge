@@ -1,5 +1,5 @@
 /* Skill Forge service worker — offline shell + installability */
-const CACHE = 'sf-cache-v6';
+const CACHE = 'sf-cache-v7';
 const SHELL = [
   './',
   './index.html',
