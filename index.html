@@ -2553,7 +2553,9 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   /* (1) role flip */
   var flip = document.getElementById('roleFlip');
-  if(flip && !reduce){
+  /* role-flip only on desktop 2-col layout — on phones/tablets the changing word length
+     reshuffled line breaks and made the title jump, so keep it static there */
+  if(flip && !reduce && window.matchMedia('(min-width: 981px)').matches){
     var roles=['тиммейта','отряда','напарника','дуо','команды'], ri=0;
     setInterval(function(){ ri=(ri+1)%roles.length; flip.style.animation='none'; flip.offsetHeight; flip.textContent=roles[ri]; flip.style.animation=''; }, 2200);
   }
