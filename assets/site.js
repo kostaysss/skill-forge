@@ -26,6 +26,14 @@
       tk.innerHTML='<div class="tk">'+grp+grp+'</div>';
       nav.insertAdjacentElement('afterend', tk);
     }
+    // 4. magnetic glow follows cursor on primary buttons
+    document.querySelectorAll('.btn-primary,.donate-fab').forEach(function(b){
+      b.addEventListener('pointermove',function(e){ var r=b.getBoundingClientRect(); b.style.setProperty('--mx',(e.clientX-r.left)+'px'); b.style.setProperty('--my',(e.clientY-r.top)+'px'); },{passive:true});
+    });
+    // 7. NEW badge on the news nav link
+    var nl=Array.prototype.slice.call(document.querySelectorAll('.nav-links a')).filter(function(a){ return /news\.html/i.test(a.getAttribute('href')||'') || /новости/i.test(a.textContent); })[0];
+    if(nl && !nl.querySelector('.sf-badge')){ nl.insertAdjacentHTML('beforeend',' <span class="sf-badge new">NEW</span>'); }
+
     // scroll handler (rAF-throttled)
     var de=document.documentElement, ticking=false;
     function upd(){

@@ -38,3 +38,28 @@ html{scrollbar-width:thin;scrollbar-color:#ff7a2a #14121a;}
 .site-ticker:hover .tk{animation-play-state:paused;}
 @keyframes tkscroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 @media (prefers-reduced-motion:reduce){.site-ticker .tk{animation:none;}}
+
+/* 1. section kicker (eyebrow) */
+.sf-kicker{display:inline-flex;align-items:center;gap:9px;font-family:var(--font-mono,'JetBrains Mono',monospace);
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#ff5e1a;margin-bottom:8px;}
+.sf-kicker::before{content:"";width:28px;height:2px;background:linear-gradient(90deg,#ff5e1a,transparent);}
+.sf-kicker--c{display:flex;justify-content:center;}
+.sf-kicker--c::after{content:"";width:28px;height:2px;background:linear-gradient(270deg,#ff5e1a,transparent);}
+
+/* 7. badges NEW / LIVE / HOT */
+.sf-badge{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-mono,'JetBrains Mono',monospace);
+  font-size:9.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border-radius:20px;line-height:1.5;vertical-align:middle;}
+.sf-badge.new{color:#160a03;background:#ff5e1a;}
+.sf-badge.live{color:#2fe0a8;border:1px solid rgba(47,224,168,.5);}
+.sf-badge.live i{width:6px;height:6px;border-radius:50%;background:#2fe0a8;animation:sfbp 1.6s infinite;}
+.sf-badge.hot{color:#ffb020;border:1px solid rgba(255,176,32,.5);}
+@keyframes sfbp{0%{box-shadow:0 0 0 0 rgba(47,224,168,.6);}70%{box-shadow:0 0 0 6px rgba(47,224,168,0);}100%{box-shadow:0 0 0 0 rgba(47,224,168,0);}}
+@media (prefers-reduced-motion:reduce){.sf-badge.live i{animation:none;}}
+
+/* 4. magnetic glow on primary buttons */
+.btn-primary,.donate-fab{position:relative;overflow:hidden;}
+.btn-primary::after,.donate-fab::after{content:"";position:absolute;width:150px;height:150px;
+  left:var(--mx,50%);top:var(--my,50%);transform:translate(-50%,-50%);border-radius:50%;pointer-events:none;z-index:0;
+  background:radial-gradient(circle,rgba(255,255,255,.28),transparent 62%);opacity:0;transition:opacity .25s ease;}
+.btn-primary:hover::after,.donate-fab:hover::after{opacity:1;}
+.btn-primary > *,.donate-fab > *{position:relative;z-index:1;}

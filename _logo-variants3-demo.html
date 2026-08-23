@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Логотип — подборка 3</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--void:#0b0a0d;--bone:#edeae6;--ash:#a89fa8;--signal:#ff5e1a;--ember:#ffb020;
+    --fd:'Oswald',sans-serif;--fm:'JetBrains Mono',monospace;--fb:'Inter',sans-serif;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:radial-gradient(1100px 600px at 30% -10%,#1c1420,#0b0a0d 55%);color:var(--bone);font-family:var(--fb);padding:40px 24px 90px;}
+  .wrap{max-width:940px;margin:0 auto;}
+  h1{font-family:var(--fd);font-size:25px;margin:0 0 6px;}
+  .lead{color:var(--ash);font-size:14px;margin:0 0 30px;}
+  .row{margin-bottom:18px;border:1px solid rgba(237,234,230,.1);border-radius:16px;background:rgba(20,18,24,.4);overflow:hidden;}
+  .rh{display:flex;align-items:center;gap:10px;padding:12px 18px 6px;}
+  .rh .n{font-family:var(--fm);font-size:12px;font-weight:700;color:var(--void);background:var(--ember);border-radius:6px;padding:2px 8px;}
+  .rh h2{font-family:var(--fd);font-size:16px;margin:0;}
+  .rd{color:var(--ash);font-size:12px;padding:0 18px 12px;line-height:1.4;}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;background:linear-gradient(180deg,#141017,#0d0b11);border-top:1px solid rgba(237,234,230,.06);}
+  .chip{font-family:var(--fm);font-size:10px;color:var(--ash);border:1px solid rgba(237,234,230,.14);border-radius:20px;padding:6px 12px;}
+  .big{display:flex;align-items:center;justify-content:center;padding:32px;background:radial-gradient(400px 200px at 50% 0,rgba(255,94,26,.06),transparent 60%);}
+  .big .brand{transform:scale(1.8);}
+  .brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;}
+  .brand-mark{width:38px;height:38px;flex:none;display:block;}
+  .bw{font-family:var(--fd);font-weight:600;font-size:21px;letter-spacing:.02em;color:var(--bone);display:inline-flex;align-items:baseline;gap:4px;line-height:1;}
+  .bw .grad{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .glow{filter:drop-shadow(0 0 7px rgba(255,94,26,.45));}
+  /* type-led wordmark 6 */
+  .bwbold{font-family:var(--fd);font-weight:700;font-size:26px;letter-spacing:-.01em;line-height:.9;display:inline-flex;flex-direction:column;}
+  .bwbold .l1{color:var(--bone);}
+  .bwbold .l2{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;position:relative;}
+  .bwbold .l2::after{content:"";position:absolute;left:0;right:0;bottom:-5px;height:3px;border-radius:2px;background:linear-gradient(90deg,var(--signal),var(--ember),transparent);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Логотип Skill Forge — подборка 3</h1>
+  <p class="lead">Совсем другие направления. Скажи номер или комбо «значок X + текст Y».</p>
+  <div id="root"></div>
+</div>
+<script>
+function gv(id){return '<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5e1a"/><stop offset="1" stop-color="#ffb020"/></linearGradient></defs>';}
+function gd(id){return '<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffd35a"/><stop offset=".5" stop-color="#ff7a1a"/><stop offset="1" stop-color="#ff3d1a"/></linearGradient></defs>';}
+var MARKS={
+  /* 1 tactical seal / medallion */
+  seal:'<svg class="brand-mark glow" viewBox="0 0 40 40" fill="none">'+gv('s1')+
+    '<circle cx="20" cy="20" r="17" stroke="url(#s1)" stroke-width="1.4" opacity=".6"/>'+
+    '<circle cx="20" cy="20" r="13.5" stroke="url(#s1)" stroke-width="2.4"/>'+
+    '<g stroke="url(#s1)" stroke-width="1.6" stroke-linecap="round">'+
+    '<path d="M20 3.5v3M20 33.5v3M3.5 20h3M33.5 20h3M8 8l2 2M32 8l-2 2M8 32l2-2M32 32l-2-2"/></g>'+
+    '<circle cx="20" cy="20" r="4" fill="url(#s1)"/><circle cx="20" cy="20" r="8" stroke="url(#s1)" stroke-width="1" opacity=".5"/></svg>',
+  /* 2 hammer strike + sparks */
+  hammer:'<svg class="brand-mark glow" viewBox="0 0 40 40" fill="none">'+gv('h1')+
+    '<path d="M13 6 L23 6 L21 12 L15 12 Z" fill="url(#h1)"/>'+
+    '<rect x="17" y="11" width="2.6" height="16" rx="1.2" transform="rotate(30 18 19)" fill="url(#h1)"/>'+
+    '<g stroke="#ffd35a" stroke-width="1.8" stroke-linecap="round"><path d="M26 24l4 3M27 29l4 1M23 29l1 4"/></g>'+
+    '<circle cx="25" cy="26" r="1.5" fill="#fff"/></svg>',
+  /* 3 crossed rifles badge */
+  guns:'<svg class="brand-mark glow" viewBox="0 0 40 40" fill="none">'+gv('g1')+
+    '<g stroke="url(#g1)" stroke-width="2.4" stroke-linecap="round">'+
+    '<path d="M7 12 L30 30"/><path d="M33 12 L10 30"/></g>'+
+    '<path d="M7 12 h4 M33 12 h-4 M28 30 l2 3 M12 30 l-2 3" stroke="url(#g1)" stroke-width="2.4" stroke-linecap="round"/>'+
+    '<circle cx="20" cy="21" r="3.4" fill="url(#g1)" stroke="#0d0b11" stroke-width="1.5"/></svg>',
+  /* 4 geometric fox mascot */
+  fox:'<svg class="brand-mark glow" viewBox="0 0 40 40" fill="none">'+gv('f1')+
+    '<path d="M6 7 L18 15 L22 15 L34 7 L31 21 L20 34 L9 21 Z" fill="url(#f1)"/>'+
+    '<path d="M6 7 L13 13 L9 21 Z M34 7 L27 13 L31 21 Z" fill="#0d0b11" opacity=".28"/>'+
+    '<path d="M15 18 l3 1.6 M25 18 l-3 1.6" stroke="#0d0b11" stroke-width="2" stroke-linecap="round"/>'+
+    '<path d="M20 27 l-2-3 h4 z" fill="#0d0b11"/></svg>',
+  /* 5 lightning match (bolt in ring) */
+  bolt:'<svg class="brand-mark glow" viewBox="0 0 40 40" fill="none">'+gd('b1')+
+    '<circle cx="20" cy="20" r="15" stroke="#ff5e1a" stroke-width="2" opacity=".5"/>'+
+    '<path d="M22 8 L13 22 H19 L18 32 L27 18 H21 Z" fill="url(#b1)"/></svg>'
+};
+var WM={
+  grad:'<span class="bw">SKILL <span class="grad">FORGE</span></span>',
+  bold:'<span class="bwbold"><span class="l1">SKILL</span><span class="l2">FORGE</span></span>'
+};
+var V=[
+  {n:'1',t:'Tactical Seal — медальон',d:'Круглый тактический медальон (двойное кольцо, риски по кругу, ядро) — как жетон/коин. Официально, солидно, «командный знак».',mark:'seal',wm:'grad'},
+  {n:'2',t:'Hammer Strike — удар кузнеца',d:'Молот с летящими искрами — сам процесс ковки. Динамичный и прямой смысл «Forge», тёплый.',mark:'hammer',wm:'grad'},
+  {n:'3',t:'Crossed Rifles — скрещённое оружие',d:'Две скрещённые винтовки с бейджем — сильная PUBG-идентичность, «боевой» знак отряда.',mark:'guns',wm:'grad'},
+  {n:'4',t:'Fox Mascot — лис (маскот)',d:'Геометрический лис — хитрость и «умный подбор», оранжевый идеально в тему. Маскоты популярны в киберспорте, легко узнаётся.',mark:'fox',wm:'grad'},
+  {n:'5',t:'Lightning Match — молния',d:'Молния в кольце — «мгновенный подбор напарника». Энергично, современно, отличает от прицела.',mark:'bolt',wm:'grad'},
+  {n:'6',t:'Type-led — только текст (без значка)',d:'Чистая типографика в две строки: SKILL / FORGE с градиентом и подчёркиванием-искрой. Минимал, дорого, отлично тянется в любой размер.',mark:null,wm:'bold'}
+];
+document.getElementById('root').innerHTML=V.map(function(v){
+  var brand='<a class="brand">'+(v.mark?MARKS[v.mark]:'')+WM[v.wm]+'</a>';
+  return '<div class="row"><div class="rh"><span class="n">'+v.n+'</span><h2>'+v.t+'</h2></div><div class="rd">'+v.d+'</div>'+
+    '<div class="nav">'+brand+'<span class="chip">Войти / Регистрация</span></div>'+
+    '<div class="big">'+brand+'</div></div>';
+}).join('');
+</script>
+</body>
+</html>
