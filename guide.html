@@ -155,7 +155,8 @@
   .nade-shots figure{margin:0;}
   .nade-shots img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.09);box-shadow:0 10px 26px -14px #000;}
   .nade-shots figcaption{margin-top:6px;font-family:var(--font-mono,'JetBrains Mono',monospace);font-size:11px;letter-spacing:.02em;color:#a89fa8;}
-  @media (max-width:640px){ .nade-shots{grid-template-columns:1fr;gap:14px;} }
+  .nade-shots figure:last-child:nth-child(odd){grid-column:1 / -1;max-width:calc(50% - 6px);margin-inline:auto;}
+  @media (max-width:640px){ .nade-shots{grid-template-columns:1fr;gap:14px;} .nade-shots figure:last-child:nth-child(odd){max-width:none;} }
 </style>
 </head>
 <body>
