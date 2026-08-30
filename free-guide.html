@@ -96,6 +96,26 @@
   h1.guide-title .accent{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
   .lead{color:var(--ash);font-size:16px;margin:0;max-width:52ch;}
 
+  /* ===== Variant 3: Tactical HUD (applied to all free guides) ===== */
+  .hud-frame{position:relative;margin:0 0 26px;padding:34px 34px 30px;border-radius:18px;
+    border:1px solid rgba(255,94,26,.22);
+    background:
+      linear-gradient(rgba(255,94,26,.022) 1px,transparent 1px) 0 0/100% 27px,
+      linear-gradient(180deg,rgba(20,18,24,.55),rgba(13,11,17,.55));
+    box-shadow:0 30px 70px -40px #000;}
+  .hud-frame::before,.hud-frame::after{content:"";position:absolute;width:24px;height:24px;border:2px solid var(--signal);pointer-events:none;}
+  .hud-frame::before{top:-1px;left:-1px;border-right:none;border-bottom:none;border-radius:8px 0 0 0;}
+  .hud-frame::after{bottom:-1px;right:-1px;border-left:none;border-top:none;border-radius:0 0 8px 0;}
+  @media(max-width:560px){ .hud-frame{padding:24px 18px 22px;} }
+  .brief{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--signal);}
+  .hud-frame .guide-head--free{max-width:none;margin-bottom:20px;}
+  .hud-frame h1.guide-title{margin:10px 0 14px;}
+  .hud-frame .lead{max-width:none;border-left:2px solid rgba(255,94,26,.5);padding-left:14px;
+    font-family:var(--font-mono);font-size:13.5px;line-height:1.65;color:#c7c1c7;}
+  .hud-frame .guide-content{max-width:none;}
+  .hud-frame .guide-content p{font-size:15.5px;line-height:1.72;color:#d5cfd5;margin:0 0 14px;}
+  .hud-frame .guide-content .hl{color:var(--bone);font-weight:700;border-bottom:1px solid rgba(255,94,26,.6);}
+
   .guide-hero{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/10;border:1px solid rgba(237,234,230,0.1);box-shadow:0 26px 50px -22px rgba(0,0,0,0.8);}
   .guide-hero img{width:100%;height:100%;object-fit:cover;filter:contrast(1.08) saturate(1.12);animation:ken 20s ease-in-out infinite alternate;transform-origin:60% 40%;}
   @keyframes ken{from{transform:scale(1.03);}to{transform:scale(1.12);}}
@@ -265,15 +285,17 @@
   <div class="wrap">
     <a class="back-link" href="index.html#guides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> Назад к гайдам</a>
 
-    <div class="guide-head guide-head--free">
-      <div class="guide-intro">
-        <span class="eyebrow" id="g-eyebrow"></span>
-        <h1 class="guide-title" id="g-title"></h1>
-        <p class="lead" id="g-lead"></p>
+    <div class="hud-frame">
+      <div class="guide-head guide-head--free">
+        <div class="guide-intro">
+          <span class="eyebrow" id="g-eyebrow"></span>
+          <h1 class="guide-title" id="g-title"></h1>
+          <p class="lead" id="g-lead"></p>
+        </div>
       </div>
-    </div>
 
-    <article class="guide-content" id="g-content"></article>
+      <article class="guide-content" id="g-content"></article>
+    </div>
 
     <div class="guide-foot">
       <a class="btn btn-primary" href="index.html#guides"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> К другим гайдам</a>
@@ -382,7 +404,7 @@
   const g = GUIDES[getId()];
 
   document.title = 'Skill Forge — ' + g.title.join('');
-  document.getElementById('g-eyebrow').innerHTML = '<span class="chip">Бесплатный гайд</span>';
+  document.getElementById('g-eyebrow').innerHTML = '<span class="brief">// Бесплатный гайд · Skill Forge</span>';
   document.getElementById('g-title').innerHTML = '<span class="accent">' + g.title[0].trim() + '</span> ' + g.title[1];
   document.getElementById('g-lead').textContent = g.lead;
   document.getElementById('g-content').innerHTML = g.body;
