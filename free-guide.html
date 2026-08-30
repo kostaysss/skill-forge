@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>Skill Forge — Гайд</title>
+<meta name="description" content="Разбор механики PUBG Mobile: тайминги, раскидки, настройки и фишки для роста скилла.">
+<meta name="theme-color" content="#0b0a0d">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="stylesheet" href="assets/site.css">
+<script defer src="assets/site.js"></script>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Skill Forge">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Skill Forge">
+<meta property="og:title" content="Гайд PUBG Mobile — Skill Forge">
+<meta property="og:description" content="Разбор механики: тайминги, раскидки, настройки и фишки для роста скилла.">
+<meta property="og:image" content="https://kostaysss.github.io/skill-forge/assets/og-image-fox.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://kostaysss.github.io/skill-forge/guide.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Гайд PUBG Mobile — Skill Forge">
+<meta name="twitter:description" content="Разбор механики: тайминги, раскидки, настройки и фишки для роста скилла.">
+<meta name="twitter:image" content="https://kostaysss.github.io/skill-forge/assets/og-image-fox.jpg">
+<script>if('serviceWorker' in navigator){window.addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
+<style>
+  :root{
+    --void:#0b0a0d; --gunmetal:#17151a; --gunmetal-2:#211d24; --steel:#4a454e;
+    --bone:#edeae6; --ash:#a89fa8; --signal:#ff5e1a; --ember:#ffb020; --intel:#2fe0a8;
+    --grid-line: rgba(237,234,230,0.05);
+    --font-display: "Arial Black","Haettenschweiler","Franklin Gothic Bold","Segoe UI",sans-serif;
+    --font-body: -apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    --font-mono: "SF Mono","Cascadia Code","Consolas","Roboto Mono",ui-monospace,monospace;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:radial-gradient(150% 120% at 50% 38%, #100c13 42%, #08070b 100%), var(--void);color:var(--bone);font-family:var(--font-body);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;}
+  ::selection{background:var(--signal);color:var(--void);}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--ember);outline-offset:3px;border-radius:2px;}
+
+  .bg-topo{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:0.22;}
+  .bg-topo svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+  .ember-global{position:fixed;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none;}
+
+  .wrap{max-width:1000px;margin:0 auto;padding:0 clamp(20px,4vw,40px);}
+
+  .btn{
+    font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+    text-decoration:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:9px;
+    padding:13px 24px;border-radius:999px;transition:transform .15s ease, filter .15s ease, border-color .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:rgba(255,255,255,0.05);color:var(--bone);border:1px solid rgba(255,255,255,0.34);backdrop-filter:blur(18px) saturate(1.3);-webkit-backdrop-filter:blur(18px) saturate(1.3);box-shadow:inset 0 1px 0 rgba(255,255,255,0.5), inset 0 0 22px rgba(255,255,255,0.05), 0 8px 24px -12px rgba(255,94,26,0.35);}
+  .btn-primary:hover{background:rgba(255,94,26,0.16);border-color:rgba(255,255,255,0.55);}
+  .btn-ghost{background:rgba(255,255,255,0.04);color:var(--bone);border:1px solid rgba(255,255,255,0.22);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);box-shadow:inset 0 1px 0 rgba(255,255,255,0.28);}
+  .btn-ghost:hover{border-color:rgba(255,94,26,0.6);background:rgba(255,255,255,0.1);}
+
+  /* nav */
+  .nav{position:sticky;top:0;z-index:200;background:rgba(11,10,13,0.94);border-bottom:1px solid rgba(237,234,230,0.08);}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1180px;}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .brand svg{width:32px;height:32px;}
+  .brand-word{font-family:var(--font-display);font-size:18px;color:var(--bone);display:flex;align-items:center;gap:6px;}
+  .brand-word .tag{font-family:var(--font-mono);font-size:10px;font-weight:700;letter-spacing:0.1em;color:var(--signal);border:1px solid var(--signal);border-radius:999px;padding:3px 8px;}
+
+  main{padding:44px 0 90px;position:relative;z-index:1;}
+
+  .back-link{
+    display:inline-flex;align-items:center;gap:8px;text-decoration:none;
+    font-family:var(--font-mono);font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;color:var(--ash);
+    margin-bottom:26px;transition:color .15s ease, gap .15s ease;
+  }
+  .back-link:hover{color:var(--signal);gap:12px;}
+  .back-link svg{width:16px;height:16px;}
+
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:0.14em;text-transform:uppercase;color:var(--ash);display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .eyebrow .chip{border:1px solid rgba(255,94,26,0.4);color:var(--ember);border-radius:999px;padding:3px 10px;}
+  .eyebrow .chip.lock{display:inline-flex;align-items:center;gap:6px;}
+  .eyebrow .chip.lock svg{width:12px;height:12px;}
+
+  .guide-head{display:grid;grid-template-columns:1.1fr 1fr;gap:30px;align-items:center;margin-bottom:38px;}
+  @media(max-width:760px){.guide-head{grid-template-columns:1fr;}}
+  .guide-head--free{grid-template-columns:1fr;max-width:760px;margin-bottom:26px;}
+  .guide-head--free .lead{max-width:64ch;}
+  h1.guide-title{font-family:var(--font-display);font-size:clamp(30px,5vw,52px);text-transform:uppercase;line-height:1.02;margin:16px 0 16px;text-wrap:balance;}
+  h1.guide-title .accent{background:linear-gradient(100deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lead{color:var(--ash);font-size:16px;margin:0;max-width:52ch;}
+
+  .guide-hero{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/10;border:1px solid rgba(237,234,230,0.1);box-shadow:0 26px 50px -22px rgba(0,0,0,0.8);}
+  .guide-hero img{width:100%;height:100%;object-fit:cover;filter:contrast(1.08) saturate(1.12);animation:ken 20s ease-in-out infinite alternate;transform-origin:60% 40%;}
+  @keyframes ken{from{transform:scale(1.03);}to{transform:scale(1.12);}}
+  .guide-hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 50% 10%, rgba(255,120,40,0.14), transparent 55%),linear-gradient(180deg, transparent 55%, rgba(0,0,0,0.65));}
+
+  /* video placeholder */
+  .video-box{
+    position:relative;border-radius:18px;border:1.5px dashed rgba(255,94,26,0.35);
+    background:linear-gradient(160deg, rgba(33,29,36,0.6), rgba(12,11,15,0.8));
+    padding:46px 24px;text-align:center;margin-bottom:40px;overflow:hidden;
+  }
+  .video-box .vp{
+    width:70px;height:70px;border-radius:50%;margin:0 auto 16px;
+    background:linear-gradient(135deg,var(--signal),var(--ember));color:#fff;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 10px rgba(255,94,26,0.12);animation:vpPulse 2.6s ease-in-out infinite;
+  }
+  @keyframes vpPulse{0%,100%{box-shadow:0 0 0 8px rgba(255,94,26,0.1);}50%{box-shadow:0 0 0 16px rgba(255,94,26,0.05);}}
+  .video-box .vp svg{width:26px;height:26px;margin-left:3px;}
+  .video-box h3{font-family:var(--font-display);text-transform:uppercase;font-size:18px;margin:0 0 6px;}
+  .video-box p{color:var(--ash);font-size:13.5px;margin:0;}
+
+  .guide-content{max-width:760px;}
+  .guide-content section{margin-bottom:30px;}
+  .guide-content h2{font-family:var(--font-body);font-weight:800;text-transform:uppercase;letter-spacing:0.02em;font-size:19px;margin:0 0 12px;display:flex;align-items:center;gap:10px;}
+  .guide-content h2::before{content:"";width:8px;height:22px;border-radius:3px;background:linear-gradient(180deg,var(--signal),var(--ember));flex:none;}
+  .guide-content p{color:var(--ash);font-size:15px;margin:0 0 10px;}
+  .guide-content .hl{color:var(--ember);font-weight:700;}
+  .learn{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:11px;}
+  .learn li{display:flex;gap:12px;align-items:flex-start;color:var(--bone);font-size:14.5px;}
+  .learn .ico{flex:none;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,rgba(255,94,26,0.2),rgba(255,176,32,0.06));border:1px solid rgba(255,94,26,0.32);color:var(--ember);}
+  .learn .ico svg{width:14px;height:14px;}
+
+  .guide-foot{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;}
+  .lock-note{font-family:var(--font-mono);font-size:11.5px;color:var(--ash);display:inline-flex;align-items:center;gap:8px;}
+  .lock-note svg{width:14px;height:14px;color:var(--ember);}
+
+  @media (prefers-reduced-motion: reduce){.guide-hero img,.video-box .vp{animation:none;}}
+
+  /* ============ MOBILE / PHONE ADAPTATION ============ */
+  @media (max-width:640px){
+    .nav .wrap{height:60px;}
+    .brand-word{font-size:16px;}
+    .nav .btn{font-size:11px;padding:9px 14px;}
+    main{padding:26px 0 60px;}
+    .guide-head{grid-template-columns:1fr;gap:20px;margin-bottom:28px;}
+    h1.guide-title{font-size:clamp(26px,8vw,40px);}
+    .lead{font-size:15px;}
+    .video-box{padding:34px 18px;margin-bottom:30px;}
+    .guide-content h2{font-size:17px;}
+    .guide-content p{font-size:14.5px;}
+    .guide-foot{gap:12px;}
+    .guide-foot .btn{width:100%;justify-content:center;}
+  }
+  @media (max-width:380px){ .wrap{padding:0 15px;} }
+
+  /* molik shots gallery */
+  .nade-shots{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+  .nade-shots figure{margin:0;}
+  .nade-shots img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.09);box-shadow:0 10px 26px -14px #000;}
+  .nade-shots figcaption{margin-top:6px;font-family:var(--font-mono,'JetBrains Mono',monospace);font-size:11px;letter-spacing:.02em;color:#a89fa8;}
+  .nade-shots figure:last-child:nth-child(odd){grid-column:1 / -1;max-width:calc(50% - 6px);margin-inline:auto;}
+  @media (max-width:640px){ .nade-shots{grid-template-columns:1fr;gap:14px;} .nade-shots figure:last-child:nth-child(odd){max-width:none;} }
+</style>
+</head>
+<body>
+<canvas class="ember-global" data-embers aria-hidden="true"></canvas>
+
+<div class="bg-topo" data-topo aria-hidden="true"></div>
+
+<script>
+/* ---- procedural topographic contour lines (marching squares over value-noise) ---- */
+(function(){
+  const host = document.querySelector('[data-topo]');
+  if(!host) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const canvas=document.createElement('canvas');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;display:block;';
+  host.replaceChildren(canvas);
+  const ctx=canvas.getContext('2d');
+  const DPR=Math.min(window.devicePixelRatio||1,1.5);
+  const cell=11, scale=0.0125;
+  const levels=[]; for(let t=0.13;t<=0.87;t+=0.062) levels.push(t);
+  function makeNoise(seed){
+    function rand(x,y){ let n=(x|0)*374761393+(y|0)*668265263+seed*1274126177; n=(n^(n>>13))>>>0; n=(n*1274126177)>>>0; n=(n^(n>>16))>>>0; return n/4294967295; }
+    const sm=t=>t*t*(3-2*t), lp=(a,b,t)=>a+(b-a)*t;
+    function vn(x,y){ const xi=Math.floor(x),yi=Math.floor(y),xf=x-xi,yf=y-yi,u=sm(xf),v=sm(yf); return lp(lp(rand(xi,yi),rand(xi+1,yi),u),lp(rand(xi,yi+1),rand(xi+1,yi+1),u),v); }
+    return function(x,y){ let a=1,f=1,s=0,nm=0; for(let o=0;o<2;o++){s+=a*vn(x*f,y*f);nm+=a;a*=0.45;f*=2;} return s/nm; };
+  }
+  const noise=makeNoise(9);
+  let W=0,H=0,cols=0,rows=0,field=null,raf=null,ox=0,oy=0,last=0;
+  function resize(){
+    W=window.innerWidth; H=window.innerHeight; if(!W||!H) return;
+    canvas.width=Math.round(W*DPR); canvas.height=Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    cols=Math.ceil(W/cell)+2; rows=Math.ceil(H/cell)+2;
+    field=new Float32Array(cols*rows);
+  }
+  function render(){
+    if(!field) return;
+    for(let j=0;j<rows;j++){ const sy=(j*cell+oy)*scale; for(let i=0;i<cols;i++){ field[j*cols+i]=noise((i*cell+ox)*scale,sy); } }
+    const at=(i,j)=>field[j*cols+i];
+    ctx.clearRect(0,0,W,H);
+    ctx.strokeStyle='#ffb267'; ctx.lineWidth=1.15; ctx.lineCap='round'; ctx.lineJoin='round';
+    ctx.beginPath();
+    for(const lv of levels){
+      for(let j=0;j<rows-1;j++){
+        const y=j*cell;
+        for(let i=0;i<cols-1;i++){
+          const tl=at(i,j),tr=at(i+1,j),bl=at(i,j+1),br=at(i+1,j+1);
+          let c=0; if(tl>lv)c|=8; if(tr>lv)c|=4; if(br>lv)c|=2; if(bl>lv)c|=1;
+          if(c===0||c===15) continue;
+          const x=i*cell;
+          const top=[x+cell*((lv-tl)/(tr-tl)),y];
+          const right=[x+cell,y+cell*((lv-tr)/(br-tr))];
+          const bottom=[x+cell*((lv-bl)/(br-bl)),y+cell];
+          const left=[x,y+cell*((lv-tl)/(bl-tl))];
+          const seg=(a,b)=>{ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);};
+          switch(c){
+            case 1: case 14: seg(left,bottom); break;
+            case 2: case 13: seg(bottom,right); break;
+            case 3: case 12: seg(left,right); break;
+            case 4: case 11: seg(top,right); break;
+            case 6: case 9: seg(top,bottom); break;
+            case 7: case 8: seg(left,top); break;
+            case 5: seg(left,top); seg(bottom,right); break;
+            case 10: seg(left,bottom); seg(top,right); break;
+          }
+        }
+      }
+    }
+    ctx.stroke();
+  }
+  function loop(ts){ if(!last)last=ts; const dt=Math.min(50,ts-last); last=ts; ox+=dt*0.011; oy+=dt*0.005; render(); raf=requestAnimationFrame(loop); }
+  resize(); render();
+  if(!reduce){ last=0; raf=requestAnimationFrame(loop); }
+  let rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(function(){ resize(); render(); },200); });
+  document.addEventListener('visibilitychange', function(){ if(document.hidden){ if(raf){cancelAnimationFrame(raf);raf=null;} } else if(!reduce&&!raf){ last=0; raf=requestAnimationFrame(loop); } });
+})();
+</script>
+
+<nav class="nav">
+  <div class="wrap">
+    <a class="brand" href="index.html">
+      <svg viewBox="0 0 40 40" fill="none" aria-label="Skill Forge"><defs><linearGradient id="foxGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff5e1a"/><stop offset="1" stop-color="#ffb020"/></linearGradient></defs><path d="M6 7 L18 15 L22 15 L34 7 L31 21 L20 34 L9 21 Z" fill="url(#foxGrad)"/><path d="M6 7 L13 13 L9 21 Z M34 7 L27 13 L31 21 Z" fill="#0d0b11" opacity=".28"/><path d="M15 18 l3 1.6 M25 18 l-3 1.6" stroke="#0d0b11" stroke-width="2" stroke-linecap="round"/><path d="M20 27 l-2-3 h4 z" fill="#0d0b11"/></svg>
+      <span class="brand-word">SKILL <span class="tag">FORGE</span></span>
+    </a>
+    <a class="btn btn-primary" href="index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> На главную</a>
+  </div>
+</nav>
+
+<main>
+  <div class="wrap">
+    <a class="back-link" href="index.html#guides"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> Назад к гайдам</a>
+
+    <div class="guide-head guide-head--free">
+      <div class="guide-intro">
+        <span class="eyebrow" id="g-eyebrow"></span>
+        <h1 class="guide-title" id="g-title"></h1>
+        <p class="lead" id="g-lead"></p>
+      </div>
+    </div>
+
+    <article class="guide-content" id="g-content"></article>
+
+    <div class="guide-foot">
+      <a class="btn btn-primary" href="index.html#guides"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> К другим гайдам</a>
+    </div>
+  </div>
+</main>
+
+<script>
+(function(){
+  const GUIDES = {
+    basics: {
+      title: ['Основы ', 'игры'],
+      lead: 'Базовые механики и полезные фишки, которые нужно знать новичку — и которые не будут лишними для опытных игроков.',
+      body:
+        '<p>Если ты новоприбывший игрок, то подскажу тебе некоторые игровые моменты, знание которых тебе необходимо. Для игроков с опытом данные фишки лишними не будут.</p>' +
+        '<p>Многие не воспринимают <b class="hl">утиль в своём рюкзаке</b> как значимый предмет, и далеко не все правильно пользуются этим важным предметом в файтах. В большинстве ситуаций <b class="hl">идеальный тайминг хае — 2–3 секунды</b>, такой тайминг допустим, если она бросается на ближней-средней дистанции. Также важен сам факт <b class="hl">«холодной» хаешки</b>: кидая утиль в точную позицию противника, который никак не хочет совершать ошибок и первым начинать файт, можно <b class="hl">бросить хае под ноги, не прогревая её</b>, тем самым выкурив противника из позиции.</p>' +
+        '<p><b class="hl">Играй через кавер.</b> Многие игроки пренебрегают этим действием, ошибочно перебегая или переезжая в позицию без тиммейта, который в случае агрессии противника поможет тебе закрыть его. Так же это работает, когда у вас есть информация по позиции игрока в зоне или просто выгодная позиция, которую вы хотите занять: кто-то <b class="hl">берёт машину и раскатывает игроков</b>, провоцируя на агрессию, а тиммейт на позиции включается и работает по вражескому скваду. Важно <b class="hl">раскатывать противников под тиммейта</b>, чтобы были шансы закрыть вражескую команду, а не просто торговать лицом, отлетев в нок.</p>' +
+        '<p>Ошибочно мнение давить противника количеством, входя в один дверной проём. Имея информацию по противникам, количеством давить можно, <b class="hl">но не в изолированных позициях</b> — будь то общага или другой рандомный дом. Когда противники сидят в одной комнате, не издавая звуков, <b class="hl">сперва открой дверь и проверь их реакцию</b> — возможно, узнаешь позиционку. После забегает первый игрок, противник реагирует на твоего тиммейта — <b class="hl">этим действием тиммейт забирает прицел противника</b>, и следом вылетают остальные. В случае нока товарища можно не волноваться об отправке его в лобби. <b class="hl">Реагируйте быстро и переигрывайте противников</b> данной тактикой.</p>' +
+        '<p>В файтах вне зданий, имея такое укрытие как машина, не забывай <b class="hl">прострелить 2 колеса с левой или правой стороны</b> транспорта, чтобы противники не могли прострелить твои пятки. Вещь очевидная, но и её забывать не стоит.</p>' +
+        '<p>Обязательно используй <b class="hl">«глазок» при метании гранат</b> — это действие помогает отслеживать траекторию броска и правильно раскидывать утиль в нужные позиции, без возможности промаха.</p>' +
+        '<p><b class="hl">Паркурь в здания правильно, без анимации</b> — ведь в её момент ты становишься уязвимым. Пропрыгивай в окно <b class="hl">через присед</b>, если речь идёт о пуше игрока, который находится в здании: это сократит время на анимацию залаза в окно и даст тебе больше фокуса в момент попадания в само здание.</p>'
+    },
+    map: {
+      title: ['Карта и ', 'ротации'],
+      lead: 'Понимание карты, фаз зоны и правильные ротации в выгодную позицию.',
+      body:
+        '<p>Карта с названием всех позиций <b class="hl">создана лично</b>. Благодаря пониманию и знанию всех отмеченных позиций у тебя есть большой набор позиций, которые помогут закрыть игру в твою пользу. Но <b class="hl">знания позиций недостаточно</b> — должно быть понимание ротации по карте, опираясь на <b class="hl">фазу каждой новой зоны</b>, которая сужается в течении игры. Есть много вариаций по ротациям в самую выгодную позицию на карте. В игре всё происходит неоднозначно, и нужно <b class="hl">подстраиваться под саму игру</b>. Нет идеальной тактики или гайда, который поможет тебе ротироваться правильно каждую игру, но есть некоторые советы, которыми мы поделимся с тобой.</p>' +
+        '<p><b class="hl">Никогда не торопись въезжать в новый сформированный круг</b> и не бойся синей зоны при сужении круга. Её стоит бояться только в <b class="hl">последних 3–4 фазах</b> — более подробно можешь посмотреть во вкладке <b class="hl">Инструменты → тайминги зоны</b>. В этих фазах урон, получаемый от зоны, уже ощутимо чувствуется.</p>' +
+        '<p><b class="hl">Не всегда стоит заезжать в центр зоны.</b> Иногда на турнирах бывает так, что ни одна из команд не решается заехать в кемп, который будет самым выгодным и находится в центре зоны, ошибочно думая, что сражаться за этот спот будет половина лобби. Но на турнирах <b class="hl">высокого уровня команды готовы отбивать спот до последнего</b>, а на турнирах низкого уровня игра ведётся более пассивно — поэтому <b class="hl">всё зависит от ситуации</b>.</p>' +
+        '<p><b class="hl">Обязательно собирай информацию по карте</b>, но делай это правильно, <b class="hl">не подставляясь под чужую команду</b>. Делай так, чтобы в случае агрессии противников тебе могла помочь команда. Собирая информацию по позиционке врагов таким путём, ты сможешь <b class="hl">правильно ротироваться</b> — чтобы случайно не оказаться в ситуации <b class="hl">бутерброда</b> между командами, либо просто спокойно зайти в <b class="hl">белый круг</b> без каких-либо проблем.</p>'
+    },
+    situations: {
+      title: ['Ситуации и ', 'решения'],
+      lead: 'Как принимать решения в разных ситуациях, оценивать файты и побеждать чаще.',
+      body:
+        '<p>В разных ситуациях важно принимать решения, по итогу которых ты выходишь победителем. В первую очередь нужно <b class="hl">нарабатывать опыт и автоматизировать каждое своё движение</b>: записывай и просматривай свои демки, сам разбирай свои игры. <b class="hl">Выяви основные ошибки и уменьшай их количество</b> — будь сам для себя тренером. При игре в долгую эти действия как минимум приведут тебя к <b class="hl">стабильной игре</b>.</p>' +
+        '<p><b class="hl">Прокачивай индивидуалку</b> — надеяться на команду это ошибочное мышление. Вноси импакт в каждую игру и старайся <b class="hl">прокачивать своё макро</b>. На одном невероятном аиме или зажиме далеко не уехать.</p>' +
+        '<p>Учись играть и развивать свои пики на метовых ганах на <b class="hl">12 калибре</b> — хоть их недавно и дебафнули, подавляющее количество игроков предпочитают иметь в сетапе что-то из 12 калибра. Оттачивая <b class="hl">правильное чувство тайминга и пиков</b> из этого калибра, ты придёшь к победам в разных ситуациях — как минимум <b class="hl">в клоузфайте преимущество будет за тобой</b>.</p>' +
+        '<p>Конечно, не забываем про ганы на дальнюю дистанцию. Большая часть комьюнити, играющая на высоком уровне, отдаёт предпочтение <b class="hl">АУГу</b> — это оружие не уступает <b class="hl">М416</b> ни на дальней дистанции, ни в клоузфайте. С такой скорострельностью, как у ауга, ты сможешь <b class="hl">моментально отправлять соперников в лобби</b>. Бесспорно, контроль отдачи здесь не так прост, как на М416, но, настроив правильную чувствительность, ты поймёшь, что это оружие славится не просто так.</p>' +
+        '<p>Итак, мы разобрались, что лучше иметь при себе, когда ты в не самом выгодном положении. Теперь разберём сами файты. Важно понимать, что <b class="hl">каждый файт имеет смысл</b>. Нужно <b class="hl">трезво оценивать свои силы</b>: если в начале игры на пятки наступают противники, а у тебя даже каски нет — стоит отступить. Понимая, что противники всё ещё на той же локации, и хорошо подлутавшись, можно пробовать <b class="hl">кемперить их</b>, если у них нет точной информации по твоей позиции. Но не торопись: в такой ситуации нет смысла нокать одного — <b class="hl">важно дождаться хотя бы 2–3 человек для первой агрессии</b>, чтобы уравнять свои шансы. Каждое действие должно быть обдумано: <b class="hl">«Нужен ли мне этот файт?»</b>, <b class="hl">«Смогу ли я перестрелять их при таком сетапе?»</b>, <b class="hl">«Выгодно ли мне начинать файт первому?»</b>, <b class="hl">«Собрал ли я информацию по другим игрокам?»</b>. Такие мысли должны сопровождать игрока, заинтересованного в развитии, а <b class="hl">бездумные пуши и выдавание позиции без необходимости</b> ни к чему хорошему не приведут.</p>' +
+        '<p>При игре с друзьями <b class="hl">распределите роли</b>, чтобы у каждого была своя задача — <b class="hl">слаженность команды</b> самый важный игровой момент, который сильно упростит игру для всех. Выбирайте свои споты на разных картах, развивайтесь вместе и <b class="hl">отыгрывайте праки или регистрируйтесь на турнирах низкого уровня</b> — это лучше, чем ограничивать себя пабликом или ультимейтом. Весь опыт приходит именно на турнирах: <b class="hl">больше турниров — больше опыта</b>.</p>'
+    }
+  };
+
+  function getId(){
+    const p = new URLSearchParams(location.search).get('id');
+    return GUIDES[p] ? p : 'basics';
+  }
+  const g = GUIDES[getId()];
+
+  document.title = 'Skill Forge — ' + g.title.join('');
+  document.getElementById('g-eyebrow').innerHTML = '<span class="chip">Бесплатный гайд</span>';
+  document.getElementById('g-title').innerHTML = '<span class="accent">' + g.title[0].trim() + '</span> ' + g.title[1];
+  document.getElementById('g-lead').textContent = g.lead;
+  document.getElementById('g-content').innerHTML = g.body;
+})();
+
+/* embers (same as main page) */
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.querySelectorAll('canvas[data-embers]').forEach(function(canvas){
+    const ctx = canvas.getContext('2d');
+    let w,h,particles=[],raf=null;
+    const DPR = Math.min(window.devicePixelRatio||1,2);
+    function resize(){const r=canvas.getBoundingClientRect();w=r.width;h=r.height;canvas.width=w*DPR;canvas.height=h*DPR;ctx.setTransform(DPR,0,0,DPR,0,0);const c=Math.round(Math.min(90,Math.max(36,w*h/16000)));particles=Array.from({length:c},makeP);}
+    function makeP(){return {x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.4,vy:-(Math.random()*0.5+0.15),vx:(Math.random()-0.5)*0.4,life:Math.random(),flick:Math.random()*0.04+0.01,hue:Math.random()>0.5?28:18};}
+    function tick(){ctx.clearRect(0,0,w,h);for(const p of particles){p.x+=p.vx;p.y+=p.vy;p.life+=p.flick;p.vx+=(Math.random()-0.5)*0.02;if(p.y<-6||p.x<-6||p.x>w+6){Object.assign(p,makeP(),{y:h+6,x:Math.random()*w});}const a=0.35+Math.abs(Math.sin(p.life))*0.55;const gr=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*3.2);gr.addColorStop(0,'hsla('+p.hue+',100%,62%,'+a+')');gr.addColorStop(1,'hsla('+p.hue+',100%,50%,0)');ctx.fillStyle=gr;ctx.beginPath();ctx.arc(p.x,p.y,p.r*3.2,0,Math.PI*2);ctx.fill();ctx.fillStyle='hsla('+p.hue+',100%,80%,'+a+')';ctx.beginPath();ctx.arc(p.x,p.y,p.r*0.7,0,Math.PI*2);ctx.fill();}raf=requestAnimationFrame(tick);}
+    let rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(resize,150);});
+    resize();tick();
+  });
+})();
+</script>
+</body>
+</html>
