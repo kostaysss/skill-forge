@@ -135,6 +135,9 @@
   .ob-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;margin:0 0 6px;}
   .ob-grid img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0d0b11;box-shadow:0 8px 22px -14px #000;}
   @media (max-width:560px){ .ob-grid{grid-template-columns:1fr;gap:12px;} }
+  .map-shot{margin:6px 0 18px;}
+  .map-shot img{width:100%;height:auto;display:block;border-radius:14px;border:1px solid rgba(255,255,255,.1);box-shadow:0 14px 34px -18px #000;}
+  .map-shot figcaption{margin-top:8px;font-family:var(--font-mono,'JetBrains Mono',monospace);font-size:11.5px;letter-spacing:.02em;color:var(--ash);}
   .learn{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:11px;}
   .learn li{display:flex;gap:12px;align-items:flex-start;color:var(--bone);font-size:14.5px;}
   .learn .ico{flex:none;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,rgba(255,94,26,0.2),rgba(255,176,32,0.06));border:1px solid rgba(255,94,26,0.32);color:var(--ember);}
@@ -298,6 +301,7 @@
       lead: 'Понимание карты, фаз зоны и правильные ротации в выгодную позицию.',
       body:
         '<p>Карта с названием всех позиций <b class="hl">создана лично</b>. Благодаря пониманию и знанию всех отмеченных позиций у тебя есть большой набор позиций, которые помогут закрыть игру в твою пользу. Но <b class="hl">знания позиций недостаточно</b> — должно быть понимание ротации по карте, опираясь на <b class="hl">фазу каждой новой зоны</b>, которая сужается в течении игры. Есть много вариаций по ротациям в самую выгодную позицию на карте. В игре всё происходит неоднозначно, и нужно <b class="hl">подстраиваться под саму игру</b>. Нет идеальной тактики или гайда, который поможет тебе ротироваться правильно каждую игру, но есть некоторые советы, которыми мы поделимся с тобой.</p>' +
+        '<figure class="map-shot"><img src="assets/erangel-positions.jpg" alt="Карта Эрангеля со всеми позициями" loading="lazy"><figcaption>Эрангель — карта со всеми позициями</figcaption></figure>' +
         '<p><b class="hl">Никогда не торопись въезжать в новый сформированный круг</b> и не бойся синей зоны при сужении круга. Её стоит бояться только в <b class="hl">последних 3–4 фазах</b> — более подробно можешь посмотреть во вкладке <b class="hl">Инструменты → тайминги зоны</b>. В этих фазах урон, получаемый от зоны, уже ощутимо чувствуется.</p>' +
         '<p><b class="hl">Не всегда стоит заезжать в центр зоны.</b> Иногда на турнирах бывает так, что ни одна из команд не решается заехать в кемп, который будет самым выгодным и находится в центре зоны, ошибочно думая, что сражаться за этот спот будет половина лобби. Но на турнирах <b class="hl">высокого уровня команды готовы отбивать спот до последнего</b>, а на турнирах низкого уровня игра ведётся более пассивно — поэтому <b class="hl">всё зависит от ситуации</b>.</p>' +
         '<p><b class="hl">Обязательно собирай информацию по карте</b>, но делай это правильно, <b class="hl">не подставляясь под чужую команду</b>. Делай так, чтобы в случае агрессии противников тебе могла помочь команда. Собирая информацию по позиционке врагов таким путём, ты сможешь <b class="hl">правильно ротироваться</b> — чтобы случайно не оказаться в ситуации <b class="hl">бутерброда</b> между командами, либо просто спокойно зайти в <b class="hl">белый круг</b> без каких-либо проблем.</p>'
