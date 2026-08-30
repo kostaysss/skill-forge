@@ -129,6 +129,12 @@
   .guide-content ul li::before{content:"";position:absolute;left:2px;top:8px;width:8px;height:8px;border-radius:2px;
     background:linear-gradient(180deg,var(--signal),var(--ember));transform:rotate(45deg);}
   @media (max-width:520px){ .guide-content ul li{font-size:14.5px;} }
+  .ob-sub{font-family:var(--font-body);font-weight:800;text-transform:uppercase;letter-spacing:.04em;font-size:15px;color:var(--bone);margin:26px 0 12px;display:flex;align-items:center;gap:9px;}
+  .ob-sub::before{content:"";width:7px;height:18px;border-radius:2px;background:linear-gradient(180deg,var(--signal),var(--ember));flex:none;}
+  .ob-sub small{font-family:var(--font-mono);font-weight:600;font-size:11px;letter-spacing:.06em;color:var(--ash);text-transform:none;}
+  .ob-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;margin:0 0 6px;}
+  .ob-grid img{width:100%;height:auto;display:block;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:#0d0b11;box-shadow:0 8px 22px -14px #000;}
+  @media (max-width:560px){ .ob-grid{grid-template-columns:1fr;gap:12px;} }
   .learn{list-style:none;margin:0 0 8px;padding:0;display:grid;gap:11px;}
   .learn li{display:flex;gap:12px;align-items:flex-start;color:var(--bone);font-size:14.5px;}
   .learn .ico{flex:none;width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,rgba(255,94,26,0.2),rgba(255,176,32,0.06));border:1px solid rgba(255,94,26,0.32);color:var(--ember);}
@@ -313,6 +319,44 @@
         '<p><b class="hl">Контролируй гребень, но не обязательно стой на его вершине.</b> Высота действительно даёт преимущество по обзору и линиям стрельбы, но <b class="hl">слишком высокая и изолированная точка может сама превратиться в ловушку</b> для следующей ротации.</p>' +
         '<p><b class="hl">Всегда имей пару вариантов отступления.</b> Въезжая в любую из позиций на карте, всегда ставь машину так, чтобы в случае высушивания тебя противниками ты мог <b class="hl">отступить</b>.</p>' +
         '<p>Многие игроки думают, что при ротации из закрывающегося круга обязательно нужно играть центр либо край зоны — но это ошибочное мнение. <b class="hl">Ротация — это не про быстрое занятие необдуманной позиции</b>, а действие, которое спасает тебя от быстрого высушивания из зоны. Выбор позиции в сформированном круге должен быть <b class="hl">обдуманным и правильным</b> — например, удобным для смены позиции в случае агрессии. В голове всегда должны быть <b class="hl">пути отступления</b> под давлением вражеских команд, либо наоборот — позиция, удобная для приёма агрессии и пуша. Всегда выбирай позицию с умом, и держи в голове вопрос <b class="hl">«могут ли меня закидать утилом в этом месте?»</b>. Всегда думай и анализируй игру — это очень важный момент.</p>'
+    },
+    shooting: {
+      title: ['Стрельба и ', 'отдача'],
+      lead: 'Как работает связка ADS и гироскопа, распределение контроля палец/гиро и актуальные обвесы для основных ганов.',
+      body:
+        '<p>Очень распространённая ошибка: <b class="hl">«У меня чувствительность не подходит — поставлю выше»</b> — и игрок начинает бесконечно менять значения. На самом деле проблема часто находится <b class="hl">между ADS и гироскопом</b>.</p>' +
+        '<p>Если <b class="hl">гиро слишком быстрый</b> — вертикаль компенсируется, но появляется лишняя горизонтальная коррекция. Если <b class="hl">слишком медленный</b> — палец начинает делать слишком большую часть работы, и ухудшается трекинг.</p>' +
+        '<p>Поэтому чувствительность нужно подбирать не по принципу «какое значение самое лучшее?», а по принципу: <b class="hl">какую часть контроля делает палец, а какую — гироскоп?</b></p>' +
+        '<p><b class="hl">Гироскоп не должен полностью заменять палец.</b> Это особенно важно для игроков на фул-гиро. Ошибка: «Я играю на гироскопе, поэтому палец почти не должен двигаться». На практике гораздо эффективнее <b class="hl">разделять действия</b>:</p>' +
+        '<p><b class="hl">Палец:</b></p>' +
+        '<ul><li>основное перемещение камеры;</li><li>быстрый перевод на противника;</li><li>крупные коррекции.</li></ul>' +
+        '<p><b class="hl">Гироскоп:</b></p>' +
+        '<ul><li>микрокоррекция;</li><li>контроль вертикальной отдачи;</li><li>трекинг;</li><li>удержание прицела на движущейся цели.</li></ul>' +
+        '<p>Получается: <b class="hl">палец = макро-момент</b>, <b class="hl">гиро = микро-момент</b>. Именно поэтому хороший гиро ощущается не как «я двигаю телефоном вместо пальца», а как <b class="hl">второй слой управления</b>.</p>' +
+        '<h2>Актуальные обвесы</h2>' +
+        '<p>А вот <b class="hl">актуальные обвесы для основных ганов</b>, которыми чаще всего пользуются — распределены по типу оружия.</p>' +
+        '<h3 class="ob-sub">Штурмовые винтовки <small>ШВ</small></h3>' +
+        '<div class="ob-grid">' +
+          '<img src="assets/obves-ar-1.jpg" alt="Обвесы M416" loading="lazy">' +
+          '<img src="assets/obves-ar-2.jpg" alt="Обвесы SCAR-L" loading="lazy">' +
+          '<img src="assets/obves-ar-3.jpg" alt="Обвесы AUG" loading="lazy">' +
+          '<img src="assets/obves-ar-4.jpg" alt="Обвесы QBZ" loading="lazy">' +
+          '<img src="assets/obves-ar-5.jpg" alt="Обвесы АСМ Абакан" loading="lazy">' +
+          '<img src="assets/obves-ar-6.jpg" alt="Обвесы M762" loading="lazy">' +
+          '<img src="assets/obves-ar-7.jpg" alt="Обвесы ACE32" loading="lazy">' +
+        '</div>' +
+        '<h3 class="ob-sub">Пистолеты-пулемёты <small>ПП</small></h3>' +
+        '<div class="ob-grid">' +
+          '<img src="assets/obves-smg-1.jpg" alt="Обвесы Vector" loading="lazy">' +
+          '<img src="assets/obves-smg-2.jpg" alt="Обвесы JS9" loading="lazy">' +
+          '<img src="assets/obves-smg-3.jpg" alt="Обвесы UMP45" loading="lazy">' +
+          '<img src="assets/obves-smg-4.jpg" alt="Обвесы Томпсон и UZI" loading="lazy">' +
+        '</div>' +
+        '<h3 class="ob-sub">Дробовики <small>ДК</small></h3>' +
+        '<div class="ob-grid">' +
+          '<img src="assets/obves-sg-1.jpg" alt="Обвесы S1897 и S12K" loading="lazy">' +
+          '<img src="assets/obves-sg-2.jpg" alt="Обвесы S12K" loading="lazy">' +
+        '</div>'
     },
     situations: {
       title: ['Ситуации и ', 'решения'],
