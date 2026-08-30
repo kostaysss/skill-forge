@@ -974,6 +974,40 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   }
   .read-btn:hover{background:var(--c);border-color:var(--c);color:#160a03;}
 
+  /* read modal */
+  .read-modal{position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;padding:24px;
+    background:rgba(6,5,8,.72);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);}
+  .read-modal.on{display:flex;}
+  .read-dialog{position:relative;width:min(720px,100%);max-height:86vh;display:flex;flex-direction:column;
+    background:linear-gradient(180deg,#151318,#100e13);border:1px solid rgba(255,94,26,.28);border-radius:20px;
+    box-shadow:0 40px 90px -30px #000, 0 0 0 1px rgba(255,255,255,.03) inset;
+    transform:translateY(14px) scale(.985);opacity:0;transition:transform .28s cubic-bezier(.2,.7,.3,1),opacity .28s ease;}
+  .read-modal.on .read-dialog{transform:none;opacity:1;}
+  .read-head{display:flex;align-items:center;gap:12px;padding:22px 26px 16px;border-bottom:1px solid rgba(237,234,230,.08);}
+  .read-head .rh-ico{flex:0 0 auto;width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    color:var(--signal);background:rgba(255,94,26,.12);border:1px solid rgba(255,94,26,.3);}
+  .read-head .rh-ico svg{width:24px;height:24px;}
+  .read-head h3{margin:0;font-family:var(--font-display);font-size:20px;text-transform:uppercase;letter-spacing:.01em;color:var(--bone);}
+  .read-head .rh-tag{margin-top:2px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--signal);}
+  .read-close{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;cursor:pointer;
+    border:1px solid rgba(237,234,230,.14);background:rgba(255,255,255,.04);color:var(--ash);
+    display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s,border-color .2s;}
+  .read-close:hover{background:rgba(255,94,26,.16);color:var(--signal);border-color:rgba(255,94,26,.5);}
+  .read-close svg{width:16px;height:16px;}
+  .read-body{padding:20px 26px 26px;overflow-y:auto;}
+  .read-body p{margin:0 0 15px;font-size:14.5px;line-height:1.72;color:#d8d2d8;}
+  .read-body p:last-child{margin-bottom:0;}
+  .read-body .hl{color:var(--bone);font-weight:700;background:linear-gradient(180deg,transparent 62%,rgba(255,94,26,.28) 62%);
+    padding:0 2px;border-radius:2px;}
+  @media (max-width:640px){
+    .read-modal{padding:14px;}
+    .read-dialog{border-radius:16px;max-height:90vh;}
+    .read-head{padding:18px 18px 14px;}
+    .read-head h3{font-size:17px;}
+    .read-body{padding:16px 18px 20px;}
+    .read-body p{font-size:13.5px;}
+  }
+
   /* pro panel — gold gradient border + glow (variant A) */
   .gpro{
     border:1.5px solid transparent;
@@ -2615,6 +2649,57 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
   var cols=['#ff5e1a','#2fe0a8','#ffb020'];
   document.querySelectorAll('.feature-grid .tile').forEach(function(t,i){ t.style.setProperty('--c', cols[i%cols.length]); });
 })();
+/* read-modal for free guide cards */
+(function(){
+  var GUIDE_READS = {
+    'Основы игры': {
+      tag: 'Бесплатный гайд',
+      html:
+        '<p>Если ты новоприбывший игрок, то подскажу тебе некоторые игровые моменты, знание которых тебе необходимо. Для игроков с опытом данные фишки лишними не будут.</p>' +
+        '<p>Многие не воспринимают <b class="hl">утиль в своём рюкзаке</b> как значимый предмет, и далеко не все правильно пользуются этим важным предметом в файтах. В большинстве ситуаций <b class="hl">идеальный тайминг хае — 2–3 секунды</b>, такой тайминг допустим, если она бросается на ближней-средней дистанции. Также важен сам факт <b class="hl">«холодной» хаешки</b>: кидая утиль в точную позицию противника, который никак не хочет совершать ошибок и первым начинать файт, можно <b class="hl">бросить хае под ноги, не прогревая её</b>, тем самым выкурив противника из позиции.</p>' +
+        '<p><b class="hl">Играй через кавер.</b> Многие игроки пренебрегают этим действием, ошибочно перебегая или переезжая в позицию без тиммейта, который в случае агрессии противника поможет тебе закрыть его. Так же это работает, когда у вас есть информация по позиции игрока в зоне или просто выгодная позиция, которую вы хотите занять: кто-то <b class="hl">берёт машину и раскатывает игроков</b>, провоцируя на агрессию, а тиммейт на позиции включается и работает по вражескому скваду. Важно <b class="hl">раскатывать противников под тиммейта</b>, чтобы были шансы закрыть вражескую команду, а не просто торговать лицом, отлетев в нок.</p>' +
+        '<p>Ошибочно мнение давить противника количеством, входя в один дверной проём. Имея информацию по противникам, количеством давить можно, <b class="hl">но не в изолированных позициях</b> — будь то общага или другой рандомный дом. Когда противники сидят в одной комнате, не издавая звуков, <b class="hl">сперва открой дверь и проверь их реакцию</b> — возможно, узнаешь позиционку. После забегает первый игрок, противник реагирует на твоего тиммейта — <b class="hl">этим действием тиммейт забирает прицел противника</b>, и следом вылетают остальные. В случае нока товарища можно не волноваться об отправке его в лобби. <b class="hl">Реагируйте быстро и переигрывайте противников</b> данной тактикой.</p>' +
+        '<p>В файтах вне зданий, имея такое укрытие как машина, не забывай <b class="hl">прострелить 2 колеса с левой или правой стороны</b> транспорта, чтобы противники не могли прострелить твои пятки. Вещь очевидная, но и её забывать не стоит.</p>' +
+        '<p>Обязательно используй <b class="hl">«глазок» при метании гранат</b> — это действие помогает отслеживать траекторию броска и правильно раскидывать утиль в нужные позиции, без возможности промаха.</p>' +
+        '<p><b class="hl">Паркурь в здания правильно, без анимации</b> — ведь в её момент ты становишься уязвимым. Пропрыгивай в окно <b class="hl">через присед</b>, если речь идёт о пуше игрока, который находится в здании: это сократит время на анимацию залаза в окно и даст тебе больше фокуса в момент попадания в само здание.</p>'
+    }
+  };
+  function initReads(){
+    var modal=document.getElementById('readModal');
+    if(!modal) return;
+    var titleEl=modal.querySelector('.rh-title'), tagEl=modal.querySelector('.rh-tag'), bodyEl=modal.querySelector('.read-body');
+    var lastFocus=null;
+    function open(name){
+      var data=GUIDE_READS[name]; if(!data) return;
+      titleEl.textContent=name; tagEl.textContent=data.tag||'Гайд'; bodyEl.innerHTML=data.html;
+      bodyEl.scrollTop=0; modal.classList.add('on'); document.body.style.overflow='hidden';
+      var c=modal.querySelector('.read-close'); if(c) c.focus();
+    }
+    function close(){ modal.classList.remove('on'); document.body.style.overflow=''; if(lastFocus) lastFocus.focus(); }
+    document.querySelectorAll('.gpanel:not(.gpro) .gcard').forEach(function(card){
+      var h=card.querySelector('h4'); var btn=card.querySelector('.read-btn');
+      if(!h||!btn) return; var name=h.textContent.trim();
+      if(!GUIDE_READS[name]) return;
+      btn.addEventListener('click',function(){ lastFocus=btn; open(name); });
+    });
+    modal.addEventListener('click',function(e){ if(e.target===modal || e.target.closest('.read-close')) close(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape' && modal.classList.contains('on')) close(); });
+  }
+  if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', initReads); } else { initReads(); }
+})();
 </script>
+<div class="read-modal" id="readModal" role="dialog" aria-modal="true" aria-labelledby="readModalTitle">
+  <div class="read-dialog">
+    <button class="read-close" type="button" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    <div class="read-head">
+      <span class="rh-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H12v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H12v16h5.5A2.5 2.5 0 0 1 20 21.5z"/></svg></span>
+      <div>
+        <div class="rh-tag" id="readModalTag">Бесплатный гайд</div>
+        <h3 class="rh-title" id="readModalTitle">Основы игры</h3>
+      </div>
+    </div>
+    <div class="read-body"></div>
+  </div>
+</div>
 </body>
 </html>
