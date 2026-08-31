@@ -1,11 +1,12 @@
 /* Skill Forge service worker — offline shell + installability */
-const CACHE = 'sf-cache-v11';
+const CACHE = 'sf-cache-v12';
 const SHELL = [
   './',
   './index.html',
   './guides.html',
   './guide.html',
   './free-guide.html',
+  './tournaments.html',
   './profile.html',
   './news.html',
   './tools.html',
