@@ -77,7 +77,11 @@
   .tabpanel.active{display:block;}
   @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
 
-  .glass{background:linear-gradient(160deg, rgba(40,35,46,0.42), rgba(14,12,18,0.6));backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.12);border-radius:20px;box-shadow:0 26px 60px -25px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.14);}
+  .glass{position:relative;overflow:hidden;background:rgba(20,17,25,0.5);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);border:1px solid rgba(255,255,255,0.13);border-radius:20px;box-shadow:0 30px 70px -30px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.14);}
+  .glass::before,.glass::after{content:"";position:absolute;width:320px;height:320px;border-radius:50%;filter:blur(66px);pointer-events:none;z-index:0;}
+  .glass::before{background:var(--signal);opacity:0.4;top:-140px;left:-90px;}
+  .glass::after{background:var(--ember);opacity:0.32;bottom:-150px;right:-90px;}
+  .glass > *{position:relative;z-index:1;}
 
   .card-h{font-family:var(--font-display);text-transform:uppercase;font-size:17px;margin:0 0 4px;}
   .card-sub{color:var(--ash);font-size:13px;margin:0 0 18px;}
