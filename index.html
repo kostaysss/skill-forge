@@ -2618,13 +2618,20 @@ if(!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').
 })();
 /* free-guide cards: open dedicated page */
 (function(){
-  var MAP = { 'Основы игры':'basics', 'Карта и ротации':'map', 'Движение и позиции':'movement', 'Стрельба и отдача':'shooting', 'Ситуации и решения':'situations' };
+  var MAP = {
+    'Основы игры':'free-guide.html?id=basics',
+    'Карта и ротации':'free-guide.html?id=map',
+    'Движение и позиции':'free-guide.html?id=movement',
+    'Стрельба и отдача':'free-guide.html?id=shooting',
+    'Ситуации и решения':'free-guide.html?id=situations',
+    'Лут и снаряжение':'tools.html#calc'
+  };
   function init(){
     document.querySelectorAll('.gpanel:not(.gpro) .gcard').forEach(function(card){
       var h=card.querySelector('h4'); var btn=card.querySelector('.read-btn');
-      if(!h||!btn) return; var id=MAP[h.textContent.trim()];
-      if(!id) return;
-      btn.addEventListener('click',function(){ location.href='free-guide.html?id='+id; });
+      if(!h||!btn) return; var url=MAP[h.textContent.trim()];
+      if(!url) return;
+      btn.addEventListener('click',function(){ location.href=url; });
     });
   }
   if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
