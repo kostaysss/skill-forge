@@ -362,6 +362,52 @@
   .lrow .pts2 span{display:block;font-family:var(--font-mono);font-size:10px;color:var(--ash);letter-spacing:.05em;}
   .lrow .mv{font-family:var(--font-mono);font-size:11px;margin-left:10px;color:var(--ash);}
   .lrow .mv.up{color:var(--intel);}.lrow .mv.dn{color:var(--red,#ff3b3b);}
+
+  /* ---- compact tournament page (tabs + accordion) ---- */
+  .tp-tabs{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0 16px;}
+  .tp-tab{font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ash);padding:10px 18px;border-radius:999px;border:1px solid var(--line);background:none;cursor:pointer;transition:.2s;}
+  .tp-tab:hover{color:var(--bone);border-color:rgba(255,94,26,.4);}
+  .tp-tab.on{color:var(--void);background:linear-gradient(180deg,var(--signal),var(--ember));border-color:transparent;}
+  .tp-panel{display:none;}
+  .tp-panel.on{display:block;animation:tpFade .25s ease;}
+  @keyframes tpFade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .tp-ov{padding:20px;}
+  .tp-ov h4{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);margin:0 0 10px;}
+  .tp-ov h4:not(:first-child){margin-top:20px;}
+  .tp-ov h4 .tp-mini{color:var(--ash);text-transform:none;letter-spacing:0;font-size:10px;}
+  .tp-kv{display:flex;flex-wrap:wrap;gap:8px;}
+  .tp-kv span{font-family:var(--font-mono);font-size:11.5px;color:var(--ash);background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:999px;padding:6px 12px;}
+  .tp-kv span b{color:var(--bone);}
+  .tp-prize{display:flex;flex-wrap:wrap;gap:8px;}
+  .tp-prize .p{display:flex;align-items:center;gap:8px;font-size:12.5px;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:10px;padding:8px 12px;}
+  .tp-prize .p b{font-family:var(--font-display);color:var(--ember);}
+  .tp-prize .p .pl{font-family:var(--font-mono);font-size:10px;color:var(--ash);text-transform:uppercase;}
+  /* accordion */
+  .tp-acc{display:grid;gap:10px;}
+  .tp-ai{border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02);overflow:hidden;}
+  .tp-ai>.hd{display:flex;align-items:center;gap:11px;padding:14px 16px;cursor:pointer;user-select:none;}
+  .tp-ai>.hd .ic{width:26px;height:26px;flex:none;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;background:rgba(255,94,26,.1);border:1px solid rgba(255,94,26,.3);}
+  .tp-ai>.hd .t{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--bone);}
+  .tp-ai>.hd .arw{margin-left:auto;transition:transform .25s;color:var(--ash);}
+  .tp-ai.open>.hd .arw{transform:rotate(90deg);color:var(--signal);}
+  .tp-ai>.bd{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+  .tp-ai.open>.bd{max-height:680px;}
+  .tp-ai>.bd>.in{padding:0 16px 16px;font-size:13px;color:#cbc6cd;line-height:1.6;}
+  .tp-ai .in ul{margin:0;padding-left:18px;}
+  .tp-ai .in li{margin:4px 0;}
+  .tp-ai .in b{color:var(--ember);}
+  .tp-ptab{width:100%;border-collapse:collapse;}
+  .tp-ptab td{padding:5px 6px;border-bottom:1px solid var(--line);font-size:12.5px;}
+  .tp-ptab td:last-child{text-align:right;font-family:var(--font-mono);font-weight:700;color:var(--ember);}
+  .tp-ptab tr.win td,.tp-ptab tr.win td:last-child{color:var(--intel);}
+  .tp-note{font-family:var(--font-mono);font-size:11.5px;color:var(--ash);margin-top:10px;}
+  .tp-ph{padding:34px 20px;text-align:center;color:var(--ash);font-size:13.5px;}
+  .tp-ph .big{font-family:var(--font-display);font-size:16px;color:var(--bone);text-transform:uppercase;margin-bottom:6px;}
+  .tp-teams{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px;}
+  @media(max-width:520px){.tp-teams{grid-template-columns:1fr;}}
+  .tp-teams .tm{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid var(--line);}
+  .tp-teams .tm .av{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--signal),var(--ember));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--void);font-size:13px;}
+  .tp-teams .tm b{font-size:13px;}.tp-teams .tm span{display:block;font-family:var(--font-mono);font-size:10.5px;color:var(--ash);}
 </style>
 </head>
 <body>
@@ -506,10 +552,10 @@
       </div>
     </section>
 
-    <!-- 2. TOURNAMENT PAGE (example) -->
+    <!-- 2. TOURNAMENT PAGE (compact, tabbed) -->
     <section class="trn-sec">
       <h2 class="trn-h">Страница турнира</h2>
-      <p class="trn-sub">Так выглядит турнир изнутри — на примере <b class="hl">Skill Forge Squad Cup #12</b>.</p>
+      <p class="trn-sub">Так выглядит турнир изнутри — на примере <b class="hl">Skill Forge Squad Cup #12</b>. Обзор и регламент — под вкладками.</p>
       <div class="facts">
         <div class="f"><div class="l">Дата</div><div class="v">05.09</div></div>
         <div class="f"><div class="l">Слоты</div><div class="v">34/48</div></div>
@@ -518,52 +564,71 @@
         <div class="f"><div class="l">Формат</div><div class="v">Squad</div></div>
         <div class="f"><div class="l">Tier</div><div class="v">1–2</div></div>
       </div>
-      <div class="tabs"><span class="on">Обзор</span><span>Правила</span><span>Сетка</span><span>Команды</span></div>
-      <div class="ov card">
-        <div class="grid2">
-          <div>
-            <h4>Общая информация</h4>
-            <div class="info">
-              <div><span>Вид</span><b>От 3-го лица (TPP)</b></div>
-              <div><span>Режим</span><b>Squad (отряды 4×4)</b></div>
-              <div><span>Карты</span><b>Эрангель · Мирамар · Рондо</b></div>
-              <div><span>Регион</span><b>СНГ</b></div>
-            </div>
+
+      <div class="tp-tabs">
+        <button class="tp-tab on" data-p="ov" type="button">Обзор</button>
+        <button class="tp-tab" data-p="rules" type="button">Правила</button>
+        <button class="tp-tab" data-p="grid" type="button">Сетка</button>
+        <button class="tp-tab" data-p="teams" type="button">Команды</button>
+      </div>
+
+      <!-- Обзор -->
+      <div class="tp-panel on" id="tp-ov">
+        <div class="card tp-ov">
+          <h4>Общая информация</h4>
+          <div class="tp-kv"><span>Вид: <b>TPP</b></span><span>Режим: <b>Squad 4×4</b></span><span>Карты: <b>Эрангель · Мирамар · Рондо</b></span><span>Регион: <b>СНГ</b></span></div>
+          <h4>Призовой фонд · 150 USDT <span class="tp-mini">(в криптовалюте)</span></h4>
+          <div class="tp-prize"><div class="p"><span class="pl">TOP 1</span><b>75 USDT</b></div><div class="p"><span class="pl">TOP 2</span><b>45 USDT</b></div><div class="p"><span class="pl">TOP 3</span><b>20 USDT</b></div><div class="p"><span class="pl">WWCD</span><b>10 USDT</b></div></div>
+          <h4>Расписание этапов</h4>
+          <div class="stages">
+            <div class="stage"><div class="sn">Полуфинал · 05.09</div><div class="sm">Группы A/B · Топ-9 в финал</div><div class="maps"><b>Эрангель</b><b>Мирамар</b><b>Эрангель</b><b>Мирамар</b></div></div>
+            <div class="stage"><div class="sn">Финал · 06.09</div><div class="sm">16 команд · Топ-3 — призовые</div><div class="maps"><b>Эрангель</b><b>Мирамар</b><b>Рондо</b><b>Эрангель</b><b>Мирамар</b></div></div>
           </div>
-          <div>
-            <h4>Призовой фонд · 150 USDT</h4>
-            <div class="prize">
-              <div class="p"><span class="pl g">TOP 1</span><span>Чемпион</span><span class="amt">75 USDT</span></div>
-              <div class="p"><span class="pl">TOP 2</span><span>Финалист</span><span class="amt">45 USDT</span></div>
-              <div class="p"><span class="pl">TOP 3</span><span>Бронза</span><span class="amt">20 USDT</span></div>
-              <div class="p"><span class="pl">WWCD</span><span>За лучшую игру</span><span class="amt">10 USDT</span></div>
-            </div>
-            <div class="crypto-note">Выплаты — в <b>криптовалюте (USDT)</b> на кошелёк капитана в течение 7 дней после финала.</div>
-          </div>
-        </div>
-        <div class="stages">
-          <div class="stage"><div class="sn">Полуфинал · 05.09</div><div class="sm">Группы A/B · Топ-9 проходят в финал</div><div class="maps"><b>Эрангель</b><b>Мирамар</b><b>Эрангель</b><b>Мирамар</b></div></div>
-          <div class="stage"><div class="sn">Финал · 06.09</div><div class="sm">16 команд · Топ-3 забирают призовые</div><div class="maps"><b>Эрангель</b><b>Мирамар</b><b>Рондо</b><b>Эрангель</b><b>Мирамар</b></div></div>
         </div>
       </div>
-    </section>
 
-    <!-- 3. POINTS (птс) -->
-    <section class="trn-sec">
-      <h2 class="trn-h">Система птс за карту</h2>
-      <p class="trn-sub">Птс за карту = <b class="hl">место</b> + <b class="hl">киллы</b>. Распределение птс за места <b class="hl">разное для Дуо и Сквадов</b> — переключи формат.</p>
-      <div class="pt-switch"><button class="pt-tab active" data-fmt="squad" type="button">Сквад 4×4</button><button class="pt-tab" data-fmt="duo" type="button">Дуо 2×2</button></div>
-      <div class="pts">
-        <div class="card ptable">
-          <h4>Птс за место <span id="ptFmt">· Сквад (16 команд)</span></h4>
-          <table id="ptTable"></table>
+      <!-- Правила (аккордеон) -->
+      <div class="tp-panel" id="tp-rules">
+        <div class="tp-acc">
+          <div class="tp-ai open">
+            <div class="hd"><span class="ic">📋</span><span class="t">Общая информация</span><svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div class="bd"><div class="in"><ul><li>Аккаунт уровня <b>35+</b>, только мобильные устройства (эмуляторы запрещены).</li><li>Каждый игрок обязан прочесть и соблюдать регламент.</li><li>Команда ведёт <b>запись всех игр</b> — организатор может запросить.</li></ul></div></div>
+          </div>
+          <div class="tp-ai">
+            <div class="hd"><span class="ic">🏆</span><span class="t">Птс за место — Сквад</span><svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div class="bd"><div class="in"><table class="tp-ptab"><tr class="win"><td>1 место — WWCD</td><td>10 птс</td></tr><tr><td>2 место</td><td>6 птс</td></tr><tr><td>3 место</td><td>5 птс</td></tr><tr><td>4 место</td><td>4 птс</td></tr><tr><td>5 место</td><td>3 птс</td></tr><tr><td>6 место</td><td>2 птс</td></tr><tr><td>7–8 место</td><td>1 птс</td></tr><tr><td>9–16 место</td><td>0 птс</td></tr></table><div class="tp-note">+1 птс за килл · птс за карту = место + киллы</div></div></div>
+          </div>
+          <div class="tp-ai">
+            <div class="hd"><span class="ic">🎯</span><span class="t">Птс за место — Дуо</span><svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div class="bd"><div class="in"><table class="tp-ptab"><tr class="win"><td>1 место — WWCD</td><td>10 птс</td></tr><tr><td>2 место</td><td>8 птс</td></tr><tr><td>3 место</td><td>7 птс</td></tr><tr><td>4 место</td><td>6 птс</td></tr><tr><td>5 место</td><td>5 птс</td></tr><tr><td>6 место</td><td>4 птс</td></tr><tr><td>7 место</td><td>3 птс</td></tr><tr><td>8 место</td><td>2 птс</td></tr><tr><td>9–16 место</td><td>1 птс</td></tr><tr><td>17–32 место</td><td>0 птс</td></tr></table><div class="tp-note">+1 птс за килл · в Дуо больше команд — шкала длиннее</div></div></div>
+          </div>
+          <div class="tp-ai">
+            <div class="hd"><span class="ic">🚫</span><span class="t">Запреты и штрафы</span><svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div class="bd"><div class="in"><ul><li>Читы, стороннее ПО, использование багов — <b>дисквалификация</b>.</li><li>Тимминг, посадка в чужой слот, передача id/пароля лобби.</li><li>Использование самореса (реанимации) — <b>обнуление птс за матч</b>; ношение — <b>−5 птс</b>.</li><li>Оскорбления, неспортивное поведение — предупреждение / <b>штраф −20 птс</b> / бан.</li></ul></div></div>
+          </div>
+          <div class="tp-ai">
+            <div class="hd"><span class="ic">⚖️</span><span class="t">Ничья (тай-брейк)</span><svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div class="bd"><div class="in">При равенстве птс места определяются по: <b>1)</b> числу побед на этапе → <b>2)</b> птс за места → <b>3)</b> суммарным киллам → <b>4)</b> месту в последнем матче.</div></div>
+          </div>
+          <div class="tp-ai">
+            <div class="hd"><span class="ic">💰</span><span class="t">Выплаты призовых</span><svg class="arw" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></div>
+            <div class="bd"><div class="in">Все призовые отправляются участникам <b>в криптовалюте (USDT)</b> на кошелёк капитана в течение <b>7 дней</b> после финала.</div></div>
+          </div>
         </div>
-        <div class="card pform">
-          <h4>Как считается</h4>
-          <div class="f">Птс за карту = <b>место</b> + <b>киллы</b></div>
-          <span class="kill">🎯 +1 птс за каждое убийство</span>
-          <p class="ex" id="ptEx"></p>
-          <div class="crypto-note">По сумме птс за все карты этапа строится таблица турнира и общий <b>рейтинг Skill Forge (SFR)</b>.</div>
+      </div>
+
+      <!-- Сетка -->
+      <div class="tp-panel" id="tp-grid">
+        <div class="card tp-ph"><div class="big">Турнирная таблица</div>Появится после старта: места команд, птс за карты и общий зачёт этапа в реальном времени.</div>
+      </div>
+
+      <!-- Команды -->
+      <div class="tp-panel" id="tp-teams">
+        <div class="card tp-teams">
+          <div class="tm"><span class="av">N</span><div><b>NIGHT OWLS</b><span>Squad · TIER 1</span></div></div>
+          <div class="tm"><span class="av">V</span><div><b>VORTEX</b><span>Squad · TIER 1</span></div></div>
+          <div class="tm"><span class="av">R</span><div><b>REDLINE</b><span>Squad · TIER 2</span></div></div>
+          <div class="tm"><span class="av">B</span><div><b>BLIZZARD</b><span>Squad · TIER 2</span></div></div>
         </div>
       </div>
     </section>
@@ -667,28 +732,17 @@
   var tg = document.getElementById('teamsGrid');
   if(tg) tg.innerHTML = TEAMS.map(card).join('');
 
-  /* ---- points tables (Duo vs Squad) ---- */
-  var PTS = {
-    squad: { label:'· Сквад (16 команд в лобби)',
-      rows:[['1 место — WWCD',10,1],['2 место',6],['3 место',5],['4 место',4],['5 место',3],['6 место',2],['7 место',1],['8 место',1],['9–16 место',0]],
-      ex:'Пример: команда заняла <b>3 место</b> (5 птс) и сделала <b>8 killов</b> (8 птс) → <b>13 птс за карту</b>.' },
-    duo: { label:'· Дуо (до 32 команд в лобби)',
-      rows:[['1 место — WWCD',10,1],['2 место',8],['3 место',7],['4 место',6],['5 место',5],['6 место',4],['7 место',3],['8 место',2],['9–16 место',1],['17–32 место',0]],
-      ex:'Пример: команда заняла <b>3 место</b> (7 птс) и сделала <b>6 killов</b> (6 птс) → <b>13 птс за карту</b>.' }
-  };
-  var ptTbl=document.getElementById('ptTable'), ptFmt=document.getElementById('ptFmt'), ptEx=document.getElementById('ptEx');
-  function renderPts(fmt){
-    var d=PTS[fmt]; if(!ptTbl||!d) return;
-    ptTbl.innerHTML=d.rows.map(function(r){ return '<tr'+(r[2]?' class="win"':'')+'><td>'+r[0]+'</td><td>'+r[1]+' птс</td></tr>'; }).join('');
-    if(ptFmt) ptFmt.textContent=d.label;
-    if(ptEx) ptEx.innerHTML=d.ex;
-  }
-  renderPts('squad');
-  document.querySelectorAll('.pt-tab').forEach(function(b){
-    b.addEventListener('click',function(){
-      document.querySelectorAll('.pt-tab').forEach(function(x){x.classList.remove('active');});
-      b.classList.add('active'); renderPts(b.dataset.fmt);
+  /* ---- tournament page: tabs + rules accordion ---- */
+  document.querySelectorAll('.tp-tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      document.querySelectorAll('.tp-tab').forEach(function(x){x.classList.remove('on');});
+      document.querySelectorAll('.tp-panel').forEach(function(x){x.classList.remove('on');});
+      t.classList.add('on');
+      var p=document.getElementById('tp-'+t.dataset.p); if(p) p.classList.add('on');
     });
+  });
+  document.querySelectorAll('.tp-ai > .hd').forEach(function(h){
+    h.addEventListener('click',function(){ h.parentElement.classList.toggle('open'); });
   });
 })();
 /* embers (same as main page) */
