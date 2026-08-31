@@ -408,6 +408,42 @@
   .tp-teams .tm{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid var(--line);}
   .tp-teams .tm .av{width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,var(--signal),var(--ember));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--void);font-size:13px;}
   .tp-teams .tm b{font-size:13px;}.tp-teams .tm span{display:block;font-family:var(--font-mono);font-size:10.5px;color:var(--ash);}
+
+  /* ============ Direction C+D: Glass + Neon ============ */
+  :root{ --cyan:#33e1ff; }
+  /* frosted glass panels */
+  .card, .tourn, .team-card{
+    background:rgba(255,255,255,.05) !important;
+    -webkit-backdrop-filter:blur(13px) saturate(1.15); backdrop-filter:blur(13px) saturate(1.15);
+    border:1px solid rgba(255,255,255,.13) !important;
+    box-shadow:0 22px 55px -28px #000, inset 0 1px 0 rgba(255,255,255,.12);
+    transition:box-shadow .25s ease, transform .2s ease, border-color .2s ease;
+  }
+  .tourn:hover, .team-card:hover{
+    border-color:rgba(255,94,26,.55) !important; transform:translateY(-3px);
+    box-shadow:0 26px 60px -26px #000, 0 0 30px -6px rgba(255,94,26,.5), inset 0 1px 0 rgba(255,255,255,.14);
+  }
+  /* accordion + tabs glass (lighter, no blur for perf) */
+  .tp-ai{ background:rgba(255,255,255,.045); border-color:rgba(255,255,255,.12); }
+  .tp-tab, .chip{ background:rgba(255,255,255,.05) !important; border-color:rgba(255,255,255,.13) !important; }
+  .tp-tab.on{ box-shadow:0 0 20px -5px rgba(255,94,26,.65); }
+  .chip.active{ box-shadow:0 0 18px -5px rgba(255,94,26,.6); }
+  .tp-ai>.hd .ic, .req-ic{ box-shadow:0 0 14px -4px rgba(255,94,26,.5); }
+
+  /* neon accents */
+  .tourn .date{ color:var(--cyan) !important; text-shadow:0 0 10px rgba(51,225,255,.45); }
+  .tourn .foot .pf, .tp-prize .p b, .prize .p .amt, .facts .f .v{ text-shadow:0 0 15px rgba(255,176,32,.4); }
+  .lrow .pts2 b{ text-shadow:0 0 14px rgba(255,176,32,.55); }
+  .lrow.top1 .rk{ text-shadow:0 0 18px rgba(255,176,32,.65); }
+  .lrow.top2 .rk, .lrow.top3 .rk{ text-shadow:0 0 12px rgba(255,255,255,.4); }
+  .trn-title .accent{ filter:drop-shadow(0 0 18px rgba(255,120,40,.4)); }
+  .step .num{ filter:drop-shadow(0 0 14px rgba(255,120,40,.45)); }
+  /* glowing status badges */
+  .facts .f .v.reg{ text-shadow:0 0 12px rgba(47,224,168,.55); }
+  .tourn .st.reg{ box-shadow:0 0 16px -3px rgba(47,224,168,.55); text-shadow:0 0 8px rgba(47,224,168,.4); }
+  .tourn .st.soon{ box-shadow:0 0 16px -3px rgba(255,176,32,.5); }
+  .tc-badge.open{ box-shadow:0 0 15px -4px rgba(47,224,168,.5); }
+  .crypto-pill{ box-shadow:0 0 22px -8px rgba(255,176,32,.5); }
 </style>
 </head>
 <body>
