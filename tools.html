@@ -108,6 +108,22 @@
     background:linear-gradient(180deg,var(--signal),var(--ember));box-shadow:0 0 14px rgba(255,120,40,0.55);}
   .bp-note b{color:var(--ember);font-weight:700;}
   .bp-note a{color:var(--signal);}
+  /* capacity infographic (fills empty left-column space) */
+  .cap-info{margin-top:22px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,0.025);border:1px solid var(--line);}
+  .capi-t{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ash);margin-bottom:12px;}
+  .capi-bar{display:flex;height:28px;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);}
+  .capi-bar span{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;min-width:0;transition:flex-grow .3s ease;}
+  .capi-bar .cs1{flex:1 1 0;flex-grow:150;background:#5a5560;color:#edeae6;}
+  .capi-bar .cs2{flex:1 1 0;flex-grow:50;background:var(--intel);color:#08110d;}
+  .capi-bar .cs3{flex:1 1 0;background:linear-gradient(90deg,var(--signal),var(--ember));color:#160a03;}
+  .capi-leg{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;}
+  .capi-leg div{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--ash);}
+  .capi-leg i{width:10px;height:10px;border-radius:3px;flex:none;}
+  .capi-leg .ci1{background:#5a5560;}
+  .capi-leg .ci2{background:var(--intel);}
+  .capi-leg .ci3{background:linear-gradient(180deg,var(--signal),var(--ember));}
+  .capi-tot{margin-top:12px;font-size:12px;color:var(--ash);}
+  .capi-tot b{color:var(--ember);font-size:15px;}
   .cap-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:2px;}
   .cap-head .ct{font-family:var(--font-display);text-transform:uppercase;font-size:14px;}
   .cap-head .cn{font-family:var(--font-mono);font-size:12px;color:var(--ash);}
@@ -332,6 +348,12 @@
             <div class="field"><label>Оружие 1</label><select id="w1"></select></div>
             <div class="field"><label>Оружие 2</label><select id="w2"></select></div>
             <div class="field"><label>Сетап 5.56 + 12 калибр?</label><select id="mix"><option value="no">Нет</option><option value="yes">Да — увеличить 5.56</option></select></div>
+            <div class="cap-info" aria-hidden="true">
+              <div class="capi-t">Из чего складывается вместимость</div>
+              <div class="capi-bar"><span class="cs1">150</span><span class="cs2">50</span><span class="cs3" id="capS3" style="flex-grow:250">250</span></div>
+              <div class="capi-leg"><div><i class="ci1"></i> База 150</div><div><i class="ci2"></i> Жилет 50</div><div><i class="ci3"></i> Рюкзак <span id="capBagN">250</span></div></div>
+              <div class="capi-tot">Итого вместимость: <b id="capTot">450 ед.</b></div>
+            </div>
           </div>
           <div class="bp-out" id="bpOut"></div>
         </div>
@@ -481,6 +503,8 @@
   function render(){
     var a=WEAPONS[+w1.value], b=WEAPONS[+w2.value], boost=(mix.value==='yes');
     var CAP=CAPS[+bag.value];
+    var bagAdd=CAP-200, capS3=document.getElementById('capS3');
+    if(capS3){ capS3.style.flexGrow=bagAdd; capS3.textContent=bagAdd; document.getElementById('capBagN').textContent=bagAdd; document.getElementById('capTot').textContent=CAP+' ед.'; }
     var wa=AMMOW[a.cal], wb=AMMOW[b.cal];
     var recA=recAmmo(a,boost), recB=recAmmo(b,boost);
     var baseA=Math.floor(recA*0.5), baseB=Math.floor(recB*0.5);
