@@ -256,6 +256,112 @@
   .tc-btn.off{background:rgba(255,255,255,.05);color:var(--steel);cursor:not-allowed;}
   .trn-note{font-family:var(--font-mono);font-size:11.5px;color:var(--ash);}
   @media (max-width:560px){ .trn-stats{gap:22px;} }
+
+  /* ---- shared ---- */
+  .trn-sec{margin-bottom:48px;}
+  .card{background:linear-gradient(180deg,rgba(24,21,27,.62),rgba(14,12,17,.62));border:1px solid var(--line);border-radius:16px;}
+  .crypto-pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:#e7dfce;background:rgba(255,176,32,.08);border:1px solid rgba(255,176,32,.32);border-radius:999px;padding:9px 16px;margin:0 0 22px;}
+  .crypto-pill b{color:var(--ember);}
+  .crypto-note{margin-top:12px;font-size:12.5px;color:var(--ash);line-height:1.5;border-left:2px solid rgba(255,176,32,.5);padding-left:12px;}
+  .crypto-note b{color:var(--ember);}
+
+  /* ---- 1. listing ---- */
+  .tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;}
+  .tourn{overflow:hidden;padding:0;display:flex;flex-direction:column;transition:transform .2s,border-color .2s;}
+  .tourn:hover{transform:translateY(-3px);border-color:rgba(255,94,26,.4);}
+  .tourn .banner{position:relative;height:92px;background:linear-gradient(120deg,rgba(255,94,26,.28),rgba(255,176,32,.12)),#141017;display:flex;align-items:flex-end;padding:12px 16px;}
+  .tourn .banner .game{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--bone);}
+  .tourn .st{position:absolute;top:12px;right:12px;font-family:var(--font-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:999px;}
+  .tourn .st.reg{color:var(--intel);background:rgba(47,224,168,.16);border:1px solid rgba(47,224,168,.5);}
+  .tourn .st.soon{color:var(--ember);background:rgba(255,176,32,.14);border:1px solid rgba(255,176,32,.5);}
+  .tourn .st.done{color:var(--ash);background:rgba(0,0,0,.35);border:1px solid rgba(237,234,230,.16);}
+  .tourn .body{padding:14px 16px 16px;display:flex;flex-direction:column;flex:1;}
+  .tourn .date{font-family:var(--font-mono);font-size:11px;color:var(--signal);text-transform:uppercase;letter-spacing:.06em;}
+  .tourn h3{font-size:16px;margin:4px 0 10px;}
+  .tourn .chips{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+  .tourn .chips span{font-family:var(--font-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--ash);border:1px solid var(--line);border-radius:999px;padding:4px 9px;}
+  .tourn .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px solid var(--line);}
+  .tourn .foot .pf{font-family:var(--font-display);color:var(--ember);font-size:17px;}
+  .tourn .foot .pf small{display:block;font-family:var(--font-mono);font-size:9px;color:var(--ash);letter-spacing:.06em;font-weight:400;}
+  .tourn .foot .slot{font-family:var(--font-mono);font-size:12px;color:var(--ash);}
+  .tourn .foot .slot b{color:var(--bone);}
+
+  /* ---- 2. detail ---- */
+  .facts{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line);border-radius:14px;overflow:hidden;margin-bottom:18px;}
+  .facts .f{background:#100e14;padding:14px 12px;}
+  .facts .f .l{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ash);}
+  .facts .f .v{font-family:var(--font-display);font-size:16px;margin-top:5px;}
+  .facts .f .v.reg{color:var(--intel);}
+  @media(max-width:720px){.facts{grid-template-columns:repeat(3,1fr);} }
+  .tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+  .tabs span{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ash);padding:9px 15px;border-radius:999px;border:1px solid var(--line);}
+  .tabs span.on{color:var(--void);background:linear-gradient(180deg,var(--signal),var(--ember));border-color:transparent;}
+  .ov{padding:22px;}
+  .ov h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);margin:0 0 10px;}
+  .ov .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media(max-width:680px){.ov .grid2{grid-template-columns:1fr;} }
+  .ov .info div{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line);font-size:13.5px;}
+  .ov .info div span{color:var(--ash);}
+  .ov .info div b{color:var(--bone);text-align:right;}
+  .prize{display:grid;gap:8px;}
+  .prize .p{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;background:rgba(255,255,255,.025);border:1px solid var(--line);font-size:13px;color:var(--ash);}
+  .prize .p .pl{font-family:var(--font-display);font-size:13px;width:52px;color:var(--bone);}
+  .prize .p .pl.g{color:var(--ember);}
+  .prize .p .amt{margin-left:auto;font-family:var(--font-mono);color:var(--bone);font-weight:700;}
+  .stages{margin-top:20px;display:grid;gap:12px;}
+  .stage{padding:14px 16px;border-radius:12px;background:rgba(255,255,255,.025);border:1px solid var(--line);border-left:3px solid var(--signal);}
+  .stage .sn{font-family:var(--font-display);text-transform:uppercase;font-size:14px;}
+  .stage .sm{font-family:var(--font-mono);font-size:11.5px;color:var(--ash);margin-top:5px;}
+  .stage .maps{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px;}
+  .stage .maps b{font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ember);background:rgba(255,176,32,.1);border:1px solid rgba(255,176,32,.28);border-radius:6px;padding:3px 8px;font-weight:600;}
+
+  /* ---- 3. points ---- */
+  .pt-switch{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid var(--line);margin-bottom:16px;}
+  .pt-tab{font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--ash);background:none;border:none;border-radius:999px;padding:8px 18px;cursor:pointer;transition:.2s;}
+  .pt-tab.active{color:var(--void);background:linear-gradient(180deg,var(--signal),var(--ember));}
+  .pts{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;}
+  @media(max-width:680px){.pts{grid-template-columns:1fr;} }
+  .ptable{padding:18px;}
+  .ptable h4,.pform h4{font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--signal);margin:0 0 12px;}
+  .ptable h4 span{color:var(--ash);text-transform:none;letter-spacing:0;}
+  .ptable table{width:100%;border-collapse:collapse;}
+  .ptable td{padding:7px 8px;border-bottom:1px solid var(--line);font-size:13.5px;}
+  .ptable td:last-child{text-align:right;font-family:var(--font-mono);font-weight:700;color:var(--ember);}
+  .ptable tr.win td{color:var(--intel);}
+  .ptable tr.win td:last-child{color:var(--intel);}
+  .pform{padding:18px;}
+  .pform .f{font-family:var(--font-mono);font-size:13px;background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:12px;line-height:1.7;}
+  .pform .f b{color:var(--ember);}
+  .pform .ex{font-size:13px;color:var(--ash);line-height:1.65;margin:14px 0 0;}
+  .pform .ex b{color:var(--bone);}
+  .kill{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12.5px;color:var(--bone);background:rgba(255,94,26,.08);border:1px solid rgba(255,94,26,.3);border-radius:999px;padding:7px 14px;}
+
+  /* ---- 4. steps ---- */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+  @media(max-width:680px){.steps{grid-template-columns:1fr;} }
+  .step{padding:20px;}
+  .step .num{font-family:var(--font-display);font-size:34px;background:linear-gradient(180deg,var(--signal),var(--ember));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1;}
+  .step h4{margin:8px 0 6px;font-size:15px;text-transform:uppercase;}
+  .step p{margin:0;font-size:13px;color:var(--ash);line-height:1.55;}
+
+  /* ---- 5. leaderboard ---- */
+  .lboard{padding:8px 6px;}
+  .lrow{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;transition:.15s;}
+  .lrow:hover{background:rgba(255,94,26,.04);}
+  .lrow+.lrow{border-top:1px solid var(--line);}
+  .lrow .rk{font-family:var(--font-display);font-size:20px;color:var(--ash);text-align:center;}
+  .lrow.top1 .rk{color:var(--ember);}
+  .lrow.top2 .rk,.lrow.top3 .rk{color:var(--bone);}
+  .lrow .nm{display:flex;align-items:center;gap:11px;}
+  .lrow .nm .av{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--signal),var(--ember));display:flex;align-items:center;justify-content:center;font-family:var(--font-display);color:var(--void);font-size:15px;}
+  .lrow .nm b{font-size:14.5px;}
+  .lrow .nm span{display:block;font-family:var(--font-mono);font-size:11px;color:var(--ash);}
+  .lrow .lend{display:flex;align-items:center;}
+  .lrow .pts2{text-align:right;}
+  .lrow .pts2 b{font-family:var(--font-display);font-size:18px;color:var(--ember);}
+  .lrow .pts2 span{display:block;font-family:var(--font-mono);font-size:10px;color:var(--ash);letter-spacing:.05em;}
+  .lrow .mv{font-family:var(--font-mono);font-size:11px;margin-left:10px;color:var(--ash);}
+  .lrow .mv.up{color:var(--intel);}.lrow .mv.dn{color:var(--red,#ff3b3b);}
 </style>
 </head>
 <body>
@@ -352,7 +458,8 @@
     <section class="trn-hero">
       <span class="brief">// Турниры · Skill Forge</span>
       <h1 class="trn-title"><span class="accent">Турниры</span> и команды</h1>
-      <p class="trn-lead">Собери состав или найди команду для турнира. Здесь — анкеты команд, которые набирают игроков. Участвовать могут только <b class="hl">зарегистрированные игроки Skill Forge</b> с заполненным профилем.</p>
+      <p class="trn-lead">Регулярные турниры по PUBG Mobile для команд Skill Forge. Собери состав, подай заявку и сражайся за призовые. Участвовать могут только <b class="hl">зарегистрированные игроки</b> с заполненным профилем.</p>
+      <div class="crypto-pill">💰 Все призовые отправляются участникам в <b>криптовалюте (USDT)</b></div>
       <div class="trn-cta">
         <a class="btn btn-primary" href="profile.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg> Создать анкету команды</a>
         <a class="btn btn-ghost" href="profile.html">Заполнить профиль</a>
@@ -361,6 +468,114 @@
         <div><b>12</b><span>команд в поиске</span></div>
         <div><b>38</b><span>свободных слотов</span></div>
         <div><b class="live">● 3</b><span>турнира скоро</span></div>
+      </div>
+    </section>
+
+    <!-- 1. LISTING -->
+    <section class="trn-sec">
+      <h2 class="trn-h">Ближайшие турниры</h2>
+      <p class="trn-sub">Выбери турнир, проверь регламент и подай заявку командой.</p>
+      <div class="tlist">
+        <article class="t-card tourn">
+          <div class="banner"><span class="game">PUBG Mobile</span><span class="st reg">Регистрация</span></div>
+          <div class="body">
+            <div class="date">5 сентября · 21:00 МСК</div>
+            <h3>Skill Forge Squad Cup #12</h3>
+            <div class="chips"><span>Squad 4×4</span><span>TPP</span><span>TIER 1–2</span></div>
+            <div class="foot"><div class="pf">150 USDT<small>Призовой</small></div><div class="slot"><b>34</b>/48 слотов</div></div>
+          </div>
+        </article>
+        <article class="t-card tourn">
+          <div class="banner"><span class="game">PUBG Mobile</span><span class="st soon">Скоро</span></div>
+          <div class="body">
+            <div class="date">8 сентября · 20:00 МСК</div>
+            <h3>Duo Masters #7</h3>
+            <div class="chips"><span>Duo 2×2</span><span>TPP</span><span>Открытый</span></div>
+            <div class="foot"><div class="pf">70 USDT<small>Призовой</small></div><div class="slot"><b>0</b>/64 слотов</div></div>
+          </div>
+        </article>
+        <article class="t-card tourn">
+          <div class="banner"><span class="game">PUBG Mobile</span><span class="st done">Завершён</span></div>
+          <div class="body">
+            <div class="date">29 августа</div>
+            <h3>Skill Forge Squad Cup #11</h3>
+            <div class="chips"><span>Squad 4×4</span><span>TIER 3</span></div>
+            <div class="foot"><div class="pf">100 USDT<small>Призовой</small></div><div class="slot">Победитель: <b>NIGHT OWLS</b></div></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 2. TOURNAMENT PAGE (example) -->
+    <section class="trn-sec">
+      <h2 class="trn-h">Страница турнира</h2>
+      <p class="trn-sub">Так выглядит турнир изнутри — на примере <b class="hl">Skill Forge Squad Cup #12</b>.</p>
+      <div class="facts">
+        <div class="f"><div class="l">Дата</div><div class="v">05.09</div></div>
+        <div class="f"><div class="l">Слоты</div><div class="v">34/48</div></div>
+        <div class="f"><div class="l">Призовой</div><div class="v">150 USDT</div></div>
+        <div class="f"><div class="l">Статус</div><div class="v reg">Регистрация</div></div>
+        <div class="f"><div class="l">Формат</div><div class="v">Squad</div></div>
+        <div class="f"><div class="l">Tier</div><div class="v">1–2</div></div>
+      </div>
+      <div class="tabs"><span class="on">Обзор</span><span>Правила</span><span>Сетка</span><span>Команды</span></div>
+      <div class="ov card">
+        <div class="grid2">
+          <div>
+            <h4>Общая информация</h4>
+            <div class="info">
+              <div><span>Вид</span><b>От 3-го лица (TPP)</b></div>
+              <div><span>Режим</span><b>Squad (отряды 4×4)</b></div>
+              <div><span>Карты</span><b>Эрангель · Мирамар · Рондо</b></div>
+              <div><span>Регион</span><b>СНГ</b></div>
+            </div>
+          </div>
+          <div>
+            <h4>Призовой фонд · 150 USDT</h4>
+            <div class="prize">
+              <div class="p"><span class="pl g">TOP 1</span><span>Чемпион</span><span class="amt">75 USDT</span></div>
+              <div class="p"><span class="pl">TOP 2</span><span>Финалист</span><span class="amt">45 USDT</span></div>
+              <div class="p"><span class="pl">TOP 3</span><span>Бронза</span><span class="amt">20 USDT</span></div>
+              <div class="p"><span class="pl">WWCD</span><span>За лучшую игру</span><span class="amt">10 USDT</span></div>
+            </div>
+            <div class="crypto-note">Выплаты — в <b>криптовалюте (USDT)</b> на кошелёк капитана в течение 7 дней после финала.</div>
+          </div>
+        </div>
+        <div class="stages">
+          <div class="stage"><div class="sn">Полуфинал · 05.09</div><div class="sm">Группы A/B · Топ-9 проходят в финал</div><div class="maps"><b>Эрангель</b><b>Мирамар</b><b>Эрангель</b><b>Мирамар</b></div></div>
+          <div class="stage"><div class="sn">Финал · 06.09</div><div class="sm">16 команд · Топ-3 забирают призовые</div><div class="maps"><b>Эрангель</b><b>Мирамар</b><b>Рондо</b><b>Эрангель</b><b>Мирамар</b></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. POINTS (птс) -->
+    <section class="trn-sec">
+      <h2 class="trn-h">Система птс за карту</h2>
+      <p class="trn-sub">Птс за карту = <b class="hl">место</b> + <b class="hl">киллы</b>. Распределение птс за места <b class="hl">разное для Дуо и Сквадов</b> — переключи формат.</p>
+      <div class="pt-switch"><button class="pt-tab active" data-fmt="squad" type="button">Сквад 4×4</button><button class="pt-tab" data-fmt="duo" type="button">Дуо 2×2</button></div>
+      <div class="pts">
+        <div class="card ptable">
+          <h4>Птс за место <span id="ptFmt">· Сквад (16 команд)</span></h4>
+          <table id="ptTable"></table>
+        </div>
+        <div class="card pform">
+          <h4>Как считается</h4>
+          <div class="f">Птс за карту = <b>место</b> + <b>киллы</b></div>
+          <span class="kill">🎯 +1 птс за каждое убийство</span>
+          <p class="ex" id="ptEx"></p>
+          <div class="crypto-note">По сумме птс за все карты этапа строится таблица турнира и общий <b>рейтинг Skill Forge (SFR)</b>.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. HOW TO PLAY -->
+    <section class="trn-sec">
+      <h2 class="trn-h">Как играть</h2>
+      <p class="trn-sub">Три шага до участия в турнире.</p>
+      <div class="steps">
+        <div class="card step"><div class="num">1</div><h4>Профиль и верификация</h4><p>Зарегистрируйся, пройди верификацию и заполни игровой профиль: ник, ID, ранг, K/D, роль.</p></div>
+        <div class="card step"><div class="num">2</div><h4>Собери команду</h4><p>Создай команду или вступи в существующую в разделе «Команды», пригласи друзей.</p></div>
+        <div class="card step"><div class="num">3</div><h4>Подай заявку</h4><p>Выбери турнир, подтверди участие капитаном до дедлайна — и в бой за криптопризовые.</p></div>
       </div>
     </section>
 
@@ -385,9 +600,22 @@
       <div class="teams-grid" id="teamsGrid"></div>
     </section>
 
+    <!-- 5. RATING -->
+    <section class="trn-sec">
+      <h2 class="trn-h">Рейтинг команд</h2>
+      <p class="trn-sub">Птс с турниров идут в общий рейтинг <b class="hl">SFR</b>. Чем больше играешь и выигрываешь — тем выше место.</p>
+      <div class="card lboard">
+        <div class="lrow top1"><div class="rk">1</div><div class="nm"><span class="av">N</span><div><b>NIGHT OWLS</b><span>Squad · TIER 1</span></div></div><div class="lend"><div class="pts2"><b>148.5</b><span>SFR</span></div><span class="mv up">▲ 2</span></div></div>
+        <div class="lrow top2"><div class="rk">2</div><div class="nm"><span class="av">V</span><div><b>VORTEX</b><span>Squad · TIER 1</span></div></div><div class="lend"><div class="pts2"><b>129.0</b><span>SFR</span></div><span class="mv dn">▼ 1</span></div></div>
+        <div class="lrow top3"><div class="rk">3</div><div class="nm"><span class="av">R</span><div><b>REDLINE</b><span>Squad · TIER 2</span></div></div><div class="lend"><div class="pts2"><b>119.6</b><span>SFR</span></div><span class="mv up">▲ 4</span></div></div>
+        <div class="lrow"><div class="rk">4</div><div class="nm"><span class="av">B</span><div><b>BLIZZARD</b><span>Squad · TIER 2</span></div></div><div class="lend"><div class="pts2"><b>111.0</b><span>SFR</span></div><span class="mv">—</span></div></div>
+        <div class="lrow"><div class="rk">5</div><div class="nm"><span class="av">G</span><div><b>GHOST</b><span>Duo · TIER 2</span></div></div><div class="lend"><div class="pts2"><b>102.9</b><span>SFR</span></div><span class="mv up">▲ 1</span></div></div>
+      </div>
+    </section>
+
     <div class="guide-foot">
       <a class="btn btn-primary" href="index.html"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg> На главную</a>
-      <span class="trn-note">Раздел в разработке — анкеты показаны для примера.</span>
+      <span class="trn-note">Раздел в разработке — данные показаны для примера. Все призовые — в криптовалюте (USDT).</span>
     </div>
   </div>
 </main>
@@ -438,6 +666,30 @@
   }
   var tg = document.getElementById('teamsGrid');
   if(tg) tg.innerHTML = TEAMS.map(card).join('');
+
+  /* ---- points tables (Duo vs Squad) ---- */
+  var PTS = {
+    squad: { label:'· Сквад (16 команд в лобби)',
+      rows:[['1 место — WWCD',10,1],['2 место',6],['3 место',5],['4 место',4],['5 место',3],['6 место',2],['7 место',1],['8 место',1],['9–16 место',0]],
+      ex:'Пример: команда заняла <b>3 место</b> (5 птс) и сделала <b>8 killов</b> (8 птс) → <b>13 птс за карту</b>.' },
+    duo: { label:'· Дуо (до 32 команд в лобби)',
+      rows:[['1 место — WWCD',10,1],['2 место',8],['3 место',7],['4 место',6],['5 место',5],['6 место',4],['7 место',3],['8 место',2],['9–16 место',1],['17–32 место',0]],
+      ex:'Пример: команда заняла <b>3 место</b> (7 птс) и сделала <b>6 killов</b> (6 птс) → <b>13 птс за карту</b>.' }
+  };
+  var ptTbl=document.getElementById('ptTable'), ptFmt=document.getElementById('ptFmt'), ptEx=document.getElementById('ptEx');
+  function renderPts(fmt){
+    var d=PTS[fmt]; if(!ptTbl||!d) return;
+    ptTbl.innerHTML=d.rows.map(function(r){ return '<tr'+(r[2]?' class="win"':'')+'><td>'+r[0]+'</td><td>'+r[1]+' птс</td></tr>'; }).join('');
+    if(ptFmt) ptFmt.textContent=d.label;
+    if(ptEx) ptEx.innerHTML=d.ex;
+  }
+  renderPts('squad');
+  document.querySelectorAll('.pt-tab').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.querySelectorAll('.pt-tab').forEach(function(x){x.classList.remove('active');});
+      b.classList.add('active'); renderPts(b.dataset.fmt);
+    });
+  });
 })();
 /* embers (same as main page) */
 (function(){
