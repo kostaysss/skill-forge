@@ -124,6 +124,18 @@
   .capi-leg .ci3{background:linear-gradient(180deg,var(--signal),var(--ember));}
   .capi-tot{margin-top:12px;font-size:12px;color:var(--ash);}
   .capi-tot b{color:var(--ember);font-size:15px;}
+  /* hit-zones infographic (damage calc) */
+  .hitzones{margin-top:22px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,0.025);border:1px solid var(--line);}
+  .hz-t{font-family:var(--font-mono);font-size:10.5px;letter-spacing:0.12em;text-transform:uppercase;color:var(--ash);margin-bottom:12px;}
+  .hz-body{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;}
+  .hz-body svg{flex:none;}
+  .hz-list div{display:flex;align-items:center;gap:9px;margin-bottom:11px;font-size:13.5px;color:#d6d0d8;}
+  .hz-list div:last-child{margin-bottom:0;}
+  .hz-list b{margin-left:auto;font-family:var(--font-mono);color:var(--bone);font-size:13px;}
+  .hz-list i{width:12px;height:12px;border-radius:3px;flex:none;}
+  .hz-list .hz-h{background:#ff5e1a;}
+  .hz-list .hz-b{background:#ffb020;}
+  .hz-list .hz-l{background:#6a6570;}
   .cap-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:2px;}
   .cap-head .ct{font-family:var(--font-display);text-transform:uppercase;font-size:14px;}
   .cap-head .cn{font-family:var(--font-mono);font-size:12px;color:var(--ash);}
@@ -395,6 +407,24 @@
             <div class="field"><label>Бронежилет цели</label><select id="dv"><option value="0">Нет</option><option value="1">Ур. 1</option><option value="2">Ур. 2</option><option value="3" selected>Ур. 3</option></select></div>
             <div class="field"><label>Шлем цели</label><select id="dh"><option value="0">Нет</option><option value="1">Ур. 1</option><option value="2">Ур. 2</option><option value="3" selected>Ур. 3</option></select></div>
             <div class="field"><label>Дистанция: <span id="ddV">50</span> м</label><input id="dd" type="range" min="0" max="300" step="10" value="50"></div>
+            <div class="hitzones" aria-hidden="true">
+              <div class="hz-t">Множители урона по зонам</div>
+              <div class="hz-body">
+                <svg viewBox="0 0 60 116" fill="none" width="72" height="140">
+                  <circle cx="30" cy="13" r="11" fill="#ff5e1a"/>
+                  <rect x="16" y="27" width="28" height="40" rx="7" fill="#ffb020"/>
+                  <rect x="4" y="30" width="10" height="34" rx="5" fill="#6a6570"/>
+                  <rect x="46" y="30" width="10" height="34" rx="5" fill="#6a6570"/>
+                  <rect x="19" y="70" width="10" height="42" rx="5" fill="#6a6570"/>
+                  <rect x="31" y="70" width="10" height="42" rx="5" fill="#6a6570"/>
+                </svg>
+                <div class="hz-list">
+                  <div><i class="hz-h"></i> Голова <b>×2.35</b></div>
+                  <div><i class="hz-b"></i> Тело <b>×1.0</b></div>
+                  <div><i class="hz-l"></i> Конечности <b>×0.9</b></div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="bp-out" id="dmgOut"></div>
         </div>
